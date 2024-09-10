@@ -1,0 +1,25 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "crypto-js": "^4.2.0",
+    "express": "^4.19.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.4.0",
+    "mysql2-promise": "^0.1.4",
+    "nodemailer": "^6.9.3",
+    "nodemon": "^3.1.4",
+    "pm2": "^5.3.0",
+    "socket.io": "^4.7.5",
+    "utf8": "^3.0.0"
+  }
+}
