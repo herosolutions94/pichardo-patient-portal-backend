@@ -2444,7 +2444,7 @@ function getSingleData($table_name,$where){
 
 function get_pages()
     {
-        return $page_arr = array('/'=>'Home','/about'=>'About Us','/explore'=>'Explore','/contact'=>'Contact Us','/blog'=>'Blog','/services'=>'Services','/partners'=>'Partners','/mission'=>'Mission','/faq'=>'FAQs','/login'=>'Login','/signup'=>'Signup','/dashboard/inbox'=>'Chat','/properties'=>'Properties','/privacy-policy'=>'Privacy Policy','/terms-conditions'=>'Terms & Conditions');
+        return $page_arr = array('/'=>'Home','/about'=>'About Us','/services'=>'Services','/contact'=>'Contact Us','/privacy-policy'=>'Privacy Policy','/terms-conditions'=>'Terms & Conditions');
     }
 function checkSlug($slug,$table_name,$id='') {
 

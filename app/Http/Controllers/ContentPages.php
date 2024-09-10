@@ -67,21 +67,9 @@ class ContentPages extends Controller
         $token=$request->input('token', null);
         $member=$this->authenticate_verify_token($token);
         $this->data['content']=get_page('home');     
-        $this->data['page_title']=$this->data['content']['page_title'];    
-        $this->data['categories']=Categories_model::where('status',1)->where('featured',1)->orderBy('order_no', 'ASC')->get();    
-        $this->data['listings']=Listings_model::with(['singleFirstImage'])->orderBy('id', 'DESC')->where('featured',1)->get();    
-        $this->data['testimonials']=Testimonial_model::orderBy('id', 'DESC')->where('status',1)->get();    
-        $this->data['locations'] = Locations_model::with(['top_searches' => function($query) {
-            $query->where('status', 1);
-            $query->orderBy('order_no', 'asc');
-        }])
-        ->whereHas('top_searches', function($query) {
-            $query->where('status', 1);
-            $query->orderBy('order_no', 'asc');
-        })
-        ->where('status', 1)
-        ->orderBy('order_no', 'asc')
-        ->get();
+        $this->data['page_title']=$this->data['content']['page_title'];
+           
+        $this->data['testimonials']=Testimonial_model::orderBy('id', 'DESC')->where('status',1)->get(); 
           
         exit(json_encode($this->data));
     }

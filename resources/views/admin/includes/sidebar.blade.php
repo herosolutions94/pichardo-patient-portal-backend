@@ -43,14 +43,14 @@
             </a>
           </li>
           @endif
-          @if(access(21))
+          {{-- @if(access(21))
           <li class="sidebar-item">
             <a class="sidebar-link {{ $admin_page == 'promocodes' ? 'active' : '' }}" href="{{ url('admin/promocodes') }}" aria-expanded="false">
             <iconify-icon icon="ph:codesandbox-logo-duotone"></iconify-icon>
               <span class="hide-menu">Site PromoCodes</span>
             </a>
           </li>
-          @endif
+          @endif --}}
           {{-- <li class="sidebar-item">
             <a class="sidebar-link {{ $admin_page == 'permissions' ? 'active' : '' }}" href="{{ url('admin/permissions') }}" aria-expanded="false">
               <iconify-icon icon="icon-park-outline:permissions"></iconify-icon>
@@ -70,14 +70,14 @@
               </a>
             </li>
             @endif
-            @if(access(4))
+            {{-- @if(access(4))
             <li class="sidebar-item">
               <a class="sidebar-link {{ $admin_page == 'user_id_verifications' ? 'active' : '' }}" href="{{ url('admin/user_id_verifications') }}" aria-expanded="false">
                 <iconify-icon icon="solar:user-id-linear"></iconify-icon>
                 <span class="hide-menu">Uer ID Verifications</span>
               </a>
             </li>
-            @endif
+            @endif --}}
           @endif
           @if(access(5) || access(6) || access(7) || access(8) || access(9) || access(10) || access(11))
               <li class="nav-small-cap">
@@ -100,23 +100,23 @@
                 </a>
               </li>
               @endif
-              @if(access(7))
+              {{-- @if(access(7))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'listings' ? 'active' : '' }}" href="{{ url('admin/listings') }}" aria-expanded="false">
                   <iconify-icon icon="ph:user-list-bold"></iconify-icon>
                   <span class="hide-menu">Listings</span>
                 </a>
               </li>
-              @endif
-              @if(access(8))
+              @endif --}}
+              {{-- @if(access(8))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'bookings' ? 'active' : '' }}" href="{{ url('admin/bookings') }}" aria-expanded="false">
                   <iconify-icon icon="tabler:brand-booking"></iconify-icon>
                   <span class="hide-menu">Bookings</span>
                 </a>
               </li>
-              @endif
-              @if(access(9))
+              @endif --}}
+              {{-- @if(access(9))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'chat' ? 'active' : '' }}" href="{{ url('admin/chat') }}" aria-expanded="false">
                   <iconify-icon icon="entypo:chat"></iconify-icon>
@@ -139,7 +139,7 @@
                   <span class="hide-menu">User Tickets</span>
                 </a>
               </li>
-              @endif
+              @endif --}}
               <li>
                 <span class="sidebar-divider lg"></span>
               </li>
@@ -181,15 +181,15 @@
                 </a>
               </li>
               @endif
-              @if(access(16))
+              {{-- @if(access(16))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'top_searches' ? 'active' : '' }}" href="{{ url('admin/top_searches') }}" aria-expanded="false">
                   <iconify-icon icon="icon-park-outline:search"></iconify-icon>
                   <span class="hide-menu">Top Searches</span>
                 </a>
               </li>
-              @endif
-              @if(access(17) || access(18))
+              @endif --}}
+              {{-- @if(access(17) || access(18))
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow {{ $admin_page == 'blog' || $admin_page == 'blog_categories' ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                   <iconify-icon icon="solar:widget-4-line-duotone"></iconify-icon>
@@ -214,8 +214,8 @@
                   @endif
                 </ul>
               </li>
-              @endif
-              @if(access(19) || access(20))
+              @endif --}}
+              {{-- @if(access(19) || access(20))
               <li class="sidebar-item">
                 <a class="sidebar-link has-arrow {{ $admin_page == 'faqs' || $admin_page == 'faq_categories' ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                   <iconify-icon icon="mdi:faq"></iconify-icon>
@@ -240,7 +240,7 @@
                   @endif
                 </ul>
               </li>
-              @endif
+              @endif --}}
             @endif
         </ul>
         

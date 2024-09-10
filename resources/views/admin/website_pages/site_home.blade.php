@@ -89,10 +89,32 @@ id="saveForm">
                     <div class="col">
                         <div class="mb-3">
                             <label class="form-label" for="banner_bottom_text">Bottom Text</label>
-                            <textarea id="banner_bottom_text" name="banner_bottom_text" rows="4" class=" form-control">{{ !empty($sitecontent['banner_bottom_text']) ? $sitecontent['banner_bottom_text'] : "" }}</textarea>
+                            <textarea id="banner_bottom_text" name="banner_bottom_text" rows="4" class="editor">{{ !empty($sitecontent['banner_bottom_text']) ? $sitecontent['banner_bottom_text'] : "" }}</textarea>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    @for ($i = 1; $i < 3; $i++)
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label" for="button_lable_{{ $i }}">Button Label {{ $i }}</label>
+                                <input class="form-control" id="button_lable_{{ $i }}" type="text"
+                                       name="button_lable_{{ $i }}" placeholder=""
+                                       value="{{ !empty($sitecontent['button_lable_' . $i]) ? $sitecontent['button_lable_' . $i] : '' }}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="form-label" for="button_link_{{ $i }}">Button Link {{ $i }}</label>
+                               <select name="button_lable_{{ $i }}" class="form-control">
+                                    @foreach(get_pages() as $key=>$page)
+                                        <option value="{{$key}}">{{$page}}</option>
+                                    @endforeach
+                               </select>
+                            </div>
+                        </div>
+                    @endfor
+                </div>                
                 
             </div>
 

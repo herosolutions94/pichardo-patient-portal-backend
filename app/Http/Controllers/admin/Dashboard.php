@@ -12,13 +12,10 @@ class Dashboard extends Controller
 
     public function index(){
         $this->data['members']=table_count('members',array(),true);
-        $this->data['listings']=table_count('listings',array(),true);
-        $this->data['bookings']=table_count('bookings',array(),true);
-        $this->data['conversations']=table_count('conversations',array(),true);
+       
         $this->data['contact']=table_count('contact',array(),true);
         $this->data['subscribers']=table_count('newsletter',array(),true);
-        $this->data['withdraw_requests']=table_count('withdraw_requests',array(),true);
-        $this->data['tickets']=table_count('tickets',array(),true);
+       
         // dd(Auth::user()->email);
         return view('admin.dashboard',$this->data);
 

@@ -102,12 +102,12 @@
                                                 placeholder="" value="{{ $site_settings->site_noreply_email }}">
                           </div>
                         </div>
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                           <div class="mb-3">
                             <label for="site_address" class="form-label">Site Address</label>
                             <textarea class="form-control" id="site_address" rows="3" name="site_address">{{ $site_settings->site_address }}</textarea>
                           </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-12">
                           <div class="mb-3">
                             <label for="site_about" class="form-label">Site About</label>
@@ -188,7 +188,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12">
+              {{-- <div class="col-12">
                 <div class="card w-100 border position-relative overflow-hidden">
                   <div class="card-body p-4">
                     <h4 class="card-title">Site Profit Percentage(%)</h4>
@@ -206,7 +206,7 @@
                     
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <div class="col-12">
                 <div class="card w-100 border position-relative overflow-hidden">
                   <div class="card-body p-4">
@@ -233,7 +233,7 @@
                               </div>
                           </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                           <div class="mb-3">
                             <div class="">
                                 <label class="form-check-label" for="color-success"> Twitter</label>
@@ -252,7 +252,7 @@
                                                 value="{{ $site_settings->site_discord }}">
                               </div>
                           </div>
-                        </div>
+                        </div> --}}
                         <div class="col-12">
                           <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
                             <button class="btn btn-primary" type="submit">Update Site Settings</button>
