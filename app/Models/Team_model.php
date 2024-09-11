@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Testimonial_model extends Model
+class Team_model extends Model
 {
     use HasFactory;
-    protected $table = 'testimonials';
+    protected $table = 'team';
     protected $fillable = [
         'name',
-        'designation', // Add designation field
-        'message',
+        'designation',
+        'description',
         'image',
         'status',
     ];

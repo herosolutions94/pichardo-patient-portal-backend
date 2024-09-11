@@ -22,7 +22,7 @@ class Pages extends Controller
             $content_row = unserialize($page->code);
             if(!is_array($content_row))
                 $content_row = array();
-            for ($i = 1; $i <= 8; $i++) {
+            for ($i = 1; $i <= 13; $i++) {
                 if ($request->hasFile('image'.$i)) {
 
                     $request->validate([
@@ -74,7 +74,7 @@ class Pages extends Controller
         $this->data['sitecontent']=unserialize($this->data['row']->code);
         return view('admin.website_pages.site_thankyou',$this->data);
     }
-    public function how_it_works(Request $request){
+    public function services(Request $request){
         has_access(12);
         $page=Sitecontent::where('ckey',$request->segment(3))->first();
         if(empty($page)){
@@ -88,7 +88,7 @@ class Pages extends Controller
             $content_row = unserialize($page->code);
             if(!is_array($content_row))
                 $content_row = array();
-            for ($i = 1; $i <= 14; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
                 if ($request->hasFile('image'.$i)) {
 
                     $request->validate([
@@ -118,7 +118,7 @@ class Pages extends Controller
             $this->data['sitecontent']=array();
         }
 
-        return view('admin.website_pages.site_how_it_works',$this->data);
+        return view('admin.website_pages.site_services',$this->data);
     }
     public function help(Request $request){
         has_access(12);
@@ -227,7 +227,7 @@ class Pages extends Controller
             $content_row = unserialize($page->code);
             if(!is_array($content_row))
                 $content_row = array();
-            for ($i = 1; $i <= 14; $i++) {
+            for ($i = 1; $i <= 7; $i++) {
                 if ($request->hasFile('image'.$i)) {
 
                     $request->validate([

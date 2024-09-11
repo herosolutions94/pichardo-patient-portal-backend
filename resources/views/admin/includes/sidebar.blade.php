@@ -157,27 +157,36 @@
                 </a>
               </li>
               @endif
-              @if(access(13))
+              {{-- @if(access(13))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'categories' ? 'active' : '' }}" href="{{ url('admin/categories') }}" aria-expanded="false">
                   <iconify-icon icon="carbon:category"></iconify-icon>
                   <span class="hide-menu">Categories</span>
                 </a>
               </li>
-              @endif
+              @endif --}}
               @if(access(14))
               <li class="sidebar-item">
-                <a class="sidebar-link {{ $admin_page == 'locations' ? 'active' : '' }}" href="{{ url('admin/locations') }}" aria-expanded="false">
-                  <iconify-icon icon="mdi:locations"></iconify-icon>
-                  <span class="hide-menu">Locations</span>
+                <a class="sidebar-link {{ $admin_page == 'team' ? 'active' : '' }}" href="{{ url('admin/team') }}" aria-expanded="false">
+                  <iconify-icon icon="lucide:users-round"></iconify-icon>
+                  <span class="hide-menu">Team</span>
                 </a>
               </li>
               @endif
+              
               @if(access(15))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'testimonials' ? 'active' : '' }}" href="{{ url('admin/testimonials') }}" aria-expanded="false">
                   <iconify-icon icon="dashicons:testimonial"></iconify-icon>
                   <span class="hide-menu">Testimonials</span>
+                </a>
+              </li>
+              @endif
+              @if(access(16))
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ $admin_page == 'services' ? 'active' : '' }}" href="{{ url('admin/services') }}" aria-expanded="false">
+                  <iconify-icon icon="lucide:briefcase-business"></iconify-icon>
+                  <span class="hide-menu">Services</span>
                 </a>
               </li>
               @endif

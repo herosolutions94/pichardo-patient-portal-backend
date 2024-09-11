@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Testimonial_model;
+use App\Models\Services_model;
 use Illuminate\Http\Request;
 
-class Testimonials extends Controller
+class Services extends Controller
 {
     public function index(){
-        has_access(15);
-        $this->data['rows']=Testimonial_model::orderBy('id', 'DESC')->get();
-        return view('admin.testimonials.index',$this->data);
+        has_access(16);
+        $this->data['rows']=Services_model::orderBy('id', 'DESC')->get();
+        return view('admin.services.index',$this->data);
     }
     public function add(Request $request){
-        has_access(15);
+        has_access(16);
         $input = $request->all();
         
         if($input){
@@ -24,7 +24,7 @@ class Testimonials extends Controller
                 $request->validate([
                     'image' => 'mimes:png,jpg,jpeg,svg,gif|max:40000'
                 ]);
-                $image=$request->file('image')->store('public/testimonials/');
+                $image=$request->file('image')->store('public/services/');
                 if(!empty(basename($image))){
                     $data['image']=basename($image);
                 }
@@ -37,19 +37,18 @@ class Testimonials extends Controller
                 $data['status']=0;
             }
             $data['name']=$input['name'];
-            $data['designation']=$input['designation'];
-            $data['message']=$input['message'];
+            $data['description']=$input['description'];
             // pr($data);
-            $id = Testimonial_model::create($data);
-            return redirect('admin/testimonials/')
+            $id = Services_model::create($data);
+            return redirect('admin/services/')
                 ->with('success','Content Updated Successfully');
         }
         $this->data['enable_editor']=true;
-        return view('admin.testimonials.index',$this->data);
+        return view('admin.services.index',$this->data);
     }
     public function edit(Request $request, $id){
-        has_access(15);
-        $service=Testimonial_model::find($id);
+        has_access(16);
+        $service=Services_model::find($id);
         $input = $request->all();
         if($input){
             $data=array();
@@ -58,7 +57,7 @@ class Testimonials extends Controller
                 $request->validate([
                     'image' => 'mimes:png,jpg,jpeg,svg,gif|max:40000'
                 ]);
-                $image=$request->file('image')->store('public/testimonials/');
+                $image=$request->file('image')->store('public/services/');
                 if(!empty($image)){
                     $service->image=basename($image);
                 }
@@ -71,23 +70,22 @@ class Testimonials extends Controller
                 $service->status=0;
             }
             $service->name=$input['name'];
-            $service->designation=$input['designation'];
-            $service->message=$input['message'];
+            $service->description=$input['description'];
             // pr($data);
             $service->update();
-            return redirect('admin/testimonials/edit/'.$request->segment(4))
+            return redirect('admin/services/edit/'.$request->segment(4))
                 ->with('success','Content Updated Successfully');
         }
-        $this->data['row']=Testimonial_model::find($id);
+        $this->data['row']=Services_model::find($id);
         $this->data['enable_editor']=true;
-        return view('admin.testimonials.index',$this->data);
+        return view('admin.services.index',$this->data);
     }
     public function delete($id){
-        has_access(15);
-        $service = Testimonial_model::find($id);
-        removeImage("testimonials/".$service->image);
+        has_access(16);
+        $service = Services_model::find($id);
+        removeImage("services/".$service->image);
         $service->delete();
-        return redirect('admin/testimonials/')
+        return redirect('admin/services/')
                 ->with('error','Content deleted Successfully');
     }
 }

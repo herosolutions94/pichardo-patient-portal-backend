@@ -20741,3 +20741,11 @@ ul {
     border-radius: 75%;
     width: 65px;
 }
+
+.row_2_col .col{
+    width: 50%;
+    flex:unset;
+}
+.row_2_col .col .row{
+    display: -webkit-box;
+}

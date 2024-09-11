@@ -7,7 +7,7 @@
 @endsection
 @section('page_content')
 @if (request()->segment(3) == 'edit' || request()->segment(3) == 'add')
-    {!!breadcrumb('Add/Update Testimonial')!!}
+    {!!breadcrumb('Add/Update Team')!!}
     <form class="form theme-form" method="post" action="" enctype="multipart/form-data"
     id="saveForm">
     @csrf
@@ -15,13 +15,13 @@
         <div class="card-body">
             <div class="row">
             
-                {{-- <div class="col-lg-6 d-flex align-items-stretch">
+                <div class="col-lg-6 d-flex align-items-stretch">
                     <div class="card w-100 border position-relative overflow-hidden">
                       <div class="card-body p-4">
                         <h4 class="card-title">Change Image</h4>
                         <div class="text-center">
                             <div class="file_choose_icon">
-                                <img src="{{ get_site_image_src('testimonials', !empty($row) ? $row->image : '') }}" alt="matdash-img" class="img-fluid" width="120" height="120">
+                                <img src="{{ get_site_image_src('team', !empty($row) ? $row->image : '') }}" alt="matdash-img" class="img-fluid" width="120" height="120">
                             </div>
                             <input class="form-control uploadFile" name="image" type="file"
                             data-bs-original-title="" title="">
@@ -29,11 +29,11 @@
                         </div>
                       </div>
                     </div>
-                  </div> --}}
+                  </div>
                   <div class="col-lg-12 d-flex align-items-stretch">
                     <div class="card w-100 border position-relative overflow-hidden">
                       <div class="card-body p-4">
-                        <h4 class="card-title">Testimonial Block</h4>
+                        <h4 class="card-title">Team Block</h4>
                           <div class="row">
                               <div class="col-4">
                                 <div class="mb-3">
@@ -66,9 +66,11 @@
                         <h4 class="card-title">Text Block</h4>
                          
                           <div class="mb-3">
-                            <label for="name" class="form-label">Text</label>
-                            <textarea class="editor" name="message">{{ !empty($row) ? $row->message : '' }}</textarea>
+                            <label for="name" class="form-label">Description</label>
+                            <textarea class="editor" name="description">{{ !empty($row) ? $row->description : '' }}</textarea>
                           </div>
+
+                          
                           
                           <div class="col-12">
                             <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
@@ -84,7 +86,7 @@
     </form>
    
 @else
-{!!breadcrumb('Testimonials',url('admin/testimonials/add/'))!!}
+{!!breadcrumb('Team',url('admin/team/add/'))!!}
 <div class="card">
   <div class="card-body">
       <div class="row">
@@ -108,7 +110,7 @@
                     <td>{{ $key + 1 }}</td>
                     <td>
                       <div class="d-flex align-items-center gap-6 crud_thumbnail_icon">
-                        {{-- <img src="{{ get_site_image_src('testimonials', !empty($row->image) ? $row->image : '') }}" width="45" class="rounded-circle" /> --}}
+                        <img src="{{ get_site_image_src('team', !empty($row->image) ? $row->image : '') }}" width="45" class="rounded-circle" />
                         <h6 class="mb-0"> {{ $row->name }}</h6>
                       </div>
 
@@ -122,12 +124,12 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                               <li>
-                                <a class="dropdown-item d-flex align-items-center gap-3" href="{{ url('admin/testimonials/edit/' . $row->id) }}">
+                                <a class="dropdown-item d-flex align-items-center gap-3" href="{{ url('admin/team/edit/' . $row->id) }}">
                                   <i class="fs-4 ti ti-edit"></i>Edit
                                 </a>
                               </li>
                               <li>
-                                <a class="dropdown-item d-flex align-items-center gap-3" href="{{ url('admin/testimonials/delete/' . $row->id) }}"  onclick="return confirm('Are you sure?');">
+                                <a class="dropdown-item d-flex align-items-center gap-3" href="{{ url('admin/team/delete/' . $row->id) }}"  onclick="return confirm('Are you sure?');">
                                   <i class="fs-4 ti ti-trash"></i>Delete
                                 </a>
                               </li>
