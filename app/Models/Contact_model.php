@@ -13,8 +13,10 @@ class Contact_model extends Model
         'name',
         'email',
         'phone',
-        'subject',
+        // 'subject',
         'message',
+        'services',
+        'hear_about',
         'status',
     ];
 }
