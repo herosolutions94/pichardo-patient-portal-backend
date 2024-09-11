@@ -20,16 +20,17 @@ use Illuminate\Support\Str;
 
 // use Image;
 use Intervention\Image\Facades\Image;
+
 function geUsertLocation($ipAddress)
 {
     if ($ipAddress === '127.0.0.1' || $ipAddress === '::1') {
         $ipAddress = '139.130.4.5';
     }
     $client = new Client();
-    
+
     // Replace 'your_api_token' with your actual IPInfo API token
     $response = $client->get("http://ipinfo.io/{$ipAddress}/json?token=08fca6a8aebb2c");
-    
+
 
     if ($response->getStatusCode() == 200) {
         $data = json_decode($response->getBody(), true);
@@ -41,8 +42,8 @@ function geUsertLocation($ipAddress)
             ];
         }
     }
-    
-    return ['error'=>1];
+
+    return ['error' => 1];
 }
 function generateThumbnail_with_thumbs_folder($folderName, $imageName, $image_type, $folder_type)
 {
@@ -63,7 +64,7 @@ function generateThumbnail_with_thumbs_folder($folderName, $imageName, $image_ty
                     break;
                 default:
                     $thumbnailWidth = 150;
-                    $thumbnailHeight = 150; 
+                    $thumbnailHeight = 150;
                     break;
             }
             break;
@@ -83,7 +84,7 @@ function generateThumbnail_with_thumbs_folder($folderName, $imageName, $image_ty
                     break;
                 default:
                     $thumbnailWidth = 300;
-                    $thumbnailHeight = 200; 
+                    $thumbnailHeight = 200;
                     break;
             }
             break;
@@ -103,7 +104,7 @@ function generateThumbnail_with_thumbs_folder($folderName, $imageName, $image_ty
                     break;
                 default:
                     $thumbnailWidth = 200;
-                    $thumbnailHeight = 300; 
+                    $thumbnailHeight = 300;
                     break;
             }
             break;
@@ -123,7 +124,7 @@ function generateThumbnail_with_thumbs_folder($folderName, $imageName, $image_ty
                     break;
                 default:
                     $thumbnailWidth = 100;
-                    $thumbnailHeight = 100; 
+                    $thumbnailHeight = 100;
                     break;
             }
             break;
@@ -218,14 +219,15 @@ function generateThumbnail_with_thumbs_folder($folderName, $imageName, $image_ty
 function nextOrder($table, $where = [])
 {
     $maxOrderNo = DB::table($table)
-                    ->when(!empty($where), function($query) use ($where) {
-                        return $query->where($where);
-                    })
-                    ->max('order_no');
+        ->when(!empty($where), function ($query) use ($where) {
+            return $query->where($where);
+        })
+        ->max('order_no');
 
     return intval($maxOrderNo) + 1;
 }
-function formatAmount($amount) {
+function formatAmount($amount)
+{
     $roundedAmount = round($amount * 10) / 10;
     if (floor($roundedAmount) == $roundedAmount) {
         return (string) intval($roundedAmount);
@@ -233,7 +235,8 @@ function formatAmount($amount) {
         return number_format($roundedAmount, 1, '.', '');
     }
 }
-function formatNumber($number) {
+function formatNumber($number)
+{
     // Check if the number has a decimal part of .00
     if (strpos($number, '.') !== false && substr($number, strpos($number, '.') + 1) === '00') {
         // If true, return only the whole number part
@@ -273,7 +276,7 @@ function generateThumbnail($folderName, $imageName, $image_type, $folder_type)
                     break;
                 default:
                     $thumbnailWidth = 150;
-                    $thumbnailHeight = 150; 
+                    $thumbnailHeight = 150;
                     break;
             }
             break;
@@ -293,7 +296,7 @@ function generateThumbnail($folderName, $imageName, $image_type, $folder_type)
                     break;
                 default:
                     $thumbnailWidth = 300;
-                    $thumbnailHeight = 200; 
+                    $thumbnailHeight = 200;
                     break;
             }
             break;
@@ -313,7 +316,7 @@ function generateThumbnail($folderName, $imageName, $image_type, $folder_type)
                     break;
                 default:
                     $thumbnailWidth = 200;
-                    $thumbnailHeight = 300; 
+                    $thumbnailHeight = 300;
                     break;
             }
             break;
@@ -333,7 +336,7 @@ function generateThumbnail($folderName, $imageName, $image_type, $folder_type)
                     break;
                 default:
                     $thumbnailWidth = 100;
-                    $thumbnailHeight = 100; 
+                    $thumbnailHeight = 100;
                     break;
             }
             break;
@@ -413,20 +416,19 @@ function generateThumbnail($folderName, $imageName, $image_type, $folder_type)
 }
 
 
-function breadcrumb($currentPage,$url='')
-    {
-        if(!empty($url)){
-            $link='
+function breadcrumb($currentPage, $url = '')
+{
+    if (!empty($url)) {
+        $link = '
             <div class="">
-                <a href="'.$url.'" class="btn btn-primary">Add New</a>
+                <a href="' . $url . '" class="btn btn-primary">Add New</a>
             </div>
             ';
-        }
-        else{
-            $link='
+    } else {
+        $link = '
             <ol class="breadcrumb">
                                     <li class="breadcrumb-item d-flex align-items-center">
-                                        <a class="text-muted text-decoration-none d-flex" href="'.url("admin/dashboard").'">
+                                        <a class="text-muted text-decoration-none d-flex" href="' . url("admin/dashboard") . '">
                                             <iconify-icon icon="solar:home-2-line-duotone" class="fs-6"></iconify-icon>
                                         </a>
                                     </li>
@@ -435,73 +437,74 @@ function breadcrumb($currentPage,$url='')
                                     </li>
                                 </ol>
             ';
-        }
-        return '
+    }
+    return '
             <div class="card card-body py-3">
                 <div class="row align-items-center">
                     <div class="col-12">
                         <div class="d-sm-flex align-items-center justify-space-between">
-                            <h4 class="mb-4 mb-md-0 card-title">'.$currentPage.'</h4>
+                            <h4 class="mb-4 mb-md-0 card-title">' . $currentPage . '</h4>
                             <nav aria-label="breadcrumb" class="ms-auto">
-                               '.$link.' 
+                               ' . $link . ' 
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
         ';
-    }
-    function showMessage()
-    {
-        $output = '';
+}
+function showMessage()
+{
+    $output = '';
 
-        if (session('status')) {
-            $output .= '<div class="alert bg-danger-subtle text-danger alert-dismissible fade show" role="alert">
+    if (session('status')) {
+        $output .= '<div class="alert bg-danger-subtle text-danger alert-dismissible fade show" role="alert">
                             <div class="d-flex align-items-center text-danger">
                                 <i class="ti ti-info-circle me-2 fs-4"></i>
                                 ' . session('status') . '
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>';
-        }
+    }
 
-        if (session('success')) {
-            $output .= '<div class="alert bg-success-subtle text-success alert-dismissible fade show" role="alert">
+    if (session('success')) {
+        $output .= '<div class="alert bg-success-subtle text-success alert-dismissible fade show" role="alert">
                             <div class="d-flex align-items-center text-success">
                                 <i class="ti ti-info-circle me-2 fs-4"></i>
                                 ' . session('success') . '
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>';
-        }
+    }
 
-        if (session('error')) {
-            $output .= '<div class="alert bg-danger-subtle text-danger alert-dismissible fade show" role="alert">
+    if (session('error')) {
+        $output .= '<div class="alert bg-danger-subtle text-danger alert-dismissible fade show" role="alert">
                             <div class="d-flex align-items-center text-danger">
                                 <i class="ti ti-info-circle me-2 fs-4"></i>
                                 ' . session('error') . '
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>';
-        }
+    }
 
-        if (!empty($errors) && count($errors) > 0) {
-            $output .= '<div class="alert bg-danger-subtle text-danger alert-dismissible fade show" role="alert">
+    if (!empty($errors) && count($errors) > 0) {
+        $output .= '<div class="alert bg-danger-subtle text-danger alert-dismissible fade show" role="alert">
                             <div class="d-flex align-items-center text-danger">
                                 <i class="ti ti-info-circle me-2 fs-4"></i>
                                 <ul>';
-            foreach ($errors->all() as $error) {
-                $output .= '<li>' . $error . '</li>';
-            }
-            $output .= '</ul>
+        foreach ($errors->all() as $error) {
+            $output .= '<li>' . $error . '</li>';
+        }
+        $output .= '</ul>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>';
-        }
-
-        return $output;
     }
-function generatePromoCode($length = 6) {
+
+    return $output;
+}
+function generatePromoCode($length = 6)
+{
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     $promoCode = '';
 
@@ -511,7 +514,8 @@ function generatePromoCode($length = 6) {
 
     return $promoCode;
 }
-function isTargetDateAfterCurrentMonth($targetDateStr) {
+function isTargetDateAfterCurrentMonth($targetDateStr)
+{
     // Get the current date
     $currentDate = new DateTime();
 
@@ -521,7 +525,8 @@ function isTargetDateAfterCurrentMonth($targetDateStr) {
     // Check if the target date is in the current month or any month after the current month
     return ($targetDate->format('Y-m') > $currentDate->format('Y-m'));
 }
-function isDateOlderOrGreater($targetDate) {
+function isDateOlderOrGreater($targetDate)
+{
     // Create DateTime objects for the target date and current date
     $targetDateTime = new DateTime($targetDate);
     $currentDateTime = new DateTime();
@@ -532,28 +537,31 @@ function isDateOlderOrGreater($targetDate) {
     // Compare the modified target date with the current date
     if ($targetDateTime < $currentDateTime) {
         return true;
-    }  else {
+    } else {
         return false;
     }
 }
-function isEditable($leaseStartDate) {
+function isEditable($leaseStartDate)
+{
     $startDateObj = new DateTime($leaseStartDate);
     $currentDate = new DateTime();
     $dateDifference = $startDateObj->diff($currentDate)->days;
     return $dateDifference >= 1;
 }
-function isEditableInDate($leaseStartDate) {
+function isEditableInDate($leaseStartDate)
+{
     $startDateTimestamp = strtotime($leaseStartDate);
     $currentDateTimestamp = time();
-    
+
     $startDate = date('Y-m-d', $startDateTimestamp);
     $currentDate = date('Y-m-d', $currentDateTimestamp);
-    
+
     $dateDifference = floor((strtotime($startDate) - strtotime($currentDate)) / (60 * 60 * 24));
-    
+
     return $dateDifference >= 1;
 }
-function hasFiveDaysPassedInCurrentMonth() {
+function hasFiveDaysPassedInCurrentMonth()
+{
     // Create DateTime objects for the current date and a reference date 5 days ago
     $currentDateTime = new DateTime();
     $fiveDaysAgo = (new DateTime())->modify('-5 days');
@@ -562,7 +570,8 @@ function hasFiveDaysPassedInCurrentMonth() {
     return $fiveDaysAgo < $currentDateTime;
 }
 
-function compareProperties($a, $b, $criteria, $order) {
+function compareProperties($a, $b, $criteria, $order)
+{
     foreach ($criteria as $criterion) {
         $comparison = $a->$criterion - $b->$criterion;
         if ($comparison !== 0) {
@@ -571,18 +580,20 @@ function compareProperties($a, $b, $criteria, $order) {
     }
     return 0;
 }
-function isTwoDaysAfter($availableDate, $requestedDate) {
+function isTwoDaysAfter($availableDate, $requestedDate)
+{
     // Create DateTime objects from the provided dates
     $availableDateTime = new DateTime($availableDate);
     $requestedDateTime = new DateTime($requestedDate);
-    
+
     // Calculate the difference between the two dates
     $interval = $availableDateTime->diff($requestedDateTime);
-    
+
     // Check if the difference is exactly 2 days and there are no other time differences
     return $interval->days;
 }
-function fiveDaysPassed(){
+function fiveDaysPassed()
+{
     $currentDate = new DateTime();
 
     // Subtract 5 days
@@ -593,12 +604,12 @@ function fiveDaysPassed(){
 
     if ($currentDate5DaysAgo > $currentDate) {
         return 1;
-    }
-    else{
+    } else {
         return 0;
     }
 }
-function addDaysToDate($inputDate, $daysToAdd) {
+function addDaysToDate($inputDate, $daysToAdd)
+{
     // Create a DateTime object from the input date string
     $date = new DateTime($inputDate);
 
@@ -610,7 +621,8 @@ function addDaysToDate($inputDate, $daysToAdd) {
 
     return $resultDate;
 }
-function addFiveDays($start_date,$site_lease_grace_period){
+function addFiveDays($start_date, $site_lease_grace_period)
+{
     $initialDate = new DateTime($start_date);
 
     for ($i = 1; $i < 5; $i++) {
@@ -619,8 +631,9 @@ function addFiveDays($start_date,$site_lease_grace_period){
 
     return $initialDate->format('Y-m-d');
 }
-function leaseStartDatePassedGrosPeriod($start_date){
-   $leaseStartDateTime = new DateTime($start_date);
+function leaseStartDatePassedGrosPeriod($start_date)
+{
+    $leaseStartDateTime = new DateTime($start_date);
     $currentDateTime = new DateTime();
 
     // Calculate the date 5 days from the lease start date
@@ -628,12 +641,12 @@ function leaseStartDatePassedGrosPeriod($start_date){
     $paymentDeadline->modify('+5 days');
     if ($currentDateTime <= $paymentDeadline) {
         return 1;
-    }
-    else{
+    } else {
         return 0;
     }
 }
-function checkLeaseCurentMonthType($date){
+function checkLeaseCurentMonthType($date)
+{
     $currentDate = new DateTime(); // Get the current date
     $givenDate = new DateTime($date); // Your given date
 
@@ -641,26 +654,25 @@ function checkLeaseCurentMonthType($date){
     if ($currentDate->format('Y-m') == $givenDate->format('Y-m')) {
         // If it's the same month, return last month
         return 'last';
-    } 
-    elseif ($currentDate > $givenDate) {
+    } elseif ($currentDate > $givenDate) {
         return null;
+    } else {
+        return 'middle';
     }
-    else {
-       return 'middle';
-    }
-
 }
-function calculateNextYearCurrentDate($year=1){
+function calculateNextYearCurrentDate($year = 1)
+{
     $currentDate = new DateTime();
 
     // Add one year to the current date
-    $currentDate->modify('+'.$year.' year');
+    $currentDate->modify('+' . $year . ' year');
 
     // Format the result as a string
     $endDate = $currentDate->format('Y-m-d');
     return $endDate;
 }
-function checkDateInLastthirtyDays($date){
+function checkDateInLastthirtyDays($date)
+{
     $currentDate = new DateTime(); // Current date and time
 
     $dateToCheck = new DateTime($date); // Replace with the date you want to check
@@ -674,7 +686,8 @@ function checkDateInLastthirtyDays($date){
         return false;
     }
 }
-function getStartDateofGivenMonth($dateString){
+function getStartDateofGivenMonth($dateString)
+{
     $date = new DateTime($dateString);
 
     // Set the date to the first day of the month
@@ -682,7 +695,8 @@ function getStartDateofGivenMonth($dateString){
 
     return new DateTime($date->format('Y-m-d'));
 }
-function getStartDate($dateString){
+function getStartDate($dateString)
+{
     $date = new DateTime($dateString);
 
     // Set the date to the first day of the month
@@ -690,7 +704,8 @@ function getStartDate($dateString){
 
     return $date->format('Y-m-d');
 }
-function getTotalDays($startDate,$last_day_of_first_month){
+function getTotalDays($startDate, $last_day_of_first_month)
+{
     $interval = $startDate->diff($last_day_of_first_month);
 
     return $interval->days + 1;
@@ -714,7 +729,7 @@ function isDateBookedAndFindClosest($bookedDates, $checkDate)
     $checkDate = (new DateTime($checkDate))->format('Y-m-d');
 
     if (in_array($checkDate, $bookedDates)) {
-        return ['isBooked' => true,'bookingAfterOneday' =>false];
+        return ['isBooked' => true, 'bookingAfterOneday' => false];
     }
 
     $closestFutureDate = null;
@@ -733,30 +748,34 @@ function isDateBookedAndFindClosest($bookedDates, $checkDate)
         $closestFutureDateObj = new DateTime($closestFutureDate);
         $interval = $checkDateObj->diff($closestFutureDateObj);
         $daysBetween = $interval->days;
-        if($daysBetween <=1){
-            return ['isBooked' => false,'bookingAfterOneday' => true];
+        if ($daysBetween <= 1) {
+            return ['isBooked' => false, 'bookingAfterOneday' => true];
         }
     }
 
     return ['isBooked' => false, 'bookingAfterOneday' => false];
 }
-function getLastMonthDays($end_date){
+function getLastMonthDays($end_date)
+{
     $endDate = new DateTime($end_date);
-    $total_days_in_month=(int)$endDate->format('t');
+    $total_days_in_month = (int)$endDate->format('t');
     $spentDays = $endDate->format('d');
     return $spentDays / $total_days_in_month;
 }
-function getLastDayDateOfGivenDate($dateString){
+function getLastDayDateOfGivenDate($dateString)
+{
     $date = new DateTime($dateString);
     $date->modify('last day of this month');
     return $date->format('m/d/Y');
 }
-function getFirstDayDateOfGivenDate($dateString){
+function getFirstDayDateOfGivenDate($dateString)
+{
     $date = new DateTime($dateString);
     $date->modify('first day of this month');
     return $date->format('m/d/Y');
 }
-function getMonthsBetweenTwoDates($start_date,$end_date){
+function getMonthsBetweenTwoDates($start_date, $end_date)
+{
     $startDate = new DateTime($start_date);
     $endDate = new DateTime($end_date);
 
@@ -765,7 +784,8 @@ function getMonthsBetweenTwoDates($start_date,$end_date){
     $months = $interval->y * 12 + $interval->m;
     return $months;
 }
-function getFirstMonthDaysCount($givenDate){
+function getFirstMonthDaysCount($givenDate)
+{
     try {
         // Create a DateTime object with the given date
         $givenDateTime = new DateTime($givenDate);
@@ -789,11 +809,12 @@ function getFirstMonthDaysCount($givenDate){
         'remaining_days' => intval($totalDays) - intval(intval($days_Passed) - 1)
     );
 }
-function getLeaseMonths($start_date,$end_date){
-    $arr=array();
-    $arr['firstMonthDays']=0;
-    $arr['lastMonthDays']=0;
-    $arr['middle_months']=0;
+function getLeaseMonths($start_date, $end_date)
+{
+    $arr = array();
+    $arr['firstMonthDays'] = 0;
+    $arr['lastMonthDays'] = 0;
+    $arr['middle_months'] = 0;
     $startDate = new DateTime($start_date);
     $endDate = new DateTime($end_date);
 
@@ -805,35 +826,35 @@ function getLeaseMonths($start_date,$end_date){
     if ($days > 0) {
         $months++;
     }
-    $arr['total_months']=$months;
-    if($months>1){
-        $last_day_of_first_month= new DateTime(date('Y-m-t'));
-        $startMonthDaysLeft = getTotalDays($startDate,$last_day_of_first_month);
+    $arr['total_months'] = $months;
+    if ($months > 1) {
+        $last_day_of_first_month = new DateTime(date('Y-m-t'));
+        $startMonthDaysLeft = getTotalDays($startDate, $last_day_of_first_month);
 
-        $firstDateofLastMonth=getStartDateofGivenMonth($end_date);
-        $LastMonthDaysPassed = getTotalDays($firstDateofLastMonth,$endDate);
+        $firstDateofLastMonth = getStartDateofGivenMonth($end_date);
+        $LastMonthDaysPassed = getTotalDays($firstDateofLastMonth, $endDate);
 
-        $daysPassedInStartDate= (int)$startDate->format('d') - 1;
+        $daysPassedInStartDate = (int)$startDate->format('d') - 1;
 
 
-        $arr['total_days_in_first_month']=(int)$startDate->format('t');
-        $arr['start_date_passed_days']=$daysPassedInStartDate;
-        $arr['firstMonthDays']=$startMonthDaysLeft;
-        $arr['lastMonthDays']=$LastMonthDaysPassed;
-        $arr['middle_months']=$months - 2;
+        $arr['total_days_in_first_month'] = (int)$startDate->format('t');
+        $arr['start_date_passed_days'] = $daysPassedInStartDate;
+        $arr['firstMonthDays'] = $startMonthDaysLeft;
+        $arr['lastMonthDays'] = $LastMonthDaysPassed;
+        $arr['middle_months'] = $months - 2;
+    } else if ($months == 1) {
+        $daysPassedInStartDate = (int)$startDate->format('d') - 1;
+        $arr['start_date_passed_days'] = $daysPassedInStartDate;
+        $startMonthDaysLeft = getTotalDays($startDate, $endDate);
+        $arr['firstMonthDays'] = $startMonthDaysLeft;
     }
-    else if($months==1){
-        $daysPassedInStartDate= (int)$startDate->format('d') - 1;
-        $arr['start_date_passed_days']=$daysPassedInStartDate;
-        $startMonthDaysLeft = getTotalDays($startDate,$endDate);
-        $arr['firstMonthDays']=$startMonthDaysLeft;
-    }
 
-    
+
 
     return $arr;
 }
-function getOnlyMonthsFromDate($dateString1,$dateString2){
+function getOnlyMonthsFromDate($dateString1, $dateString2)
+{
     // $date1 = new DateTime($dateString1);
     // $date2 = new DateTime($dateString2);
 
@@ -851,13 +872,14 @@ function getOnlyMonthsFromDate($dateString1,$dateString2){
     // Iterate through the months between the start and end dates
     while ($current_date <= $end_date) {
         $total_months++;
-        
+
         // Move to the next month
         $current_date->add(new DateInterval('P1M'));
     }
     return $total_months;
 }
-function getOnlyDaysFromDate($dateString1,$dateString2){
+function getOnlyDaysFromDate($dateString1, $dateString2)
+{
     $date1 = new DateTime($dateString1);
     $date2 = new DateTime($dateString2);
 
@@ -865,15 +887,16 @@ function getOnlyDaysFromDate($dateString1,$dateString2){
     $days = $interval->days;
     return $days;
 }
-function getMonthsDaysFromDate($dateString1,$dateString2){
+function getMonthsDaysFromDate($dateString1, $dateString2)
+{
     $date1 = new DateTime($dateString1);
     $date2 = new DateTime($dateString2);
 
     $interval = $date1->diff($date2);
 
-    $days = $interval->format('%a'); 
-    $months = $interval->format('%m'); 
-    $years = $interval->format('%y'); 
+    $days = $interval->format('%a');
+    $months = $interval->format('%m');
+    $years = $interval->format('%y');
     $duration = [];
 
     if ($years > 0) {
@@ -889,12 +912,14 @@ function getMonthsDaysFromDate($dateString1,$dateString2){
     $result = implode(', ', $duration);
     return $result;
 }
-function findAndFilterObjects($objectsArray, $valueToFind) {
-  return array_filter($objectsArray, function ($object) use ($valueToFind) {
-    return $object->mgt_type == $valueToFind;
-  });
+function findAndFilterObjects($objectsArray, $valueToFind)
+{
+    return array_filter($objectsArray, function ($object) use ($valueToFind) {
+        return $object->mgt_type == $valueToFind;
+    });
 }
-function isJson($value) {
+function isJson($value)
+{
     try {
         Json::decode($value);
         return true;
@@ -902,18 +927,19 @@ function isJson($value) {
         return false;
     }
 }
-function resize_crop_image($path,$image,$type='thumb_',$width=500,$height=500){
+function resize_crop_image($path, $image, $type = 'thumb_', $width = 500, $height = 500)
+{
     // try {
-        ini_set('memory_limit','1200M');
-        if (!empty($image) && @file_exists(".".Storage::url($path.'/'.$image))) {
-            // pr($image);
-            $imagePath = public_path('storage/'.$path.'/'.$image);
-            $thumbnailpath = public_path('storage/'.$path.'/thumbs/'.$type.$image);
-            $img=Image::make($imagePath)->resize($width, $height, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save($thumbnailpath)->destroy();
-            return $img;
-        }
+    ini_set('memory_limit', '1200M');
+    if (!empty($image) && @file_exists("." . Storage::url($path . '/' . $image))) {
+        // pr($image);
+        $imagePath = public_path('storage/' . $path . '/' . $image);
+        $thumbnailpath = public_path('storage/' . $path . '/thumbs/' . $type . $image);
+        $img = Image::make($imagePath)->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($thumbnailpath)->destroy();
+        return $img;
+    }
 
     // } catch (\Exception $e) {
 
@@ -924,67 +950,63 @@ function resize_crop_image($path,$image,$type='thumb_',$width=500,$height=500){
 
 }
 
-function get_branch_baths($branch_full_bathrooms){
-    $min=null;
-    $max=null;
-    if(!empty($branch_full_bathrooms)){
-        $min=$branch_full_bathrooms[0]->all_bathrooms;
-        $max=$branch_full_bathrooms[0]->all_bathrooms;
-        foreach($branch_full_bathrooms as $key=>$f_bath){
+function get_branch_baths($branch_full_bathrooms)
+{
+    $min = null;
+    $max = null;
+    if (!empty($branch_full_bathrooms)) {
+        $min = $branch_full_bathrooms[0]->all_bathrooms;
+        $max = $branch_full_bathrooms[0]->all_bathrooms;
+        foreach ($branch_full_bathrooms as $key => $f_bath) {
 
 
-            if($f_bath->all_bathrooms < $min){
-                $min=$f_bath->all_bathrooms;
+            if ($f_bath->all_bathrooms < $min) {
+                $min = $f_bath->all_bathrooms;
             }
-            if($f_bath->all_bathrooms > $max){
-                $max=$f_bath->all_bathrooms;
+            if ($f_bath->all_bathrooms > $max) {
+                $max = $f_bath->all_bathrooms;
             }
         }
     }
-    return(array("min"=>$min,'max'=>$max));
+    return (array("min" => $min, 'max' => $max));
 }
-function write_image($url,$path){
+function write_image($url, $path)
+{
     $contents = file_get_contents($url);
     // pr($contents);
-    $file_name=md5(rand(100, 1000)) . '_' .time() . '_' . rand(1111, 9999). '.jpg';
+    $file_name = md5(rand(100, 1000)) . '_' . time() . '_' . rand(1111, 9999) . '.jpg';
 
-    Storage::put($path.$file_name, $contents);
+    Storage::put($path . $file_name, $contents);
     return $file_name;
 }
-function format_address($address){
-    if(!empty($address)){
-        $address_arr=explode( ",", $address);
+function format_address($address)
+{
+    if (!empty($address)) {
+        $address_arr = explode(",", $address);
 
-        if(count($address_arr) == 5){
-            return nl2br($address_arr[0].", ".$address_arr[1]."\n".$address_arr[2].", ".$address_arr[3].", ".$address_arr[4]);
-        }
-        else if(count($address_arr) == 4){
-            return nl2br($address_arr[0]."\n".$address_arr[1].", ".$address_arr[2].", ".$address_arr[3]);
-        }
-        else if(count($address_arr) == 3){
-            return nl2br($address_arr[0]."\n".$address_arr[1].", ".$address_arr[2]);
-        }
-        else if(count($address_arr) == 2){
-            if(str_contains($address_arr[1], 'USA')){
+        if (count($address_arr) == 5) {
+            return nl2br($address_arr[0] . ", " . $address_arr[1] . "\n" . $address_arr[2] . ", " . $address_arr[3] . ", " . $address_arr[4]);
+        } else if (count($address_arr) == 4) {
+            return nl2br($address_arr[0] . "\n" . $address_arr[1] . ", " . $address_arr[2] . ", " . $address_arr[3]);
+        } else if (count($address_arr) == 3) {
+            return nl2br($address_arr[0] . "\n" . $address_arr[1] . ", " . $address_arr[2]);
+        } else if (count($address_arr) == 2) {
+            if (str_contains($address_arr[1], 'USA')) {
                 return nl2br($address_arr[0]);
+            } else {
+                return nl2br($address_arr[0] . "\n" . $address_arr[1]);
             }
-            else{
-                return nl2br($address_arr[0]."\n".$address_arr[1]);
-            }
-
-        }
-        else{
+        } else {
             return $address;
         }
-
-    }
-    else{
+    } else {
         return '';
     }
     // return $address;
 
 }
-function format_address_single($address){
+function format_address_single($address)
+{
     // if(!empty($address)){
     //     $address_arr=explode( ",", $address);
     //     // $address_arr=array_reverse($address_arr);
@@ -1009,48 +1031,41 @@ function format_address_single($address){
     //     return '';
     // }
     return $address;
-
 }
-function format_address_one_line($address){
-    if(!empty($address)){
-        $address_arr=explode( ",", $address);
+function format_address_one_line($address)
+{
+    if (!empty($address)) {
+        $address_arr = explode(",", $address);
         // $address_arr=array_reverse($address_arr);
-         if(count($address_arr) == 5){
-            return nl2br($address_arr[0].", ".$address_arr[1].",".$address_arr[2].", ".$address_arr[3]);
-        }
-        else if(count($address_arr) == 4){
-            return $address_arr[0].", ".$address_arr[1].", ".$address_arr[2];
-        }
-        else if(count($address_arr) == 3){
-            return $address_arr[0].", ".$address_arr[1];
-        }
-        else if(count($address_arr) == 2){
+        if (count($address_arr) == 5) {
+            return nl2br($address_arr[0] . ", " . $address_arr[1] . "," . $address_arr[2] . ", " . $address_arr[3]);
+        } else if (count($address_arr) == 4) {
+            return $address_arr[0] . ", " . $address_arr[1] . ", " . $address_arr[2];
+        } else if (count($address_arr) == 3) {
+            return $address_arr[0] . ", " . $address_arr[1];
+        } else if (count($address_arr) == 2) {
             return nl2br($address_arr[0]);
-        }
-        else{
+        } else {
             return $address;
         }
-
-    }
-    else{
+    } else {
         return '';
     }
-
 }
 
-function isCheckedFeature($features,$type='den'){
+function isCheckedFeature($features, $type = 'den')
+{
 
-    if(!empty($features) && count($features) > 0){
-        foreach($features as $feature){
+    if (!empty($features) && count($features) > 0) {
+        foreach ($features as $feature) {
 
-            $feature_id=intval(json_decode($feature));
+            $feature_id = intval(json_decode($feature));
             // pr(get_amentiy_name($feature_id));
-            if(strtolower(get_amentiy_name($feature_id))==$type){
+            if (strtolower(get_amentiy_name($feature_id)) == $type) {
                 return true;
             }
         }
-    }
-    else{
+    } else {
         return false;
     }
 }
@@ -1064,12 +1079,12 @@ function decrypt_string($string)
 }
 function doEncode($string, $key = 'preciousprotection')
 {
-    $hash='';
+    $hash = '';
     $string = base64_encode($string);
     $key = sha1($key);
     $strLen = strlen($string);
     $keyLen = strlen($key);
-    $j=0;
+    $j = 0;
     for ($i = 0; $i < $strLen; $i++) {
 
         $ordStr = ord(substr($string, $i, 1));
@@ -1084,11 +1099,11 @@ function doEncode($string, $key = 'preciousprotection')
 }
 function doDecode($string, $key = 'preciousprotection')
 {
-    $hash='';
+    $hash = '';
     $key = sha1($key);
     $strLen = strlen($string);
     $keyLen = strlen($key);
-    $j=0;
+    $j = 0;
     for ($i = 0; $i < $strLen; $i += 2) {
         $ordStr = hexdec(base_convert(strrev(substr($string, $i, 2)), 36, 16));
         if ($j == $keyLen) {
@@ -1105,16 +1120,16 @@ function doDecode($string, $key = 'preciousprotection')
 function get_users_folder_random_image()
 {
     $images = glob(public_path('users/*.{jpg,jpeg,png,gif,svg}'), GLOB_BRACE);
-    
+
     if (!empty($images) && count($images) > 0) {
         $randomImage = $images[array_rand($images)];
         $extension = pathinfo($randomImage, PATHINFO_EXTENSION);
         $encryptedName = Str::random(40) . '.' . $extension;
-        $destinationPath = 'members/' . $encryptedName;        
+        $destinationPath = 'members/' . $encryptedName;
         Storage::disk('public')->put($destinationPath, file_get_contents($randomImage));
         return $encryptedName;
     }
-    
+
     return null;
 }
 
@@ -1142,31 +1157,32 @@ function setLeaseInvoiceNo($invoice_id)
 
     return "lease_" . $output . $invoice_id;
 }
-function writ_post_data($file_name,$post) {
-    Storage::put('public/logs/'.$file_name.date('Y-m-d H:i:s').'.txt', json_encode($post));
+function writ_post_data($file_name, $post)
+{
+    Storage::put('public/logs/' . $file_name . date('Y-m-d H:i:s') . '.txt', json_encode($post));
 }
-function create_notification($data,$type='notification'){
-    $data['updated_at']=date('Y-m-d h:i:s');
-    $data['created_at']=date('Y-m-d h:i:s');
-    $data['type']=$type;
+function create_notification($data, $type = 'notification')
+{
+    $data['updated_at'] = date('Y-m-d h:i:s');
+    $data['created_at'] = date('Y-m-d h:i:s');
+    $data['type'] = $type;
     // pr($data);
     DB::table('notifications')->insert($data);
-    $id=DB::table('notifications')->insertGetId($data);
-    if(intval($data['sender']) > 0 && $sender_row=DB::table("members")->where('id',$data['sender'])->get()->first()){
-        $data['sender_dp']=get_site_image_src('members',$sender_row->mem_image);
-        $data['sender_name']=$sender_row->mem_display_name ? $sender_row->mem_display_name : $sender_row->mem_fullname;
-        $data['time']=format_date($data['created_at'], "M d, Y");
-        $data['id']=$id;
-        $notify=sendPostRequest(env('NODE_SOCKET').'receive-notification/',$data);
+    $id = DB::table('notifications')->insertGetId($data);
+    if (intval($data['sender']) > 0 && $sender_row = DB::table("members")->where('id', $data['sender'])->get()->first()) {
+        $data['sender_dp'] = get_site_image_src('members', $sender_row->mem_image);
+        $data['sender_name'] = $sender_row->mem_display_name ? $sender_row->mem_display_name : $sender_row->mem_fullname;
+        $data['time'] = format_date($data['created_at'], "M d, Y");
+        $data['id'] = $id;
+        $notify = sendPostRequest(env('NODE_SOCKET') . 'receive-notification/', $data);
         // pr($notify);
-    }
-    else if(intval($data['sender'])==0){
-        $site_settings=getSiteSettings();
-        $data['sender_dp']=get_site_image_src('images', $site_settings->site_logo);
-        $data['sender_name']=$site_settings->site_name;
-        $data['time']=format_date($data['created_at'], "M d, Y");
-        $data['id']=$id;
-        $notify=sendPostRequest(env('NODE_SOCKET').'receive-notification/',$data);
+    } else if (intval($data['sender']) == 0) {
+        $site_settings = getSiteSettings();
+        $data['sender_dp'] = get_site_image_src('images', $site_settings->site_logo);
+        $data['sender_name'] = $site_settings->site_name;
+        $data['time'] = format_date($data['created_at'], "M d, Y");
+        $data['id'] = $id;
+        $notify = sendPostRequest(env('NODE_SOCKET') . 'receive-notification/', $data);
     }
 }
 
@@ -1189,135 +1205,142 @@ function sendPostRequest($url, $data)
         ];
     }
 }
-function create_payment_history($data){
-    $data['created_at']=date('Y-m-d h:i:s');
+function create_payment_history($data)
+{
+    $data['created_at'] = date('Y-m-d h:i:s');
     DB::table('payment_history')->insert($data);
 }
-function updateRecord($table,$field,$value,$arr){
+function updateRecord($table, $field, $value, $arr)
+{
     // pr($arr);
-    $id=DB::table($table)->where($field,$value)->update($arr);
+    $id = DB::table($table)->where($field, $value)->update($arr);
     return $id;
 }
-function save_data($data,$table){
+function save_data($data, $table)
+{
     // $data['updated_at']=date('Y-m-d h:i:s');
     // $data['created_at']=date('Y-m-d h:i:s');
     // pr($data);
-    $id=DB::table($table)->insert($data);
+    $id = DB::table($table)->insert($data);
     return $id;
 }
-function roundToNearestTenCents($price) {
+function roundToNearestTenCents($price)
+{
     $rounded = round($price * 100);
     return number_format($rounded / 10, 2);
 }
-function get_notifications($mem_id, $limit = null) {
+function get_notifications($mem_id, $limit = null)
+{
     $res = [];
     $res['count'] = 0;
     $res['content'] = [];
     $query = DB::table('notifications')
-    ->leftJoin('members as receiver', 'notifications.mem_id', '=', 'receiver.id')
-    ->leftJoin('members as sender', function ($join) {
-        $join->on('notifications.sender', '=', 'sender.id')
-            ->where('notifications.sender', '>', 0);
-    })
-    ->where('notifications.mem_id', $mem_id)
-    ->orderBy('notifications.id', 'desc')
-    ->select('notifications.*', 'sender.mem_fullname as sender_name', 'sender.mem_image as sender_image');
+        ->leftJoin('members as receiver', 'notifications.mem_id', '=', 'receiver.id')
+        ->leftJoin('members as sender', function ($join) {
+            $join->on('notifications.sender', '=', 'sender.id')
+                ->where('notifications.sender', '>', 0);
+        })
+        ->where('notifications.mem_id', $mem_id)
+        ->orderBy('notifications.id', 'desc')
+        ->select('notifications.*', 'sender.mem_fullname as sender_name', 'sender.mem_image as sender_image');
 
-// Execute the query
-$results = $query->get();
+    // Execute the query
+    $results = $query->get();
 
-    
+
     if (!empty($limit)) {
         $query->take($limit);
     }
-    $res['query']=Str::replaceArray('?', $query->getBindings(), $query->toSql());
+    $res['query'] = Str::replaceArray('?', $query->getBindings(), $query->toSql());
     $notification = $query->get();
-    $site_settings=getSiteSettings();
+    $site_settings = getSiteSettings();
     if (!$notification->isEmpty()) {
         $res['count'] = $notification->count();
         $res['unread'] = DB::table('notifications')->where(['mem_id' => $mem_id, 'status' => 0])->count();
-        
+
         foreach ($notification as $notify) {
             $obj = (object)[];
             $obj->id = $notify->id;
             $obj->name = $notify->sender_name;
-            if($notify->sender==0){
+            if ($notify->sender == 0) {
                 $obj->thumb = get_site_image_src('images', $site_settings->site_logo);
-            }
-            else{
+            } else {
                 $obj->thumb = get_site_image_src('members', !empty($notify->sender_image) ? $notify->sender_image : '');
             }
-            
+
             $obj->text = $notify->text;
             $obj->time = format_date($notify->created_at, "M d, Y");
             $res['content'][] = $obj;
         }
     }
-    
+
     return $res;
 }
 
 function get_site_image_src($path, $image, $type = '', $user_image = false)
 {
-    
-    if (!empty($image) && Storage::disk('public')->exists($path.'/'.$type.'/'.$image)) {
-        $filepath = Storage::url($path.'/'.$type."/".$image);
-    // if (!empty($image) && @getimagesize($filepath)) {
+
+    if (!empty($image) && Storage::disk('public')->exists($path . '/' . $type . '/' . $image)) {
+        $filepath = Storage::url($path . '/' . $type . "/" . $image);
+        // if (!empty($image) && @getimagesize($filepath)) {
         return url($filepath);
-    }
-    else if(!empty($image) && Storage::disk('public')->exists($path.'/'.$image)){
-        return url(Storage::url($path.'/'.$image));
+    } else if (!empty($image) && Storage::disk('public')->exists($path . '/' . $image)) {
+        return url(Storage::url($path . '/' . $image));
     }
     return empty($user_image) ? asset('images/no-image.svg') : asset('images/no-user.svg');
 }
 function get_site_video($path, $video)
 {
-    $filepath = Storage::url($path.'/'.$video);
-    if (!empty($video) && @file_exists(".".Storage::url($path.'/'.$video))) {
+    $filepath = Storage::url($path . '/' . $video);
+    if (!empty($video) && @file_exists("." . Storage::url($path . '/' . $video))) {
         return $filepath;
     }
     return asset('videos/404.mp4');
 }
 function removeImage($path)
 {
-    if(file_exists(".".Storage::url($path))){
-        unlink(".".Storage::url($path));
+    if (file_exists("." . Storage::url($path))) {
+        unlink("." . Storage::url($path));
     }
 }
-function pr($data){
-    print_r($data);die;
+function pr($data)
+{
+    print_r($data);
+    die;
 }
-function getSelectObject($value,$label=''){
-    $object=(object)[];
-    if(!empty($label)){
-        $object->label=$label;
-    }
-    else{
-        $object->label=$value;
+function getSelectObject($value, $label = '')
+{
+    $object = (object)[];
+    if (!empty($label)) {
+        $object->label = $label;
+    } else {
+        $object->label = $value;
     }
 
-    $object->value=$value;
+    $object->value = $value;
     return $object;
 }
 
-function upload_error($file){
+function upload_error($file)
+{
     $error_types = array(
-        1=>'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
         'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
         'The uploaded file was only partially uploaded.',
         'No file was uploaded.',
-        6=>'Missing a temporary folder.',
+        6 => 'Missing a temporary folder.',
         'Failed to write file to disk.',
         'A PHP extension stopped the file upload.'
-        );
-        return $error_types[$file];
+    );
+    return $error_types[$file];
 }
 function getMultiText($section)
 {
-   return DB::table('multi_text')->where('section', $section)->get();
+    return DB::table('multi_text')->where('section', $section)->get();
 }
-function saveMultiText($vals,$section){
-    if(count($vals['title']) > 0){
+function saveMultiText($vals, $section)
+{
+    if (count($vals['title']) > 0) {
         for ($i = 0; $i < count($vals['title']); $i++) {
             $arr['section'] = $section;
             $arr['title'] = ($vals['title'][$i] != '') ? $vals['title'][$i] : '';
@@ -1332,361 +1355,342 @@ function saveMultiText($vals,$section){
         }
     }
 }
-function saveData($vals,$table){
-    $id=DB::table($table)->insert($vals);
+function saveData($vals, $table)
+{
+    $id = DB::table($table)->insert($vals);
     return $id;
 }
 
-function delete_record($table,$field,$value){
+function delete_record($table, $field, $value)
+{
     DB::table($table)->where($field, $value)->delete();
 }
-function get_countries($where=array("id"=>231)){
+function get_countries($where = array("id" => 231))
+{
     $options = "";
-    $rows=DB::table('countries')->where($where)->get();
+    $rows = DB::table('countries')->where($where)->get();
     return $rows;
 }
-function findPropertyAddress($where){
+function findPropertyAddress($where)
+{
     pr($where);
     $options = "";
-    $rows=DB::table('properties')->where($where)->get();
+    $rows = DB::table('properties')->where($where)->get();
     return $rows->first();
 }
-function convertArrayToSelectArray($array){
-    $rows=array();
-    if(!empty($array)){
-        foreach($array as $arr){
-            $item=(object)[];
-            $item->value=$arr->id;
-            $item->label=$arr->name;
-            $rows[]=$item;
+function convertArrayToSelectArray($array)
+{
+    $rows = array();
+    if (!empty($array)) {
+        foreach ($array as $arr) {
+            $item = (object)[];
+            $item->value = $arr->id;
+            $item->label = $arr->name;
+            $rows[] = $item;
         }
     }
     return $rows;
 }
-function get_country_name($id){
-    if(intval($id) > 0 && $row= DB::table('countries')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_country_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('countries')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->name;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_mem_name($id){
-    if(intval($id) > 0 && $row= DB::table('members')->where('id', $id)->first()){
-        if(!empty($row)){
-            return $row->mem_fname." ".$row->mem_lname;
-        }
-        else{
+function get_mem_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('members')->where('id', $id)->first()) {
+        if (!empty($row)) {
+            return $row->mem_fname . " " . $row->mem_lname;
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_mem_row($id){
-    if(intval($id) > 0 && $row= DB::table('members')->where('id', $id)->first()){
+function get_mem_row($id)
+{
+    if (intval($id) > 0 && $row = DB::table('members')->where('id', $id)->first()) {
         return $row;
-    }
-    else{
+    } else {
         return false;;
     }
 }
 
-function get_amentiy_name($id){
-    if(intval($id) > 0 && $row= DB::table('amenties')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_amentiy_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('amenties')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->title;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_floor_plan_name($id){
-    if(intval($id) > 0 && $row= DB::table('floor_plans')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_floor_plan_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('floor_plans')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->floor_plan;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_floor_plan($id){
-    if(intval($id) > 0 && $row= DB::table('floor_plans')->where('id', $id)->first()){
-       return $row;
-    }
-    else{
+function get_floor_plan($id)
+{
+    if (intval($id) > 0 && $row = DB::table('floor_plans')->where('id', $id)->first()) {
+        return $row;
+    } else {
         return false;
     }
 }
 function format_amount($amount, $size = 2)
 {
     $amount = floatval($amount);
-    return $amount >= 0 ? "$".number_format($amount, $size) : "$ (".number_format(abs($amount), $size).')';
+    return $amount >= 0 ? "$" . number_format($amount, $size) : "$ (" . number_format(abs($amount), $size) . ')';
 }
 function format_amount_with_symbols($amount, $size = 2)
 {
     $amount = floatval($amount);
-    if($amount >=10000 && $amount<=999499){
-        return "$".round($amount/1000,1)."K";
+    if ($amount >= 10000 && $amount <= 999499) {
+        return "$" . round($amount / 1000, 1) . "K";
+    } else if ($amount > 999499) {
+        return "$" . round($amount / 1000000, 1) . "M";
+    } else {
+        return $amount >= 0 ? "$" . number_format($amount, $size) : "$ (" . number_format(abs($amount), $size) . ')';
     }
-    else if($amount > 999499){
-        return "$".round($amount/1000000,1)."M";
-    }
-    else{
-        return $amount >= 0 ? "$".number_format($amount, $size) : "$ (".number_format(abs($amount), $size).')';
-    }
-    
 }
 function format_number($amount, $size = 2)
 {
     $amount = floatval($amount);
     return number_format(abs($amount), $size);
 }
-function formatDecimalNumber($number,$size=2) {
+function formatDecimalNumber($number, $size = 2)
+{
     if (strpos($number, '.') !== false) {
         return number_format($number, $size);
     } else {
         return $number;
     }
 }
-function get_branch_name($id){
-    if(intval($id) > 0 && $row= DB::table('branches')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_branch_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('branches')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->name;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_branch_description($id){
-    if(intval($id) > 0 && $row= DB::table('branches')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_branch_description($id)
+{
+    if (intval($id) > 0 && $row = DB::table('branches')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->description;
-        }
-        else{
+        } else {
             return '';
         }
-    }
-    else{
+    } else {
         return '';
     }
 }
-function get_property_name($id){
-    if(intval($id) > 0 && $row= DB::table('properties')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_property_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('properties')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->title;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_property($id){
-   return $row= DB::table('properties')->where('id', $id)->first();
+function get_property($id)
+{
+    return $row = DB::table('properties')->where('id', $id)->first();
 }
-function get_property_member($id){
-    if(intval($id) > 0 && $row= DB::table('properties')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_property_member($id)
+{
+    if (intval($id) > 0 && $row = DB::table('properties')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return get_mem_name($row->mem_id);
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_mem_properties($mem_id){
-    if(intval($mem_id) > 0 && $row= DB::table('properties')->where('mem_id', $mem_id)->get()){
-        if(!empty($row)){
+function get_mem_properties($mem_id)
+{
+    if (intval($mem_id) > 0 && $row = DB::table('properties')->where('mem_id', $mem_id)->get()) {
+        if (!empty($row)) {
             return $row->count();
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function AddMonths($months,$date=''){
-    if($date!=''){
-        $total_months=date('Y-m-d', strtotime("+".$months." months", strtotime(date('Y-m-d',strtotime($date)))));
-    }
-    else{
-        $total_months=date('Y-m-d', strtotime("+".$months." months", strtotime(date('Y-m-d'))));
+function AddMonths($months, $date = '')
+{
+    if ($date != '') {
+        $total_months = date('Y-m-d', strtotime("+" . $months . " months", strtotime(date('Y-m-d', strtotime($date)))));
+    } else {
+        $total_months = date('Y-m-d', strtotime("+" . $months . " months", strtotime(date('Y-m-d'))));
     }
 
     return $total_months;
 }
-function add_days($months,$date){
-    $total_days=0;
-    if(!empty($date)){
-        $total_days=intval($months) * 30;
-        $final_date=date('Y-m-d', strtotime("+".$total_days." days", strtotime(date('Y-m-d',strtotime($date)))));
-    }
-    else{
-        $final_date=date('Y-m-d', strtotime("+".$total_days." days", strtotime(date('Y-m-d'))));
+function add_days($months, $date)
+{
+    $total_days = 0;
+    if (!empty($date)) {
+        $total_days = intval($months) * 30;
+        $final_date = date('Y-m-d', strtotime("+" . $total_days . " days", strtotime(date('Y-m-d', strtotime($date)))));
+    } else {
+        $final_date = date('Y-m-d', strtotime("+" . $total_days . " days", strtotime(date('Y-m-d'))));
     }
     return $final_date;
 }
-function convertArrayToStringMessage($errors){
-    $message='';
-    if(is_array($errors)){
-        foreach($errors as $err){
-            $message.=$err->message;
+function convertArrayToStringMessage($errors)
+{
+    $message = '';
+    if (is_array($errors)) {
+        foreach ($errors as $err) {
+            $message .= $err->message;
         }
-    }
-    else{
-        $message=$errors;
+    } else {
+        $message = $errors;
     }
     return $message;
 }
-function getPackageID($package){
+function getPackageID($package)
+{
     if ($package == 'N') {
         return 0;
-    }
-    else if ($package == 'CC') {
+    } else if ($package == 'CC') {
         return 5002;
-    }
-    else if ($package == 'CCE') {
+    } else if ($package == 'CCE') {
         return 5003;
-    }
-    else if ($package == 'CCI') {
+    } else if ($package == 'CCI') {
         return 5007;
-    }
-    else if ($package == 'CCEI') {
+    } else if ($package == 'CCEI') {
         return 5004;
-    }
-    else {
+    } else {
         return 0;
     }
 }
 
-function getOfferPackage($package,$mem_id){
-    $packages=get_mem_packages_names($mem_id);
-    if(!empty($packages)){
+function getOfferPackage($package, $mem_id)
+{
+    $packages = get_mem_packages_names($mem_id);
+    if (!empty($packages)) {
         if ($package == 'CC') {
-            if(in_array("CC",$packages)==true || in_array("CCEI",$packages)==true){
+            if (in_array("CC", $packages) == true || in_array("CCEI", $packages) == true) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-        }
-        else if ($package == 'CCE') {
-            if(in_array("CCEI",$packages)==true){
+        } else if ($package == 'CCE') {
+            if (in_array("CCEI", $packages) == true) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-        }
-        else if ($package == 'CCI') {
-            if(in_array("CCEI",$packages)==true){
+        } else if ($package == 'CCI') {
+            if (in_array("CCEI", $packages) == true) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-        }
-        else if ($package == 'CCEI') {
+        } else if ($package == 'CCEI') {
             // if(in_array("CCE",$packages)==true && in_array("CCI",$packages)==true){
             //     return false;
             // }
-            if(in_array("CCEI",$packages)==true){
+            if (in_array("CCEI", $packages) == true) {
                 return false;
-            }
-            else{
+            } else {
                 return true;
             }
-        }
-        else {
+        } else {
             return true;
         }
     }
-
-
 }
-function getGoogleMapAddress($address){
-    $key=env('GOOGLE_API_KEY');
-   $details_url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$address['line1']." ".$address['line2'].", ".$address['city']." ".$address['state']." ".$address['zip_code']."&key=".$key;
-   $newUrl = str_replace(' ', '%20', $details_url);
-   // pr($newUrl);
-   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_URL, $newUrl);
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-   $result = curl_exec($ch);
-    if ($result === false)
-    {
+function getGoogleMapAddress($address)
+{
+    $key = env('GOOGLE_API_KEY');
+    $details_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $address['line1'] . " " . $address['line2'] . ", " . $address['city'] . " " . $address['state'] . " " . $address['zip_code'] . "&key=" . $key;
+    $newUrl = str_replace(' ', '%20', $details_url);
+    // pr($newUrl);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $newUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    if ($result === false) {
         // throw new Exception('Curl error: ' . curl_error($crl));
-       return array(
-            'error'=>curl_error($ch),
-            'status'=>0
-       );
+        return array(
+            'error' => curl_error($ch),
+            'status' => 0
+        );
     }
     // Close cURL resource
     curl_close($ch);
-    $res=json_decode($result);
-    if($res->status=='OK' || $res->status=='ok'){
+    $res = json_decode($result);
+    if ($res->status == 'OK' || $res->status == 'ok') {
         return array(
-            'address'=>format_address_one_line($res->results[0]->formatted_address),
-            'latitude'=>$res->results[0]->geometry->location->lat,
-            'longitude'=>$res->results[0]->geometry->location->lng,
-            'place_id'=>$res->results[0]->place_id,
-            'status'=>1
+            'address' => format_address_one_line($res->results[0]->formatted_address),
+            'latitude' => $res->results[0]->geometry->location->lat,
+            'longitude' => $res->results[0]->geometry->location->lng,
+            'place_id' => $res->results[0]->place_id,
+            'status' => 1
         );
     }
     return array(
-            'error'=>$res->status,
-            'status'=>0
+        'error' => $res->status,
+        'status' => 0
     );
-
 }
 
-function getGoogleMapAddressAPI($address){
-    $key=env('GOOGLE_API_KEY');
-   $details_url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$address['line1']." ".$address['line2'].", ".$address['city']." ".$address['state']." ".$address['zip_code']."&key=".$key;
-   $newUrl = str_replace(' ', '%20', $details_url);
-   // pr($newUrl);
-   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_URL, $newUrl);
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-   $result = curl_exec($ch);
-    if ($result === false)
-    {
+function getGoogleMapAddressAPI($address)
+{
+    $key = env('GOOGLE_API_KEY');
+    $details_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . $address['line1'] . " " . $address['line2'] . ", " . $address['city'] . " " . $address['state'] . " " . $address['zip_code'] . "&key=" . $key;
+    $newUrl = str_replace(' ', '%20', $details_url);
+    // pr($newUrl);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $newUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    if ($result === false) {
         // throw new Exception('Curl error: ' . curl_error($crl));
-       return array(
-            'error'=>curl_error($ch),
-            'status'=>0
-       );
+        return array(
+            'error' => curl_error($ch),
+            'status' => 0
+        );
     }
     // Close cURL resource
     curl_close($ch);
-    $res=json_decode($result);
-    if($res->status=='OK' || $res->status=='ok'){
+    $res = json_decode($result);
+    if ($res->status == 'OK' || $res->status == 'ok') {
         // pr($res);
         $components = $res->results[0]->address_components;
         // pr($components);
@@ -1698,39 +1702,39 @@ function getGoogleMapAddressAPI($address){
         $citystate = array_values(filter($components, "administrative_area_level_1"))[0]->long_name;
         // pr($street_number." ".$route." ".$neighborhood.", ".$locality.", ".$citystate.", ".$zipcode);
         return array(
-            'address'=>$res->results[0]->formatted_address,
-            'latitude'=>$res->results[0]->geometry->location->lat,
-            'longitude'=>$res->results[0]->geometry->location->lng,
-            'place_id'=>$res->results[0]->place_id,
-            'status'=>1
+            'address' => $res->results[0]->formatted_address,
+            'latitude' => $res->results[0]->geometry->location->lat,
+            'longitude' => $res->results[0]->geometry->location->lng,
+            'place_id' => $res->results[0]->place_id,
+            'status' => 1
         );
     }
     return array(
-            'error'=>$res->status,
-            'status'=>0
+        'error' => $res->status,
+        'status' => 0
     );
-
 }
 function filter($components, $type)
 {
-    return array_filter($components, function($component) use ($type) {
-        return array_filter($component->types, function($data) use ($type) {
+    return array_filter($components, function ($component) use ($type) {
+        return array_filter($component->types, function ($data) use ($type) {
             return $data == $type;
         });
     });
 }
-function curl_request($url,$payload,$token='',$put=false){
+function curl_request($url, $payload, $token = '', $put = false)
+{
     $ch = curl_init($url);
 
     // Attach encoded JSON string to the POST fields
-    if($put==true || $put==1){
+    if ($put == true || $put == 1) {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
     }
     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
     $headers = array(
         'Content-Type:application/json',
-        "Authorization: ".$token."",
-     );
+        "Authorization: " . $token . "",
+    );
     // Set the content type to application/json
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -1738,24 +1742,25 @@ function curl_request($url,$payload,$token='',$put=false){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // Execute the POST request
     $result = curl_exec($ch);
-    if ($result === false)
-    {
+    if ($result === false) {
         // throw new Exception('Curl error: ' . curl_error($crl));
-       return 'Curl error: ' . curl_error($ch);
+        return 'Curl error: ' . curl_error($ch);
     }
     // Close cURL resource
     curl_close($ch);
     return json_decode($result);
 }
-function convertPhoneToNumber($phone){
-    $phone=str_replace(array( '(', ')' ), '', $phone);
-    $phone=str_replace(' ', '', $phone);
-    $phone=str_replace('+', '', $phone);
-    $phone=str_replace('-', '', $phone);
-    $phone=substr($phone, 1);
+function convertPhoneToNumber($phone)
+{
+    $phone = str_replace(array('(', ')'), '', $phone);
+    $phone = str_replace(' ', '', $phone);
+    $phone = str_replace('+', '', $phone);
+    $phone = str_replace('-', '', $phone);
+    $phone = substr($phone, 1);
     return $phone;
 }
-function truncate_number( $number, $precision = 2) {
+function truncate_number($number, $precision = 2)
+{
     // // Zero causes issues, and no need to truncate
     // if ( 0 == (int)$number ) {
     //     return $number;
@@ -1770,23 +1775,24 @@ function truncate_number( $number, $precision = 2) {
     // return floor( $number * $precision ) / $precision * $negative;
     return $number;
 }
-function curl_get_request($url,$token='',$openstreetmap=false){
+function curl_get_request($url, $token = '', $openstreetmap = false)
+{
     $ch = curl_init($url);
 
     // Attach encoded JSON string to the POST fields
-    if(!empty($token)):
+    if (!empty($token)):
         $headers = array(
             'Content-Type:application/json',
-            "Authorization: ".$token."",
-         );
+            "Authorization: " . $token . "",
+        );
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     endif;
-    if($openstreetmap):
-         $headers = array(
-                "Content-Type: application/json",
-                "header" => "User-Agent: Nominatim-Test"
-           );
-          curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    if ($openstreetmap):
+        $headers = array(
+            "Content-Type: application/json",
+            "header" => "User-Agent: Nominatim-Test"
+        );
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     endif;
     // Set the content type to application/json
 
@@ -1795,18 +1801,18 @@ function curl_get_request($url,$token='',$openstreetmap=false){
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     // Execute the POST request
     $result = curl_exec($ch);
-    if ($result === false)
-    {
+    if ($result === false) {
         // throw new Exception('Curl error: ' . curl_error($crl));
-       return 'Curl error: ' . curl_error($ch);
+        return 'Curl error: ' . curl_error($ch);
     }
     // Close cURL resource
     curl_close($ch);
     return json_decode($result);
 }
-function createTransUnionToken(){
+function createTransUnionToken()
+{
     // API URL
-    $url = config('app.transunion_api').'Tokens';
+    $url = config('app.transunion_api') . 'Tokens';
     $data = [
         'clientId' => env('TRANSUNION_API_CLIENT'),
         'apiKey' => env('TRANSUNION_API_KEY'),
@@ -1819,10 +1825,9 @@ function createTransUnionToken(){
     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 
     // Set the content type to application/json
-    if(!empty($token)){
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization'=>$token));
-    }
-    else{
+    if (!empty($token)) {
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization' => $token));
+    } else {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
     }
 
@@ -1831,165 +1836,162 @@ function createTransUnionToken(){
 
     // Execute the POST request
     $result = curl_exec($ch);
-    if ($result === false)
-    {
+    if ($result === false) {
         // throw new Exception('Curl error: ' . curl_error($crl));
-       return 'Curl error: ' . curl_error($ch);
+        return 'Curl error: ' . curl_error($ch);
     }
     // Close cURL resource
     curl_close($ch);
     return json_decode($result);
 }
 
-function getCompanyListingPrice($property){
-    $listings=Listing_model::where(['property'=>$property,'mem_type'=>'company'])->get();
-    if(count($listings) >  0){
-        $max_price=0;
-        $min_price=0;
-        foreach($listings as $key=>$listing){
-            $max=Listing_prices_model::where('listing_id', $listing->id)->max('price');
-            $min=Listing_prices_model::where('listing_id', $listing->id)->min('price');
-            if($key==0){
-                $max_price=$max;
-                $min_price=$min;
-            }
-            else{
-                if($max > $max_price){
-                    $max_price=$max;
+function getCompanyListingPrice($property)
+{
+    $listings = Listing_model::where(['property' => $property, 'mem_type' => 'company'])->get();
+    if (count($listings) >  0) {
+        $max_price = 0;
+        $min_price = 0;
+        foreach ($listings as $key => $listing) {
+            $max = Listing_prices_model::where('listing_id', $listing->id)->max('price');
+            $min = Listing_prices_model::where('listing_id', $listing->id)->min('price');
+            if ($key == 0) {
+                $max_price = $max;
+                $min_price = $min;
+            } else {
+                if ($max > $max_price) {
+                    $max_price = $max;
                 }
-                if($min < $min_price){
-                    $min_price=$min;
+                if ($min < $min_price) {
+                    $min_price = $min;
                 }
             }
-
         }
-        return ['max_price'=>$max_price,'min_price'=>$min_price];
+        return ['max_price' => $max_price, 'min_price' => $min_price];
     }
     return false;
 }
-function getDays($future_date){
+function getDays($future_date)
+{
     $now = time(); // or your date as well
     $your_date = strtotime($future_date);
     $datediff = $your_date - $now;
 
     return round($datediff / (60 * 60 * 24));
 }
-function getListingDays($future_date){
+function getListingDays($future_date)
+{
     $now = time(); // or your date as well
     $your_date = strtotime($future_date);
     $datediff = $now - $your_date;
 
     return round($datediff / (60 * 60 * 24));
 }
-function get_property_image($id){
-    if(intval($id) > 0 && $row= DB::table('properties')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_property_image($id)
+{
+    if (intval($id) > 0 && $row = DB::table('properties')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->imageThumbnail;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
 
-function addLog($logFile){
-    Log::useDailyFiles(storage_path().'/logs/'.$logFile);
+function addLog($logFile)
+{
+    Log::useDailyFiles(storage_path() . '/logs/' . $logFile);
 }
 
-function getSiteSettings(){
-    return Admin::where('id','=',1)->first();
+function getSiteSettings()
+{
+    return Admin::where('id', '=', 1)->first();
 }
-function get_branch_size($id){
-    if(intval($id) > 0 && $row= DB::table('branches')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_branch_size($id)
+{
+    if (intval($id) > 0 && $row = DB::table('branches')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->lot_size;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_listing_floor_plan($id){
-    if(intval($id) > 0 && $row= DB::table('branches')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_listing_floor_plan($id)
+{
+    if (intval($id) > 0 && $row = DB::table('branches')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return get_floor_plan_name($row->floor_plan);
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_branch_address($id){
-    if(intval($id) > 0 && $row= DB::table('branches')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_branch_address($id)
+{
+    if (intval($id) > 0 && $row = DB::table('branches')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->address;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_amenity_name($id){
-    if(intval($id) > 0 && $row= DB::table('amenties')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_amenity_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('amenties')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->title;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_faq_category_name($id){
-    if(intval($id) > 0 && $row= DB::table('faq_categories')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_faq_category_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('faq_categories')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->name;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_category_name($id,$table_name='categories'){
-    if(intval($id) > 0 && $row= DB::table($table_name)->where('id', $id)->first()){
-        if(!empty($row)){
+function get_category_name($id, $table_name = 'categories')
+{
+    if (intval($id) > 0 && $row = DB::table($table_name)->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->name;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function convertEmailToUsername($email){
+function convertEmailToUsername($email)
+{
     list($usernamePart) = explode('@', $email);
 
-    $uniqueIdentifier = rand(1000, 9999); 
+    $uniqueIdentifier = rand(1000, 9999);
 
-    $username = $usernamePart ."_". $uniqueIdentifier;
+    $username = $usernamePart . "_" . $uniqueIdentifier;
 
     return $username;
 }
-function calculateDaysBetween($startDate, $endDate) {
+function calculateDaysBetween($startDate, $endDate)
+{
     date_default_timezone_set('Australia/Sydney');
     $start = DateTime::createFromFormat('Y-m-d', $startDate);
     $end = DateTime::createFromFormat('Y-m-d', $endDate);
@@ -2003,223 +2005,220 @@ function calculateDaysBetween($startDate, $endDate) {
     // Return the number of days
     return $interval->days + 1;
 }
-function get_country_states($country_id){
-    $rows=DB::table('states')->where('country_id', $country_id)->get();
+function get_country_states($country_id)
+{
+    $rows = DB::table('states')->where('country_id', $country_id)->get();
     return $rows;
 }
-function get_cat_faqs($category){
+function get_cat_faqs($category)
+{
     $options = "";
-    $rows=DB::table('faqs')->where(['category' => $category,'status' => 1])->get();
+    $rows = DB::table('faqs')->where(['category' => $category, 'status' => 1])->get();
     return $rows;
 }
-function table_count($table,$where=array(),$only_count=false){
-    $count=DB::table($table)->where($where)->count();
-    if($only_count){
+function table_count($table, $where = array(), $only_count = false)
+{
+    $count = DB::table($table)->where($where)->count();
+    if ($only_count) {
         return $count;
-    }
-    else if(!empty($count) && $count > 0){
-        return '<span class="badge badge-light-danger">'.$count.'</span>';
+    } else if (!empty($count) && $count > 0) {
+        return '<span class="badge badge-light-danger">' . $count . '</span>';
     }
 }
-function get_site_settings(){
-    return Admin::where('id','=',1)->first();
+function get_site_settings()
+{
+    return Admin::where('id', '=', 1)->first();
 }
-function convertArrayMessageToString($array){
-    $messages='';
-    if(!empty($array)){
-        foreach($array as $item){
-            $messages.=$item;
+function convertArrayMessageToString($array)
+{
+    $messages = '';
+    if (!empty($array)) {
+        foreach ($array as $item) {
+            $messages .= $item;
         }
     }
     return $messages;
 }
-function getWebsiteSocialLinks(){
-    $social_links=array();
-    $facebook=(object)[];
-    $instagram=(object)[];
-    $discord=(object)[];
-    $twitter=(object)[];
-    $email=(object)[];
+function getWebsiteSocialLinks()
+{
+    $social_links = array();
+    $facebook = (object)[];
+    $instagram = (object)[];
+    $discord = (object)[];
+    $twitter = (object)[];
+    $email = (object)[];
     //Social Links
-    $site_settings=get_site_settings();
-    $facebook->id=1;
-    $facebook->link=$site_settings->site_facebook;
-    $facebook->image=config('app.react_url').'/images/social-facebook.svg';
+    $site_settings = get_site_settings();
+    $facebook->id = 1;
+    $facebook->link = $site_settings->site_facebook;
+    $facebook->image = config('app.react_url') . '/images/social-facebook.svg';
     $social_links[] = $facebook;
     //Instagram
-    $instagram->id=2;
-    $instagram->link=$site_settings->site_instagram;
-    $instagram->image=config('app.react_url').'/images/social-instagram.svg';
+    $instagram->id = 2;
+    $instagram->link = $site_settings->site_instagram;
+    $instagram->image = config('app.react_url') . '/images/social-instagram.svg';
     $social_links[] = $instagram;
     //Twitter
-    $twitter->id=3;
-    $twitter->link=$site_settings->site_twitter;
-    $twitter->image=config('app.react_url').'/images/social-twitter.svg';
+    $twitter->id = 3;
+    $twitter->link = $site_settings->site_twitter;
+    $twitter->image = config('app.react_url') . '/images/social-twitter.svg';
     $social_links[] = $twitter;
     //Discord
-    $discord->id=4;
-    $discord->link=$site_settings->site_discord;
-    $discord->image=config('app.react_url').'/images/social-discord.svg';
+    $discord->id = 4;
+    $discord->link = $site_settings->site_discord;
+    $discord->image = config('app.react_url') . '/images/social-discord.svg';
     $social_links[] = $discord;
     //Email
-    $email->id=5;
-    $email->link=$site_settings->site_email;
-    $email->image=config('app.react_url').'/images/social-email.svg';
+    $email->id = 5;
+    $email->link = $site_settings->site_email;
+    $email->image = config('app.react_url') . '/images/social-email.svg';
     $social_links[] = $email;
     return $social_links;
 }
-function get_state_name($id){
-    if(intval($id) > 0 && $row= DB::table('states')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_state_name($id)
+{
+    if (intval($id) > 0 && $row = DB::table('states')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->name;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function get_state_code($id){
-    if(intval($id) > 0 && $row= DB::table('states')->where('id', $id)->first()){
-        if(!empty($row)){
+function get_state_code($id)
+{
+    if (intval($id) > 0 && $row = DB::table('states')->where('id', $id)->first()) {
+        if (!empty($row)) {
             return $row->code;
-        }
-        else{
+        } else {
             return 'N/A';
         }
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function getStatus($status){
-    if($status==1){
+function getStatus($status)
+{
+    if ($status == 1) {
         return '<span class="badge bg-success-subtle text-success">Active</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-danger-subtle text-danger">InActive</span>';
     }
 }
-function getTenantStatus($status){
-    if($status==1){
+function getTenantStatus($status)
+{
+    if ($status == 1) {
         return '<span class="badge green">Complete</span>';
-    }
-    else{
+    } else {
         return '<span class="badge yellow">Incomplete</span>';
     }
 }
-function getTenantReportStatus($expiry_date){
-    if(strtotime($expiry_date) >= strtotime(date('Y-m-d'))){
+function getTenantReportStatus($expiry_date)
+{
+    if (strtotime($expiry_date) >= strtotime(date('Y-m-d'))) {
         return '<span class="badge green">Received</span>';
-    }
-    else{
+    } else {
         return '<span class="badge red">Expired</span>';
     }
 }
-function getLandlordReportExpiryDate($screeningRequestRenterId,$type){
-    if($type=='IdReport'){
-        $report= DB::table('offer_tenants')
-        ->select('offer_tenant_reports.expiry_date')
-        ->join('offer_tenant_reports','offer_tenant_reports.tenant_id','=','offer_tenants.id')
-        ->where(['offer_tenants.screeningRequestRenterId' => intval($screeningRequestRenterId)])
-        ->get()->first();
-    }
-    else{
-        $report= DB::table('offer_tenants')
-        ->select('offer_tenant_reports.expiry_date')
-        ->join('offer_tenant_reports','offer_tenant_reports.tenant_id','=','offer_tenants.id')
-        ->where(['offer_tenants.screeningRequestRenterId' => intval($screeningRequestRenterId), 'offer_tenant_reports.type' => $type])
-        ->get()->first();
+function getLandlordReportExpiryDate($screeningRequestRenterId, $type)
+{
+    if ($type == 'IdReport') {
+        $report = DB::table('offer_tenants')
+            ->select('offer_tenant_reports.expiry_date')
+            ->join('offer_tenant_reports', 'offer_tenant_reports.tenant_id', '=', 'offer_tenants.id')
+            ->where(['offer_tenants.screeningRequestRenterId' => intval($screeningRequestRenterId)])
+            ->get()->first();
+    } else {
+        $report = DB::table('offer_tenants')
+            ->select('offer_tenant_reports.expiry_date')
+            ->join('offer_tenant_reports', 'offer_tenant_reports.tenant_id', '=', 'offer_tenants.id')
+            ->where(['offer_tenants.screeningRequestRenterId' => intval($screeningRequestRenterId), 'offer_tenant_reports.type' => $type])
+            ->get()->first();
     }
 
-    if(!empty($report)){
+    if (!empty($report)) {
         return getTenantReportStatus($report->expiry_date);
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function getLandlordReportExpiryDateFlag($screeningRequestRenterId,$type){
-    if($type=='IdReport'){
-        $report= DB::table('offer_tenants')
-        ->select('offer_tenant_reports.expiry_date')
-        ->join('offer_tenant_reports','offer_tenant_reports.tenant_id','=','offer_tenants.id')
-        ->where(['offer_tenants.screeningRequestRenterId' => $screeningRequestRenterId])
-        ->get()->first();
+function getLandlordReportExpiryDateFlag($screeningRequestRenterId, $type)
+{
+    if ($type == 'IdReport') {
+        $report = DB::table('offer_tenants')
+            ->select('offer_tenant_reports.expiry_date')
+            ->join('offer_tenant_reports', 'offer_tenant_reports.tenant_id', '=', 'offer_tenants.id')
+            ->where(['offer_tenants.screeningRequestRenterId' => $screeningRequestRenterId])
+            ->get()->first();
+    } else {
+        $report = DB::table('offer_tenants')
+            ->select('offer_tenant_reports.expiry_date')
+            ->join('offer_tenant_reports', 'offer_tenant_reports.tenant_id', '=', 'offer_tenants.id')
+            ->where(['offer_tenants.screeningRequestRenterId' => $screeningRequestRenterId, 'offer_tenant_reports.type' => $type])
+            ->get()->first();
     }
-    else{
-        $report= DB::table('offer_tenants')
-        ->select('offer_tenant_reports.expiry_date')
-        ->join('offer_tenant_reports','offer_tenant_reports.tenant_id','=','offer_tenants.id')
-        ->where(['offer_tenants.screeningRequestRenterId' => $screeningRequestRenterId, 'offer_tenant_reports.type' => $type])
-        ->get()->first();
-    }
-    if(!empty($report)){
+    if (!empty($report)) {
         return getTenantReportStatusFlag($report->expiry_date);
-    }
-    else{
+    } else {
         return 'N/A';
     }
 }
-function getTenantReportStatusFlag($expiry_date){
-    if(strtotime($expiry_date) >= strtotime(date('Y-m-d'))){
+function getTenantReportStatusFlag($expiry_date)
+{
+    if (strtotime($expiry_date) >= strtotime(date('Y-m-d'))) {
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
-function getOfferStatus($offer_status,$tenants_unpaid_count){
-    if($tenants_unpaid_count>0){
+function getOfferStatus($offer_status, $tenants_unpaid_count)
+{
+    if ($tenants_unpaid_count > 0) {
         return '<span class="badge yellow">Incomplete</span>';
-    }
-    else if($offer_status=='accepted'){
+    } else if ($offer_status == 'accepted') {
         return '<span class="badge green">Accepted</span>';
-    }
-    else if($offer_status=='rejected'){
+    } else if ($offer_status == 'rejected') {
         return '<span class="badge red">Rejected</span>';
-    }
-    else{
+    } else {
         return '<span class="badge yellow">Pending</span>';
     }
 }
-function getReadStatus($status){
-    if($status==1){
+function getReadStatus($status)
+{
+    if ($status == 1) {
         return '<span class="badge bg-success-subtle text-success">Read</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-danger-subtle text-danger">Unread</span>';
     }
 }
-function getWithdrawStatus($status){
-    if($status=='cleared'){
+function getWithdrawStatus($status)
+{
+    if ($status == 'cleared') {
         return '<span class="badge bg-success-subtle text-success">Cleared</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-danger-subtle text-danger">Pending</span>';
     }
 }
-function getUserIdStatus($status){
-    if($status=='verified'){
+function getUserIdStatus($status)
+{
+    if ($status == 'verified') {
         return '<span class="badge bg-success-subtle text-success">Verified</span>';
-    }
-    else if($status=='unverified'){
+    } else if ($status == 'unverified') {
         return '<span class="badge bg-danger-subtle text-danger">Unverified</span>';
-    }
-    else if($status=='requested'){
+    } else if ($status == 'requested') {
         return '<span class="badge bg-info-subtle text-info">Requested</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-warning-subtle text-warning">In Progress</span>';
     }
 }
 function has_access($permission_id = 0)
 {
-    if(is_admin())
+    if (is_admin())
         return true;
-    if(!in_array($permission_id, session('permissions'))){
+    if (!in_array($permission_id, session('permissions'))) {
         abort(404, 'Item not found');
         exit;
     }
@@ -2227,50 +2226,47 @@ function has_access($permission_id = 0)
 }
 function access($permission_id)
 {
-    if(is_admin()) return true;
+    if (is_admin()) return true;
     return in_array($permission_id, session('permissions'));
 }
 function is_admin()
 {
-    return session('admin_type')=='admin' ? true : false;
+    return session('admin_type') == 'admin' ? true : false;
 }
-function getTicketStatus($status){
-    if($status=='open'){
+function getTicketStatus($status)
+{
+    if ($status == 'open') {
         return '<span class="badge bg-success-subtle text-success">Open</span>';
-    }
-    else if($status=='closed'){
+    } else if ($status == 'closed') {
         return '<span class="badge bg-danger-subtle text-danger">Closed</span>';
-    }
-    else if($status=='in_progress'){
+    } else if ($status == 'in_progress') {
         return '<span class="badge bg-info-subtle text-info">In Progress</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-warning-subtle text-warning">Pending</span>';
     }
 }
-function getApproveStatus($status){
-    if($status=='1'){
+function getApproveStatus($status)
+{
+    if ($status == '1') {
         return '<span class="badge badge-success">Approved</span>';
-    }
-    else if($status=='2'){
+    } else if ($status == '2') {
         return '<span class="badge badge-warning">Denied</span>';
-    }
-    else if($status=='3'){
+    } else if ($status == '3') {
         return '<span class="badge badge-danger">Cancelled</span>';
-    }
-    else{
+    } else {
         return '<span class="badge badge-secondary">Pending</span>';
     }
 }
-function getFeatured($status){
-    if($status==1){
+function getFeatured($status)
+{
+    if ($status == 1) {
         return '<span class="badge bg-success-subtle text-success">Yes</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-danger-subtle text-danger">No</span>';
     }
 }
-function getFirstLetters($string) {
+function getFirstLetters($string)
+{
     $words = explode(" ", $string);
     $result = '';
 
@@ -2280,32 +2276,35 @@ function getFirstLetters($string) {
 
     return $result;
 }
-function replaceSpaceWith20($input) {
+function replaceSpaceWith20($input)
+{
     // Replace all spaces with "%20"
     return str_replace(' ', '%20', $input);
 }
-function userAccountType($type){
-    if(!empty($type)){
+function userAccountType($type)
+{
+    if (!empty($type)) {
         return '<span class="badge bg-danger-subtle text-danger"><i class="fa fa-google-plus-square"></i> Google</span>';
-    }
-    else{
+    } else {
         return '<span class="badge bg-info-subtle text-info"><i class="fa fa-user"></i> Website User</span>';
     }
 }
-function get_page($key){
-    $row=Sitecontent::where('ckey',$key)->first();
+function get_page($key)
+{
+    $row = Sitecontent::where('ckey', $key)->first();
     return unserialize($row->code);
 }
-function get_blog_tags(){
-    $keywords=Blog_model::pluck('meta_keywords');
-    $tags='';
-    foreach($keywords as $key=>$keyword){
-        $tags.=strtolower($keyword);
+function get_blog_tags()
+{
+    $keywords = Blog_model::pluck('meta_keywords');
+    $tags = '';
+    foreach ($keywords as $key => $keyword) {
+        $tags .= strtolower($keyword);
     }
-    $meta=explode(",",rtrim($tags,","));
-    $blog_tags=[];
-    foreach($meta as $mt){
-        $blog_tags[]=trim($mt);
+    $meta = explode(",", rtrim($tags, ","));
+    $blog_tags = [];
+    foreach ($meta as $mt) {
+        $blog_tags[] = trim($mt);
     }
     return array_unique($blog_tags);
 }
@@ -2328,7 +2327,7 @@ function time_ago($time)
         if ($diff == 1 && $strTime[$i] == ' day') {
             return 'yesterday';
         }
-        
+
         $ago = $diff > 1 ? 's ago' : ' ago';
         return $diff . $strTime[$i] . $ago;
     } else {
@@ -2356,7 +2355,7 @@ function timeAgo($time)
         if ($diff == 1 && $strTime[$i] == ' day') {
             return 'yesterday';
         }
-        
+
         $ago = $diff > 1 ? 's ago' : ' ago';
         return $diff . $strTime[$i] . $ago;
     } else {
@@ -2367,12 +2366,13 @@ function format_date($d, $format = '', $default_show = 'TBD')
 {
     $format = empty($format) ? 'm/d/Y' : $format;
     // $d = str_replace('/', '-', $d);
-    if($d=='0000:00:00' || $d=='0000-00-00' || !$d)
+    if ($d == '0000:00:00' || $d == '0000-00-00' || !$d)
         return $default_show;
-    $d = (is_numeric($d) && (int)$d == $d ) ? $d : strtotime($d);
+    $d = (is_numeric($d) && (int)$d == $d) ? $d : strtotime($d);
     return date($format, $d);
 }
-function subtractHoursFromTime($hours=4){
+function subtractHoursFromTime($hours = 4)
+{
     $timezone = new DateTimeZone("America/New_York");
 
     // Create a DateTime object with the specified timezone
@@ -2386,12 +2386,13 @@ function subtractHoursFromTime($hours=4){
     $updatedDatetime = $datetime->format('Y-m-d H:i:s');
     return $updatedDatetime;
 }
-function convertDateToTimeZone($timestamp,$timezone){ /* input: 1518404518,America/Los_Angeles */
-        $date = new DateTime(date("d F Y H:i:s",$timestamp));
-        $date->setTimezone(new DateTimeZone($timezone));
-        $rt=$date->format('Y-m-d'); /* output: Feb 11, 2018 7:01:58 pm */
-        return $rt;
-    }
+function convertDateToTimeZone($timestamp, $timezone)
+{ /* input: 1518404518,America/Los_Angeles */
+    $date = new DateTime(date("d F Y H:i:s", $timestamp));
+    $date->setTimezone(new DateTimeZone($timezone));
+    $rt = $date->format('Y-m-d'); /* output: Feb 11, 2018 7:01:58 pm */
+    return $rt;
+}
 function toSlugUrl($text)
 {
 
@@ -2406,7 +2407,7 @@ function toSlugUrl($text)
 function short_text($str, $length = 150)
 {
     $str = strip_tags($str);
-    return strlen($str) > $length ? substr($str, 0, $length).'...' : $str;
+    return strlen($str) > $length ? substr($str, 0, $length) . '...' : $str;
 }
 function countEndingDigits($string)
 {
@@ -2414,60 +2415,127 @@ function countEndingDigits($string)
     $i = 0;
     $from_end = -1;
     while ($i < strlen($string)) :
-      if (is_numeric(substr($string, $from_end - $i, 1))) :
-        $tailing_number_digits++;
-      else :
-        // End our while if we don't find a number anymore
-        break;
-      endif;
-      $i++;
+        if (is_numeric(substr($string, $from_end - $i, 1))) :
+            $tailing_number_digits++;
+        else :
+            // End our while if we don't find a number anymore
+            break;
+        endif;
+        $i++;
     endwhile;
     return $tailing_number_digits;
 }
-function getData($table_name,$where){
-    if(empty($table_name)){
-        $table_name='faqs';
+function getData($table_name, $where)
+{
+    if (empty($table_name)) {
+        $table_name = 'faqs';
     }
-    $rows=DB::table($table_name)->where($where)->get();
+    $rows = DB::table($table_name)->where($where)->get();
     return $rows;
 }
-function calculatePercentage($number, $percentage) {
+function calculatePercentage($number, $percentage)
+{
     return ($number * $percentage) / 100;
 }
-function getSingleData($table_name,$where){
-    if(empty($table_name)){
-        $table_name='faqs';
+function getSingleData($table_name, $where)
+{
+    if (empty($table_name)) {
+        $table_name = 'faqs';
     }
-    $rows=DB::table($table_name)->where($where)->get()->first();
+    $rows = DB::table($table_name)->where($where)->get()->first();
     return $rows;
 }
 
 function get_pages()
-    {
-        return $page_arr = array('/'=>'Home','/about'=>'About Us','/services'=>'Services','/contact'=>'Contact Us','/privacy-policy'=>'Privacy Policy','/terms-conditions'=>'Terms & Conditions');
-    }
-function checkSlug($slug,$table_name,$id='') {
+{
+    return $page_arr = array('/' => 'Home', '/about' => 'About Us', '/services' => 'Services', '/contact' => 'Contact Us', '/privacy-policy' => 'Privacy Policy', '/terms-conditions' => 'Terms & Conditions');
+}
+function checkSlug($slug, $table_name, $id = '')
+{
 
-    if(DB::Table($table_name)->where('slug',$slug)->when($id, function($query) use ($id) {
-        return $query->where('id','!=', $id);
-    })->count()
-     > 0){
-     $numInUN = countEndingDigits($slug);
-     if ($numInUN > 0) {
-              $base_portion = substr($slug, 0, -$numInUN);
-              $digits_portion = abs(substr($slug, -$numInUN));
-      } else {
-              $base_portion = $slug . "-";
-              $digits_portion = 0;
-      }
+    if (
+        DB::Table($table_name)->where('slug', $slug)->when($id, function ($query) use ($id) {
+            return $query->where('id', '!=', $id);
+        })->count()
+        > 0
+    ) {
+        $numInUN = countEndingDigits($slug);
+        if ($numInUN > 0) {
+            $base_portion = substr($slug, 0, -$numInUN);
+            $digits_portion = abs(substr($slug, -$numInUN));
+        } else {
+            $base_portion = $slug . "-";
+            $digits_portion = 0;
+        }
 
-      $slug = $base_portion . intval($digits_portion + 1);
-      $slug = checkSlug($slug,$table_name);
+        $slug = $base_portion . intval($digits_portion + 1);
+        $slug = checkSlug($slug, $table_name);
     }
 
     return $slug;
 }
 
+function send_email($data, $template)
+{
+    require base_path("vendor/autoload.php");
+    $mail = new PHPMailer(true);     // Passing `true` enables exceptions
 
+    try {
+        //Tell PHPMailer to use SMTP
+        $mail->isSMTP();
+        //Enable SMTP debugging
+        $mail->SMTPDebug = 0;
+        $mail->ContentType = 'text/html; charset=utf-8';
+        //Ask for HTML-friendly debug output
+        $mail->Debugoutput = 'html';
+        //Set the hostname of the mail server
+        $mail->Host = 'ssl://mail.herosolutions.com.pk';
+        //Set the SMTP port number - 587 for authenticated TLS, a.k.a. RFC4409 SMTP submission
+        // I tried PORT 25, 465 too
+        $mail->Port = 465;
+        //Set the encryption system to use - ssl (deprecated) or tls
+        $mail->SMTPSecure = 'tls';
+        //Whether to use SMTP authentication
+        $mail->SMTPAuth = true;
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        //Username to use for SMTP authentication - use full email address for gmail
+        $mail->Username = "noreply@herosolutions.com.pk";
+        //Password to use for SMTP authentication
+        $mail->Password = "B2sBcS^##C1z";
+        //Set who the message is to be sent from
+        $mail->setFrom($data['email_from'], $data['email_from_name']);
 
-?>
+        //Set who the message is to be sent to
+        $mail->addAddress($data['email_to'], $data['email_to_name']);
+        $mail->isHTML(true);
+        //Set the subject line
+        $mail->Subject = $data['subject'];
+
+        $e_data['site_settings'] = getSiteSettings();
+        $e_data['content'] = $data;
+        // pr($e_data)
+        $eMessage = view('emails.' . $template, $e_data);
+        // pr($eMessage);
+        $mail->Body = $eMessage;
+        //Replace the plain text body with one created manually
+        $mail->AltBody = 'This is a plain-text message body';
+
+        //send the message, check for errors
+        if (!$mail->send()) {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+            return false;
+        } else {
+            return true;
+        }
+    } catch (\Exception $e) {
+        echo ($e);
+        echo ("Message could not be sent. Error >> " . $e->getMessage());
+        return false;
+    }
+}

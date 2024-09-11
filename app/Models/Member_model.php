@@ -59,40 +59,40 @@ class Member_model extends Model
         "latitude",
         "mem_address_place_id"
     ];
-    function id_verification($id){
-        return $this->hasOne(Mem_id_verifications_model::class,'mem_id','id')->where('id',$id)->get()->first();
-    }
-    function sender_messages(){
-        return $this->hasMany(Msgs_model::class,'sender','id');
-    }
-    function payment_methods(){
-        return $this->hasMany(Mem_payment_methods_model::class,'mem_id','id');
-    }
-    function receiver_messages(){
-        return $this->hasMany(Msgs_model::class,'receiver','id');
-    }
-    function permissions(){
-        return $this->hasMany(Mem_permissions_model::class,'mem_id','id');
-    }
-    function emp_branches(){
-        return $this->hasMany(Mem_Branches_model::class,'mem_id','id');
-    }
-    public function branch_row()
-    {
-        return $this->belongsTo(Branches_model::class,'branch_id','id');
-    }
-    public function msgs()
-    {
-        return $this->hasMany(Msgs_model::class, 'message_by', 'id');
-    }
-    public function listings()
-    {
-        return $this->hasMany(Listings_model::class, 'mem_id', 'id');
-    }
-    public function earnings()
-    {
-        return $this->hasMany(Earnings_model::class, 'mem_id', 'id');
-    }
+    // function id_verification($id){
+    //     return $this->hasOne(Mem_id_verifications_model::class,'mem_id','id')->where('id',$id)->get()->first();
+    // }
+    // function sender_messages(){
+    //     return $this->hasMany(Msgs_model::class,'sender','id');
+    // }
+    // function payment_methods(){
+    //     return $this->hasMany(Mem_payment_methods_model::class,'mem_id','id');
+    // }
+    // function receiver_messages(){
+    //     return $this->hasMany(Msgs_model::class,'receiver','id');
+    // }
+    // function permissions(){
+    //     return $this->hasMany(Mem_permissions_model::class,'mem_id','id');
+    // }
+    // function emp_branches(){
+    //     return $this->hasMany(Mem_Branches_model::class,'mem_id','id');
+    // }
+    // public function branch_row()
+    // {
+    //     return $this->belongsTo(Branches_model::class,'branch_id','id');
+    // }
+    // public function msgs()
+    // {
+    //     return $this->hasMany(Msgs_model::class, 'message_by', 'id');
+    // }
+    // public function listings()
+    // {
+    //     return $this->hasMany(Listings_model::class, 'mem_id', 'id');
+    // }
+    // public function earnings()
+    // {
+    //     return $this->hasMany(Earnings_model::class, 'mem_id', 'id');
+    // }
 
     public function getAvailableBalance()
     {

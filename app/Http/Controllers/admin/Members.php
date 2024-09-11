@@ -13,15 +13,15 @@ class Members extends Controller
     public function index(){
         has_access(3);
         $this->data['rows']=Member_model::where('mem_type', 'member')->orderByDesc("id")->get();
-        foreach($this->data['rows'] as $member){
-            $id_verification=$member->id_verification($member->mem_id_verification_id);
-            if(!empty($id_verification)){
-                $member->id_verification_status=$id_verification->status;
-            }
-            else{
-                $member->id_verification_status='';
-            }
-        }
+        // foreach($this->data['rows'] as $member){
+        //     $id_verification=$member->id_verification($member->mem_id_verification_id);
+        //     if(!empty($id_verification)){
+        //         $member->id_verification_status=$id_verification->status;
+        //     }
+        //     else{
+        //         $member->id_verification_status='';
+        //     }
+        // }
         return view('admin.members.index',$this->data);
     }
     public function add(Request $request){
