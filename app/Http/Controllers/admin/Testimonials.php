@@ -16,6 +16,7 @@ class Testimonials extends Controller
     public function add(Request $request){
         has_access(15);
         $input = $request->all();
+        
         if($input){
             $data=array();
             if ($request->hasFile('image')) {
@@ -36,7 +37,7 @@ class Testimonials extends Controller
                 $data['status']=0;
             }
             $data['name']=$input['name'];
-            $data['ratings']=!empty($input['ratings']) ? floatval($input['ratings']) : 0;
+            $data['designation']=$input['designation'];
             $data['message']=$input['message'];
             // pr($data);
             $id = Testimonial_model::create($data);
@@ -70,7 +71,7 @@ class Testimonials extends Controller
                 $service->status=0;
             }
             $service->name=$input['name'];
-            $service->ratings=!empty($input['ratings']) ? floatval($input['ratings']) : 0;
+            $service->designation=$input['designation'];
             $service->message=$input['message'];
             // pr($data);
             $service->update();

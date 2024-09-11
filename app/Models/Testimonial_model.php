@@ -11,7 +11,7 @@ class Testimonial_model extends Model
     protected $table = 'testimonials';
     protected $fillable = [
         'name',
-        'ratings',
+        'designation', // Add designation field
         'message',
         'image',
         'status',

@@ -77,6 +77,16 @@ id="saveForm">
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">
+                            <label class="form-label" for="section1_heading">Heading</label>
+                            <input class="form-control" id="section1_heading" type="text"
+                                name="section1_heading" placeholder=""
+                                value="{{ !empty($sitecontent['section1_heading']) ? $sitecontent['section1_heading'] : '' }}">
+                        </div>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
                             <label class="form-label" for="section1_text">Text</label>
                             <textarea id="section1_text" name="section1_text" rows="4" class=" editor">{{ !empty($sitecontent['section1_text']) ? $sitecontent['section1_text'] : "" }}</textarea>
                         </div>

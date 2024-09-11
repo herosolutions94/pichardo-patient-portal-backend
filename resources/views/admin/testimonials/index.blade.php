@@ -15,7 +15,7 @@
         <div class="card-body">
             <div class="row">
             
-                <div class="col-lg-6 d-flex align-items-stretch">
+                {{-- <div class="col-lg-6 d-flex align-items-stretch">
                     <div class="card w-100 border position-relative overflow-hidden">
                       <div class="card-body p-4">
                         <h4 class="card-title">Change Image</h4>
@@ -29,24 +29,31 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-lg-6 d-flex align-items-stretch">
+                  </div> --}}
+                  <div class="col-lg-12 d-flex align-items-stretch">
                     <div class="card w-100 border position-relative overflow-hidden">
                       <div class="card-body p-4">
                         <h4 class="card-title">Testimonial Block</h4>
-                          <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" value="{{!empty($row->name) ? $row->name : ""}}">
-                          </div>
-                          <div class="mb-3">
-                            <label for="name" class="form-label">Ratings</label>
-                            <div class="rateYo" data-rateyo-rating="{{!empty($row->ratings) ? $row->ratings : ""}}"></div>
-                            <input type="hidden" name="ratings" value="{{!empty($row->ratings) ? $row->ratings : ""}}" />
-                          </div>
-                          <div class="mb-3">
-                            <div class="form-check form-switch py-2">
-                                <input class="form-check-input success" type="checkbox" id="color-success"  {{ !empty($row) ? ($row->status == 1 ? 'checked' : '') : '' }} name="status" />
-                                <label class="form-check-label" for="color-success"> {{ !empty($row) ? ($row->status == 0 ? 'InActive' : 'Active') : 'Status' }}</label>
+                          <div class="row">
+                              <div class="col-4">
+                                <div class="mb-3">
+                                  <label for="name" class="form-label">Name</label>
+                                  <input type="text" class="form-control" name="name" value="{{!empty($row->name) ? $row->name : ""}}">
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <div class="mb-3">
+                                  <label for="designation" class="form-label">Designation</label>
+                                  <input type="text" name="designation" class="form-control" value="{{!empty($row->designation) ? $row->designation : ""}}" />
+                                </div>
+                              </div>
+                              <div class="col-4">
+                                <div class="mt-4">
+                                  <div class="form-check form-switch py-2">
+                                      <input class="form-check-input success" type="checkbox" id="color-success"  {{ !empty($row) ? ($row->status == 1 ? 'checked' : '') : '' }} name="status" />
+                                      <label class="form-check-label" for="color-success"> {{ !empty($row) ? ($row->status == 0 ? 'InActive' : 'Active') : 'Status' }}</label>
+                                    </div>
+                                </div>
                               </div>
                           </div>
                           
@@ -88,7 +95,7 @@
                   <tr>
                     <th>Sr#</th>
                     <th>Name</th>
-                    <th>Ratings</th>
+                    <th>Designation</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -101,12 +108,12 @@
                     <td>{{ $key + 1 }}</td>
                     <td>
                       <div class="d-flex align-items-center gap-6 crud_thumbnail_icon">
-                        <img src="{{ get_site_image_src('testimonials', !empty($row->image) ? $row->image : '') }}" width="45" class="rounded-circle" />
+                        {{-- <img src="{{ get_site_image_src('testimonials', !empty($row->image) ? $row->image : '') }}" width="45" class="rounded-circle" /> --}}
                         <h6 class="mb-0"> {{ $row->name }}</h6>
                       </div>
 
                     </td>
-                    <td><div class="rateYo-show" data-rateyo-rating="{{$row->ratings}}"></div></td>        
+                    <td><h6 class="mb-0">{{ $row->designation }}</h6></td>        
                     <td>{!! getStatus($row->status) !!}</td>        
                     <td>
                         <div class="dropdown dropstart">

@@ -55,7 +55,7 @@ id="saveForm">
 </div>
 <div class="card">
     <div class="card-header">
-        <h5>Text Block</h5>
+        <h5>Banner</h5>
     </div>
     <div class="card-body">
         <div class="row">
@@ -74,6 +74,16 @@ id="saveForm">
                   </div>
             </div>
             <div class="col-md-8">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label class="form-label" for="section1_heading">Heading</label>
+                            <input class="form-control" id="section1_heading" type="text"
+                                name="section1_heading" placeholder=""
+                                value="{{ !empty($sitecontent['section1_heading']) ? $sitecontent['section1_heading'] : '' }}">
+                        </div>
+                    </div>
+                </div>   
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">

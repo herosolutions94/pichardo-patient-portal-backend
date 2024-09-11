@@ -28,22 +28,22 @@
                                     Page</a>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>2</td>
                             <td width="65%">How it works</td>
                             <td>
                                 <a href="{{ url('admin/pages/how_it_works') }}" class="btn btn-primary active">Edit
                                     Page</a>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> --}}
+                        {{-- <tr>
                             <td>3</td>
                             <td width="65%">Help</td>
                             <td>
                                 <a href="{{ url('admin/pages/help') }}" class="btn btn-primary active">Edit
                                     Page</a>
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td>4</td>
                             <td width="65%">About</td>
@@ -54,9 +54,9 @@
                         </tr>
                         <tr>
                             <td>5</td>
-                            <td width="65%">Blog</td>
+                            <td width="65%">Services</td>
                             <td>
-                                <a href="{{ url('admin/pages/blog') }}" class="btn btn-primary active">Edit
+                                <a href="{{ url('admin/pages/services') }}" class="btn btn-primary active">Edit
                                     Page</a>
                             </td>
                         </tr>
@@ -116,14 +116,14 @@
                                     Page</a>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>12</td>
                             <td width="65%">Thank You</td>
                             <td>
                                 <a href="{{ url('admin/pages/thankyou') }}" class="btn btn-primary active">Edit
                                     Page</a>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
