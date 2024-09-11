@@ -54,23 +54,44 @@ id="saveForm">
     </div>
 </div>
 <div class="card">
+
     <div class="card-header">
-        <h5>Main Text</h5>
+        <h5>Banner</h5>
     </div>
+
     <div class="card-body">
+
         <div class="row">
-            <div class="col-md-12">
+            <div class="col">
+                <div class="card w-100 border position-relative overflow-hidden">
+                    <div class="card-body p-4">
+                      <div class="text-center">
+                       <div class="file_choose_icon">
+                          <img src="{{ get_site_image_src('images', !empty($sitecontent['image1']) ? $sitecontent['image1'] : "") }}" alt="matdash-img" class="img-fluid " >
+                       </div>
+                        <p class="mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                        <input class="form-control uploadFile" name="image1" type="file"
+                            data-bs-original-title="" title="">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div class="col-md-8">
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">
-                            <label class="form-label" for="section1_text">Text</label>
-                            <textarea id="section1_text" name="section1_text" rows="4" class=" editor">{{ !empty($sitecontent['section1_text']) ? $sitecontent['section1_text'] : "" }}</textarea>
+                            <label class="form-label" for="banner_text">Text</label>
+                            <textarea id="banner_text" name="banner_text" rows="4" class="editor">{{ !empty($sitecontent['banner_text']) ? $sitecontent['banner_text'] : "" }}</textarea>
                         </div>
                     </div>
-                </div>          
+                </div>
             </div>
+
         </div>
     </div>
+
+
 </div>
 <div class="card">
     <div class="card-header">

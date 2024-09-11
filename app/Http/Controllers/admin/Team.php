@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Testimonial_model;
+use App\Models\Team_model;
 use Illuminate\Http\Request;
 
-class Testimonials extends Controller
+class Team extends Controller
 {
     public function index(){
-        has_access(15);
-        $this->data['rows']=Testimonial_model::orderBy('id', 'DESC')->get();
-        return view('admin.testimonials.index',$this->data);
+        has_access(14);
+        $this->data['rows']=Team_model::orderBy('id', 'DESC')->get();
+        return view('admin.team.index',$this->data);
     }
     public function add(Request $request){
-        has_access(15);
+        has_access(14);
         $input = $request->all();
         
         if($input){
@@ -24,7 +24,7 @@ class Testimonials extends Controller
                 $request->validate([
                     'image' => 'mimes:png,jpg,jpeg,svg,gif|max:40000'
                 ]);
-                $image=$request->file('image')->store('public/testimonials/');
+                $image=$request->file('image')->store('public/team/');
                 if(!empty(basename($image))){
                     $data['image']=basename($image);
                 }
@@ -38,18 +38,18 @@ class Testimonials extends Controller
             }
             $data['name']=$input['name'];
             $data['designation']=$input['designation'];
-            $data['message']=$input['message'];
+            $data['description']=$input['description'];
             // pr($data);
-            $id = Testimonial_model::create($data);
-            return redirect('admin/testimonials/')
+            $id = Team_model::create($data);
+            return redirect('admin/team/')
                 ->with('success','Content Updated Successfully');
         }
         $this->data['enable_editor']=true;
-        return view('admin.testimonials.index',$this->data);
+        return view('admin.team.index',$this->data);
     }
     public function edit(Request $request, $id){
-        has_access(15);
-        $service=Testimonial_model::find($id);
+        has_access(14);
+        $service=Team_model::find($id);
         $input = $request->all();
         if($input){
             $data=array();
@@ -58,7 +58,7 @@ class Testimonials extends Controller
                 $request->validate([
                     'image' => 'mimes:png,jpg,jpeg,svg,gif|max:40000'
                 ]);
-                $image=$request->file('image')->store('public/testimonials/');
+                $image=$request->file('image')->store('public/team/');
                 if(!empty($image)){
                     $service->image=basename($image);
                 }
@@ -72,22 +72,22 @@ class Testimonials extends Controller
             }
             $service->name=$input['name'];
             $service->designation=$input['designation'];
-            $service->message=$input['message'];
+            $service->description=$input['description'];
             // pr($data);
             $service->update();
-            return redirect('admin/testimonials/edit/'.$request->segment(4))
+            return redirect('admin/team/edit/'.$request->segment(4))
                 ->with('success','Content Updated Successfully');
         }
-        $this->data['row']=Testimonial_model::find($id);
+        $this->data['row']=Team_model::find($id);
         $this->data['enable_editor']=true;
-        return view('admin.testimonials.index',$this->data);
+        return view('admin.team.index',$this->data);
     }
     public function delete($id){
-        has_access(15);
-        $service = Testimonial_model::find($id);
-        removeImage("testimonials/".$service->image);
+        has_access(14);
+        $service = Team_model::find($id);
+        removeImage("team/".$service->image);
         $service->delete();
-        return redirect('admin/testimonials/')
+        return redirect('admin/team/')
                 ->with('error','Content deleted Successfully');
     }
 }

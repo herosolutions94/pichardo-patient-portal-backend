@@ -61,7 +61,7 @@ id="saveForm">
     <div class="card-body">
 
         <div class="row">
-            <div class="col">
+            {{-- <div class="col">
                 <div class="card w-100 border position-relative overflow-hidden">
                     <div class="card-body p-4">
                       <div class="text-center">
@@ -74,9 +74,9 @@ id="saveForm">
                       </div>
                     </div>
                   </div>
-            </div>
+            </div> --}}
 
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col">
                         <div class="mb-3">

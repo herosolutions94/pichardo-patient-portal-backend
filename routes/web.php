@@ -27,6 +27,8 @@ use App\Http\Controllers\admin\Mem_id_verifications;
 use App\Http\Controllers\admin\Tickets;
 use App\Http\Controllers\admin\Sub_admin;
 use App\Http\Controllers\admin\Permissions;
+use App\Http\Controllers\admin\Team;
+use App\Http\Controllers\admin\Services;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +102,16 @@ Route::middleware(['is_admin'])->group(function(){
     Route::match(['GET','POST'], '/admin/testimonials/add', [Testimonials::class,'add']);
     Route::match(['GET','POST'], '/admin/testimonials/edit/{id}', [Testimonials::class,'edit']);
     Route::match(['GET','POST'], '/admin/testimonials/delete/{id}', [Testimonials::class,'delete']);
+    /*==============================Team Module =====================================*/
+    Route::get('/admin/team', [Team::class,'index']);
+    Route::match(['GET','POST'], '/admin/team/add', [Team::class,'add']);
+    Route::match(['GET','POST'], '/admin/team/edit/{id}', [Team::class,'edit']);
+    Route::match(['GET','POST'], '/admin/team/delete/{id}', [Team::class,'delete']);
+     /*==============================Team Module =====================================*/
+     Route::get('/admin/services', [Services::class,'index']);
+     Route::match(['GET','POST'], '/admin/services/add', [Services::class,'add']);
+     Route::match(['GET','POST'], '/admin/services/edit/{id}', [Services::class,'edit']);
+     Route::match(['GET','POST'], '/admin/services/delete/{id}', [Services::class,'delete']);
     /*==============================Partners Module =====================================*/
     Route::get('/admin/partners', [Partners::class,'index']);
     Route::match(['GET','POST'], '/admin/partners/add', [Partners::class,'add']);
@@ -150,7 +162,7 @@ Route::middleware(['is_admin'])->group(function(){
     Route::match(['GET','POST'], '/admin/blog/delete/{id}', [Blog::class,'delete']);
     /*==============================Website Textual Pages =====================================*/
     Route::match(['GET','POST'], '/admin/pages/home', [Pages::class,'home']);
-    Route::match(['GET','POST'], '/admin/pages/how_it_works', [Pages::class,'how_it_works']);
+    Route::match(['GET','POST'], '/admin/pages/services', [Pages::class,'services']);
     Route::match(['GET','POST'], '/admin/pages/help', [Pages::class,'help']);
     Route::match(['GET','POST'], '/admin/pages/blog', [Pages::class,'blog']);
     Route::match(['GET','POST'], '/admin/pages/about', [Pages::class,'about']);
