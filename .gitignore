@@ -5,7 +5,6 @@
 /public/hot
 /public/storage
 /public/.htaccess
-/app/Http/Kernel.php
 /storage/*.key
 /vendor
 .env
