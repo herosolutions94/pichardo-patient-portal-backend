@@ -64,7 +64,7 @@ class Members extends Controller
             $data['mem_lname']=$input['mem_lname'];
             $data['mem_email']=$input['mem_email'];
             $data['mem_phone']=$input['mem_phone'];
-            $data['mem_buisness_phone']=$input['mem_buisness_phone'];
+            // $data['mem_buisness_phone']=$input['mem_buisness_phone'];
             $data['mem_dob']=date('d-m-Y',strtotime($input['mem_dob']));
             $data['mem_bio']=$input['mem_bio'];
             $data['mem_address1']=$input['mem_address1'];
@@ -122,9 +122,9 @@ class Members extends Controller
                 }
                 $member->mem_type='member';
                 $member->mem_fullname=$input['mem_fullname'];
-                $member->mem_display_name=isset($input['mem_display_name']);
+                // $member->mem_display_name=$input['mem_display_name'];
                 $member->mem_phone=$input['mem_phone'];
-                $member->mem_buisness_phone=$input['mem_buisness_phone'];
+                // $member->mem_buisness_phone=$input['mem_buisness_phone'];
                 // $member->mem_dob=!empty($input['mem_dob']) ? date('d-m-Y',strtotime($input['mem_dob'])) : '';
                 $member->mem_bio=$input['mem_bio'];
                 $member->mem_address1=$input['mem_address1'];
@@ -153,26 +153,12 @@ class Members extends Controller
     public function delete($id){
         has_access(3);
         if($member = Member_model::where(['id' => $id,'mem_type' => 'member'])->get()->first()){
-            DB::table('listings')->where('mem_id', $id)->delete();
-            DB::table('mem_withdrawal_methods')->where('mem_id', $id)->delete();
-            DB::table('notifications')->where('sender', $id)->delete();
+            // DB::table('listings')->where('mem_id', $id)->delete();
+            // DB::table('mem_withdrawal_methods')->where('mem_id', $id)->delete();
+            // DB::table('notifications')->where('sender', $id)->delete();
             DB::table('tokens')->where('mem_id', $id)->delete();
-            DB::table('msgs')->where('sender', $id)->delete();
-            DB::table('msgs')->where('receiver', $id)->delete();
-            DB::table('conversations')->where('sender', $id)->delete();
-            DB::table('conversations')->where('receiver', $id)->delete();
-            DB::table('withdraw_requests')->where('mem_id', $id)->delete();
-            DB::table('booking_reviews')->where('mem_id', $id)->delete();
-            DB::table('notifications')->where('mem_id', $id)->delete();
-            DB::table('notifications')->where('sender', $id)->delete();
-            DB::table('earnings')->where('mem_id', $id)->delete();
-            DB::table('mem_id_verifications')->where('mem_id', $id)->delete();
-            DB::table('mem_payment_methods')->where('mem_id', $id)->delete();
-            DB::table('tickets')->where('mem_id', $id)->delete();
-            DB::table('tickets_replies')->where('sender', $id)->delete();
-            DB::table('tickets_replies')->where('receiver', $id)->delete();
-
-            // removeImage("members/".$member->mem_image);
+        
+            removeImage("members/".$member->mem_image);
             $member->delete();
             return redirect('admin/members/')
                     ->with('error','Member deleted Successfully');
