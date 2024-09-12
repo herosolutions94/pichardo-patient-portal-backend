@@ -32,6 +32,7 @@ Route::post('/save-image', [App\Http\Controllers\Ajax::class, 'save_image']);
 Route::post('/save-verification-uploads', [App\Http\Controllers\Ajax::class, 'save_verification_uploads']);
 Route::post('/upload-image', [App\Http\Controllers\Ajax::class, 'upload_image']);
 Route::post('/upload-file', [App\Http\Controllers\Ajax::class, 'upload_file']);
+Route::post('/upload-files', [App\Http\Controllers\Ajax::class, 'upload_files']);
 Route::get('/get-states/{country_id}', [App\Http\Controllers\Ajax::class, 'get_states']);
 
 
@@ -67,6 +68,21 @@ Route::get('reset-page/{token}', [ContentPages::class, 'reset_page']);
 /*==============================Account Routes =====================================*/
 Route::post('/update-profile', [App\Http\Controllers\Account::class, 'update_profile']);
 Route::post('/update-password', [App\Http\Controllers\Account::class, 'update_password']);
+
+Route::post('/deactivate-account', [App\Http\Controllers\Account::class, 'deactivate_account']);
+Route::post('/user-dashboard', [App\Http\Controllers\Account::class, 'user_dashboard']);
+Route::post('/create-request', [App\Http\Controllers\Account::class, 'user_request']);
+Route::post('/user-requests', [App\Http\Controllers\Account::class, 'user_all_request']);
+
+Route::match(['GET', 'POST'], '/notifications', [Account::class, 'notifications']);
+Route::post('/delete-notification/{id}', [App\Http\Controllers\Account::class, 'delete_notification']);
+Route::match(['GET', 'POST'], '/earnings', [Account::class, 'earnings']);
+Route::match(['GET', 'POST'], '/transactions', [Account::class, 'transactions']);
+Route::match(['GET', 'POST'], '/withdrawal-methods', [Account::class, 'withdrawal_methods']);
+Route::match(['GET', 'POST'], '/add-withdrawal-method', [Account::class, 'add_withdawal_method']);
+Route::match(['GET', 'POST'], '/delete-withdrawal-method/{id}', [Account::class, 'delete_withdrawal_method']);
+Route::match(['GET', 'POST'], '/save-withdrawal-request', [Account::class, 'save_withdrawal_request']);
+
 
 
 Route::match(['GET', 'POST'], '/payment-methods', [Account::class, 'payment_methods']);

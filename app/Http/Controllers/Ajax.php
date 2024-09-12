@@ -121,6 +121,7 @@ class Ajax extends Controller
         // phpinfo();
 
     }
+
     public function get_states($country_id)
     {
         $output = array();
@@ -130,7 +131,6 @@ class Ajax extends Controller
 
         exit(json_encode($output));
     }
-
 
     public function save_image(Request $request)
     {
@@ -292,9 +292,8 @@ class Ajax extends Controller
         $res['status'] = 0;
         $input = $request->all();
         if ($request->hasFile('file')) {
-
             $request_data = [
-                'file' => 'max:40000'
+                'file' => 'mimes:jpg,jpeg,pdf,docx|max:40000'
             ];
             $validator = Validator::make($input, $request_data);
             // json is null
@@ -316,11 +315,12 @@ class Ajax extends Controller
                 }
             }
         } else {
-            $res['msg'] = "Only images are allowed to upload!";
+            $res['msg'] = "No file selected!";
         }
 
         exit(json_encode($res));
     }
+
     public function newsletter(Request $request)
     {
         $res = array();
@@ -390,6 +390,4 @@ class Ajax extends Controller
         }
         exit(json_encode($res));
     }
-
-
 }
