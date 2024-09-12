@@ -38,10 +38,10 @@
                             <label for="mem_fullname" class="form-label">Name</label>
                             <input type="text" class="form-control" name="mem_fullname" value="{{!empty($row) ? $row->mem_fullname : ''}}">
                           </div>
-                          <div class="mb-3">
+                          {{-- <div class="mb-3">
                             <label for="mem_display_name" class="form-label">Display Name</label>
                             <input type="text" class="form-control" name="mem_display_name" value="{{!empty($row) ? $row->mem_display_name : ''}}">
-                          </div>
+                          </div> --}}
                           <div class="mb-3">
                             <label for="mem_email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="mem_email" value="{{!empty($row) ? $row->mem_email : ''}}" readonly disabled />
@@ -50,10 +50,10 @@
                             <label for="mem_phone" class="form-label">Phone</label>
                             <input type="text" class="form-control" name="mem_phone" value="{{!empty($row) ? $row->mem_phone : ''}}" />
                           </div>
-                          <div class="mb-3">
+                          {{-- <div class="mb-3">
                             <label for="mem_phone" class="form-label">ABN</label>
                             <input type="text" class="form-control" name="mem_buisness_phone" value="{{!empty($row) ? $row->mem_buisness_phone : ''}}" />
-                          </div>
+                          </div> --}}
                           
                           
                       </div>
@@ -125,7 +125,7 @@
                           <th>Account Type</th>
                           <th>Status</th>
                           <th>Is Verified?</th>
-                          <th>ID Verification?</th>
+                          {{-- <th>ID Verification?</th> --}}
                           <th>Action</th>
                         </tr>
                         <!-- end row -->
@@ -141,7 +141,7 @@
                                 <div class="ms-3">
                                   <h6 class="fs-4 fw-semibold mb-0">{{$row->mem_fullname}}</h6>
                                   <span class="fw-normal">{{$row->mem_email}}</span><br>
-                                  <span class="fw-normal">{{!empty($row->mem_buisness_phone) ? "ABN: ".$row->mem_buisness_phone : ''}}</span>
+                                  {{-- <span class="fw-normal">{{!empty($row->mem_buisness_phone) ? "ABN: ".$row->mem_buisness_phone : ''}}</span> --}}
                                 </div>
                             </div>
                           </td>
@@ -149,7 +149,7 @@
                           <td>{!! userAccountType($row->googleId) !!}</td>
                           <td>{!! getStatus($row->mem_status) !!}</td>
                           <td>{!! getFeatured($row->mem_verified) !!}</td>      
-                          <td>{!! !empty($row->id_verification_status) ? getUserIdStatus($row->id_verification_status) : "N/A" !!}</td>      
+                          {{-- <td>{!! !empty($row->id_verification_status) ? getUserIdStatus($row->id_verification_status) : "N/A" !!}</td>       --}}
                           <td>
                               <div class="dropdown dropstart">
                                   <a href="javascript:void(0)" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
