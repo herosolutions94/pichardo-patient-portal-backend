@@ -98,16 +98,16 @@ class User_auth extends Controller
                         'expiry_date' => date("Y-m-d", strtotime("6 months")),
                     );
                     DB::table('tokens')->insert($token_array);
-                    $email_data = array(
-                        'email_to' => $data['mem_email'],
-                        'email_to_name' => $data['mem_fullname'],
-                        'email_from' => $this->data['site_settings']->site_noreply_email,
-                        'email_from_name' => $this->data['site_settings']->site_name,
-                        'subject' => 'Email Verification',
-                        // 'link' => config('app.react_url') . "/verification/" . $userToken,
-                        'code' => $data['otp'],
-                    );
-                    $email = send_email($email_data, 'account');
+                    // $email_data = array(
+                    //     'email_to' => $data['mem_email'],
+                    //     'email_to_name' => $data['mem_fullname'],
+                    //     'email_from' => $this->data['site_settings']->site_noreply_email,
+                    //     'email_from_name' => $this->data['site_settings']->site_name,
+                    //     'subject' => 'Email Verification',
+                    //     // 'link' => config('app.react_url') . "/verification/" . $userToken,
+                    //     'code' => $data['otp'],
+                    // );
+                    // $email = send_email($email_data, 'account');
                     $res['expire_time'] = $data['otp_expire'];
                     // if(!empty($input['type']) && $input['type']=='google'){
                     //     $email_welcome_data=array(

@@ -374,15 +374,17 @@ class Ajax extends Controller
                 $res['status'] = 0;
                 $res['msg'] = 'Error >>' . $validator->errors();
             } else {
+                $services=json_decode($input['services']);
                 $data = array(
                     'name' => $input['fname'] . " " . $input['lname'],
                     'email' => $input['email'],
                     'phone' => $input['phone'],
                     'message' => $input['comments'],
                     'hear_about' => $input['hear_about'],
-                    'services' => $input['services'],
+                    'services' => implode(",",$services),
                     'status' => 0
                 );
+                // pr($data);
                 Contact_model::create($data);
                 $res['status'] = 1;
                 $res['msg'] = 'Message sent successfully!';
