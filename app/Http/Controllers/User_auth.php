@@ -232,16 +232,16 @@ class User_auth extends Controller
             );
             DB::table('tokens')->insert($token_array);
             $res['expire_time'] = $memberRow->otp_expire;
-            $email_data = array(
-                'email_to' => $memberRow->mem_email,
-                'email_to_name' => $memberRow->mem_fname,
-                'email_from' => $this->data['site_settings']->site_noreply_email,
-                'email_from_name' => $this->data['site_settings']->site_name,
-                'subject' => 'Email Verification',
-                // 'link'=>config('app.react_url')."/verification/".$userToken,
-                'code' => $otp,
-            );
-            $email = send_email($email_data, 'account');
+            // $email_data = array(
+            //     'email_to' => $memberRow->mem_email,
+            //     'email_to_name' => $memberRow->mem_fname,
+            //     'email_from' => $this->data['site_settings']->site_noreply_email,
+            //     'email_from_name' => $this->data['site_settings']->site_name,
+            //     'subject' => 'Email Verification',
+            //     // 'link'=>config('app.react_url')."/verification/".$userToken,
+            //     'code' => $otp,
+            // );
+            // $email = send_email($email_data, 'account');
             // if($email){
             $res['msg'] = "Verification email has been sent with verification link to your email.";
             $res['status'] = 1;

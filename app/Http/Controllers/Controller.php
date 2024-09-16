@@ -36,9 +36,9 @@ class Controller extends BaseController
     {
         return Admin::where('id', '=', 1)->first();
     }
-    public function getMember($mem_id, $mem_email)
+    public function getMember($mem_id)
     {
-        return Member_model::where(['id' => $mem_id, 'mem_email' => $mem_email])->get()->first();
+        return Member_model::where(['id' => $mem_id])->get()->first();
     }
     // public function payment_methods_loop($payment_methods){
     //     $member_payment_methods_arr=array();
@@ -64,13 +64,13 @@ class Controller extends BaseController
         // pr($userToken= DB::table('tokens')->where('token', $token)->first());
         if (!empty($token) && $userToken = DB::table('tokens')->where('token', $token)->first()) {
             $toke_expiry = date('Y-m-d', strtotime($userToken->expiry_date));
-
+            
             if (strtotime($toke_expiry) <= strtotime(date('Y-m-d'))) {
                 return false;
             } else {
                 $token_parts = decrypt_string($userToken->token);
                 $token_array = explode("-", $token_parts);
-                $member = $this->getMember($token_array[0], $token_array[1]);
+                $member = $this->getMember($token_array[0]);
                 if (!empty($member)) {
                     // $member->payment_methods=$this->payment_methods_loop($member->payment_methods);
                     $mem_name = explode(" ", $member->mem_fullname);
