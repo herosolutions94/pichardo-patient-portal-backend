@@ -49,11 +49,17 @@ class Account extends Controller
         if (!empty($member)) {
             $input = $request->all();
             $request_data = [
-                'name'     => 'required',
-                'address'     => 'required',
+                'mem_fname'     => 'required',
+                'mem_lname'     => 'required',
+                'mem_address1'     => 'required',
                 'phone'     => 'required',
-                'member_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:40000',
-                // 'display_name'     => 'required',
+                'gender'     => 'required',
+                'preferred_pharmacy' => 'required',
+                'allergies'     => 'required',
+                'surgical_history'     => 'required',
+                'pregnancy_status'     => 'required',
+                'smoking_history'     => 'required',
+                'identification_photo' => 'required',
 
 
             ];
@@ -65,9 +71,16 @@ class Account extends Controller
             } else {
                 $member = Member_model::where(['id' => $member->id])->get()->first();
                 $input = $request->all();
-                $member->mem_fullname = $input['name'];
-                $member->mem_address1 = !empty($input['address']) ? $input['address'] : '';
-                $member->mem_phone = $input['phone'];
+                $member->mem_fullname = $input['mem_fname']." ".$input['mem_lname'];
+                $member->mem_phone=$request->input('phone', null);
+                $member->mem_address1=$request->input('mem_address1', null);
+                $member->gender=$request->input('gender', null);
+                $member->preferred_pharmacy=$request->input('preferred_pharmacy', null);
+                $member->allergies=$request->input('allergies', null);
+                $member->surgical_history=$request->input('surgical_history', null);
+                $member->pregnancy_status=$request->input('pregnancy_status', null);
+                $member->smoking_history=$request->input('smoking_history', null);
+                $member->identification_photo=$request->input('identification_photo', null);
 
                 if ($request->hasFile('member_image')) {
                     $member_image = $request->file('member_image')->store('public/members/');
@@ -76,12 +89,14 @@ class Account extends Controller
                     }
                 }
 
-                // $member->mem_display_name=$input['display_name'];
-                // $member->mem_bio=$request->input('bio', null);
-                // $member->mem_buisness_phone=$request->input('abn_phone', null);
-                // $member->latitude=$request->input('latitude', null);
-                // $member->longitude=$request->input('longitude', null);
-                // $member->mem_address_place_id=$request->input('place_id', null);
+                // $member->mem_fullname = $input['mem_fname']." ".$input['mem_lname'];
+                // $member->mem_phone=$request->input('phone', null);
+                // $member->mem_address1=$request->input('mem_address1', null);
+                // $member->gender=$request->input('gender', null);
+                // $member->allergies=$request->input('allergies', null);
+                // $member->surgical_history=$request->input('surgical_history', null);
+                // $member->pregnancy_status=$request->input('pregnancy_status', null);
+                // $member->smoking_history=$request->input('smoking_history', null);
                 // $member->is_profile_completed=1;
                 $member->update();
                 $res['msg'] = "Profile updated successfully!";

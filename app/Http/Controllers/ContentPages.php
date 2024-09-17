@@ -7,6 +7,7 @@ use App\Models\Categories_model;
 use App\Models\Testimonial_model;
 use App\Models\Team_model;
 use App\Models\Services_model;
+use App\Models\Preferred_pharmacy_model;
 use App\Models\Locations_model;
 use App\Models\Faq_model;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ class ContentPages extends Controller
         $member_obj=(object)[];
         $token=$request->input('token', null);
         $member=$this->authenticate_verify_token($token);
+        $this->data['preferred_pharmacy']=Preferred_pharmacy_model::orderBy('id', 'DESC')->where('status',1)->get(); 
         if(!empty($member)){
             
             
@@ -46,6 +48,7 @@ class ContentPages extends Controller
            
         }
         $output['member']=$member;
+        $output['preferred_pharmacy'] = $this->data['preferred_pharmacy'];
 
         exit(json_encode($output));
     }

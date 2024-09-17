@@ -346,16 +346,15 @@ class User_auth extends Controller
                         DB::table('tokens')->insert($token_array);
                         $verify_link = config('app.react_url') . "/reset-password/" . $userToken;
                         $res['verify_link'] = $verify_link;
-                        $email_data = array(
-                            'email_to' => $member->mem_email,
-                            'email_to_name' => $member->mem_fname,
-                            'email_from' => $this->data['site_settings']->site_noreply_email,
-                            'email_from_name' => $this->data['site_settings']->site_name,
-                            'subject' => 'Password Reset Request',
-                            'link' => $verify_link,
-                            // 'code'=>$data['otp'],
-                        );
-                        send_email($email_data, 'forget');
+                        // $email_data = array(
+                        //     'email_to' => $member->mem_email,
+                        //     'email_to_name' => $member->mem_fname,
+                        //     'email_from' => $this->data['site_settings']->site_noreply_email,
+                        //     'email_from_name' => $this->data['site_settings']->site_name,
+                        //     'subject' => 'Password Reset Request',
+                        //     'link' => $verify_link,
+                        // );
+                        // send_email($email_data, 'forget');
                         $res['status'] = 1;
                         $res['msg'] = 'Email has been sent to reset your password.';
                     } else {
@@ -371,6 +370,7 @@ class User_auth extends Controller
 
     public function reset_password(Request $request, $token)
     {
+        // pr($token);
         $res = array();
         $res['status'] = 0;
         $member = $this->authenticate_verify_token($token);

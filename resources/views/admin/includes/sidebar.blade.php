@@ -157,14 +157,14 @@
                 </a>
               </li>
               @endif
-              {{-- @if(access(13))
+              @if(access(13))
               <li class="sidebar-item">
-                <a class="sidebar-link {{ $admin_page == 'categories' ? 'active' : '' }}" href="{{ url('admin/categories') }}" aria-expanded="false">
+                <a class="sidebar-link {{ $admin_page == 'preferred_pharmacy' ? 'active' : '' }}" href="{{ url('admin/preferred_pharmacy') }}" aria-expanded="false">
                   <iconify-icon icon="carbon:category"></iconify-icon>
-                  <span class="hide-menu">Categories</span>
+                  <span class="hide-menu">Preferred Pharmacy</span>
                 </a>
               </li>
-              @endif --}}
+              @endif
               @if(access(14))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'team' ? 'active' : '' }}" href="{{ url('admin/team') }}" aria-expanded="false">

@@ -153,7 +153,7 @@ class Ajax extends Controller
                 } else {
                     $image = $request->file('image')->store('public/members/');
                     if (!empty(basename($image))) {
-                        generateThumbnail('members', basename($image), 'avatar', 'large');
+                        // generateThumbnail('members', basename($image), 'avatar', 'large');
                         $member_row = Member_model::find($member->id);
                         $member_row->mem_image = basename($image);
                         $member_row->update();
@@ -271,7 +271,7 @@ class Ajax extends Controller
                 $filename = $uploadedFile->getClientOriginalName();
                 $res['image'] = $image;
                 if (!empty(basename($image))) {
-                    generateThumbnail($type, basename($image), 'square', 'large');
+                    // generateThumbnail($type, basename($image), 'square', 'large');
                     $res['status'] = 1;
                     $res['image_name'] = basename($image);
                     $res['file_name'] = $filename;

@@ -64,7 +64,6 @@ class Controller extends BaseController
         // pr($userToken= DB::table('tokens')->where('token', $token)->first());
         if (!empty($token) && $userToken = DB::table('tokens')->where('token', $token)->first()) {
             $toke_expiry = date('Y-m-d', strtotime($userToken->expiry_date));
-            
             if (strtotime($toke_expiry) <= strtotime(date('Y-m-d'))) {
                 return false;
             } else {

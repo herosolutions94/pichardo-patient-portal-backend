@@ -29,6 +29,7 @@ use App\Http\Controllers\admin\Sub_admin;
 use App\Http\Controllers\admin\Permissions;
 use App\Http\Controllers\admin\Team;
 use App\Http\Controllers\admin\Services;
+use App\Http\Controllers\admin\Preferred_pharmacy;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +98,12 @@ Route::middleware(['is_admin'])->group(function(){
     Route::match(['GET','POST'], '/admin/services/add', [Services::class,'add']);
     Route::match(['GET','POST'], '/admin/services/edit/{id}', [Services::class,'edit']);
     Route::match(['GET','POST'], '/admin/services/delete/{id}', [Services::class,'delete']);
+     /*==============================Services Module =====================================*/
+     Route::get('/admin/preferred_pharmacy', [Preferred_pharmacy::class,'index']);
+     Route::match(['GET','POST'], '/admin/preferred_pharmacy/add', [Preferred_pharmacy::class,'add']);
+     Route::match(['GET','POST'], '/admin/preferred_pharmacy/edit/{id}', [Preferred_pharmacy::class,'edit']);
+     Route::match(['GET','POST'], '/admin/preferred_pharmacy/delete/{id}', [Preferred_pharmacy::class,'delete']);
+
     /*==============================Testimonials Module =====================================*/
     Route::get('/admin/testimonials', [Testimonials::class,'index']);
     Route::match(['GET','POST'], '/admin/testimonials/add', [Testimonials::class,'add']);
