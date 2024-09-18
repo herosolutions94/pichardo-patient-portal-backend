@@ -73,6 +73,7 @@ Route::post('/deactivate-account', [App\Http\Controllers\Account::class, 'deacti
 Route::post('/user-dashboard', [App\Http\Controllers\Account::class, 'user_dashboard']);
 Route::post('/create-request', [App\Http\Controllers\Account::class, 'user_request']);
 Route::post('/user-requests', [App\Http\Controllers\Account::class, 'user_all_request']);
+Route::post('/view-request/{encodedId}', [App\Http\Controllers\Account::class, 'viewRequest']);
 
 Route::match(['GET', 'POST'], '/notifications', [Account::class, 'notifications']);
 Route::post('/delete-notification/{id}', [App\Http\Controllers\Account::class, 'delete_notification']);

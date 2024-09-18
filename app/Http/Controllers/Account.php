@@ -209,6 +209,12 @@ class Account extends Controller
         if (!empty($member)) {
             $all_requests = Request_model::where(['mem_id' => $member->id])->get();
             $open_requests = Request_model::where(['mem_id' => $member->id, 'status' => 0])->count();
+
+            foreach($all_requests as $request){
+                $request->encoded_id=doEncode($request->id);
+                $request->created_on=format_date($request->created_at,'m/d/Y');
+            }
+
             $res['requests'] = $all_requests;
             $res['count_open_requests'] = $open_requests;
             $res['status'] = 1;
@@ -217,6 +223,36 @@ class Account extends Controller
         }
 
         exit(json_encode($res));
+    }
+
+    public function viewRequest(Request $request, $encodedId) {
+        $this->data['status'] = 0;
+            $token = $request->input('token', null);
+            $member = $this->authenticate_verify_token($token);
+            
+            if ($member) {
+                $this->data['member'] = $member;
+                $id = doDecode($encodedId);
+                
+                if (intval($id) > 0) {
+                    // Fetch row where id equals decoded id and mem_id equals member id
+                    $result = Request_model::where('id', $id)
+                            ->where('mem_id', $member->id)
+                            ->first();
+
+                    if ($result) {
+                        $this->data['status'] = 1;
+                        $this->data['request_data'] = $result;
+                    } else {
+                        $this->data['message'] = 'No matching request found';
+                    }
+                } else {
+                    $this->data['message'] = 'Invalid ID';
+                }
+            } else {
+                $this->data['not_logged_in'] = true;
+            }
+            exit(json_encode($this->data));
     }
 
 
