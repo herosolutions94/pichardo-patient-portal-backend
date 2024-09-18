@@ -151,18 +151,20 @@ class Account extends Controller
     {
         $res = array();
         $res['status'] = 0;
+        $input = $request->all();
         $token = $request->input('token', null);
+        // pr($input);
         $member = $this->authenticate_verify_token($token);
         if (!empty($member)) {
             $input = $request->all();
             if ($input) {
                 $request_data = [
-                    'address' => 'required',
-                    'preffered_pharmacy' => 'required',
+                    'mem_address1' => 'required',
+                    'preferred_pharmacy' => 'required',
                     'subject' => 'required',
                     'symptoms' => 'required',
                     'requested_medication' => 'required',
-                    'file' => 'required|mimes:jpg,jpeg,pdf,docx|max:40000',
+                    'file' => 'required',
                 ];
                 $custom_messages = [
                     'file.required' => 'Please upload your document!'
@@ -174,24 +176,15 @@ class Account extends Controller
                     $res['status'] = 0;
                     $res['msg'] = 'Error >>' . $validator->errors()->first();
                 } else {
-
-                    if ($request->hasFile('file')) {
-                        $file = $request->file('file')->store('public/attachments/');
-                        if (!empty(basename($file))) {
-                            $document = basename($file);
-                        }
-                    }
-
-
                     $data = array(
                         'mem_id' => $member->id,
-                        'p_id' => $input['preffered_pharmacy'],
-                        'address' => $input['address'],
+                        'preferred_pharmacy' => $input['preferred_pharmacy'],
+                        'address' => $input['mem_address1'],
                         'subject' => $input['subject'],
                         'symptoms' => $input['symptoms'],
                         'requested_medication' => $input['requested_medication'],
-                        'document' => $document,
-                        'status' => 0,
+                        'document' => $input['file'],
+                        'status' => 1,
 
                     );
                     // pr($data);

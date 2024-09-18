@@ -11,7 +11,7 @@ class Request_model extends Model
     protected $table = 'requests';
     protected $fillable = [
         'mem_id',
-        'p_id',
+        'preferred_pharmacy',
         'address',
         'subject',
         'symptoms',
