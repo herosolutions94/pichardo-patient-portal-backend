@@ -64,6 +64,7 @@ class Admin extends Model
         'site_sandbox',
         'site_percentage',
         'site_lastlogindate',
+        'generate_questions',
         'site_status'
     ];
 }

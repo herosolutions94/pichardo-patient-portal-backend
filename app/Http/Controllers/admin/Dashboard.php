@@ -48,6 +48,7 @@ class Dashboard extends Controller
     }
 
     public function settings_update(Request $request){
+        
         $admin=Admin::find(1);
         
         if($request->hasFile('site_logo')){
@@ -134,6 +135,7 @@ class Dashboard extends Controller
         $admin->site_ach_threshold=$request->site_ach_threshold;
         $admin->site_lease_grace_period=$request->site_lease_grace_period;
         $admin->site_sandbox=$site_sandbox;
+        $admin->generate_questions=$request->generate_questions;
         $admin->site_percentage=$request->site_percentage;
 
 

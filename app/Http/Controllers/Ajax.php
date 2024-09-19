@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-
 class Ajax extends Controller
 {
     public function upload_editor_image(Request $request)

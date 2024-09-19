@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Stripe\StripeClient;
 use App\Models\Member_model;
+use App\Models\Requests_chat_model;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -188,8 +189,9 @@ class Account extends Controller
 
                     );
                     // pr($data);
-                    Request_model::create($data);
+                    $createdRequest = Request_model::create($data);
                     $res['status'] = 1;
+                    $res['encodedId'] = doEncode($createdRequest->id);
                     $res['msg'] = 'Your request created successfully!';
                 }
             }
@@ -239,9 +241,10 @@ class Account extends Controller
                     $result = Request_model::where('id', $id)
                             ->where('mem_id', $member->id)
                             ->first();
-
                     if ($result) {
+                        $request_chat = Requests_chat_model::where('request_id', $id)->get();;
                         $this->data['status'] = 1;
+                        $this->data['request_chat'] = $request_chat;
                         $this->data['request_data'] = $result;
                     } else {
                         $this->data['message'] = 'No matching request found';

@@ -210,6 +210,25 @@
               <div class="col-12">
                 <div class="card w-100 border position-relative overflow-hidden">
                   <div class="card-body p-4">
+                    <h4 class="card-title">Generate Questions</h4>
+                    <p class="card-subtitle mb-4">These questions are automatically sent to patients who made a request.</p>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="mb-3">
+                            <div class="">
+                              <textarea class="form-control editor" id="generate_questions" rows="3" name="generate_questions">{{ $site_settings->generate_questions }}</textarea>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="card w-100 border position-relative overflow-hidden">
+                  <div class="card-body p-4">
                     <h4 class="card-title">Site Social Links</h4>
                     <p class="card-subtitle mb-4">To change your meta detail , edit and save from here</p>
                       <div class="row">

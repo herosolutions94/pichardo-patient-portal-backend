@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContentPages;
 use App\Http\Controllers\User_auth;
 
+use App\Http\Controllers\Requests_chat;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -74,6 +76,11 @@ Route::post('/user-dashboard', [App\Http\Controllers\Account::class, 'user_dashb
 Route::post('/create-request', [App\Http\Controllers\Account::class, 'user_request']);
 Route::post('/user-requests', [App\Http\Controllers\Account::class, 'user_all_request']);
 Route::post('/view-request/{encodedId}', [App\Http\Controllers\Account::class, 'viewRequest']);
+
+// ===========================requests chat==========================================
+// Route::post('/chat-requests', [App\Http\Controllers\Requests_chat::class, 'chat_requests']);
+Route::post('/chat-requests', [Requests_chat::class, 'chat_requests']);
+// Route::post('/all-chat-requests/{id}', [App\Http\Controllers\Requests_chat::class, 'chat_all_request']);
 
 Route::match(['GET', 'POST'], '/notifications', [Account::class, 'notifications']);
 Route::post('/delete-notification/{id}', [App\Http\Controllers\Account::class, 'delete_notification']);
