@@ -20,4 +20,12 @@ class Request_model extends Model
         // 'image',
         'status',
     ];
+    public function messages()
+    {
+        return $this->hasMany(Requests_chat_model::class, 'request_id', 'id');
+    }
+    public function member_row()
+    {
+        return $this->belongsTo(Member_model::class,'mem_id','id');
+    }
 }

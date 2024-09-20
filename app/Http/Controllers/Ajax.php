@@ -320,6 +320,46 @@ class Ajax extends Controller
         exit(json_encode($res));
     }
 
+   public function upload_files(Request $request)
+{
+    $res = array();
+    $res['status'] = 0;
+    $input = $request->all();
+
+    // Check if files are uploaded
+    if ($request->hasFile('files')) {
+        $files = $request->file('files');
+        $fileNames = []; // Array to store file names
+
+        foreach ($files as $file) {
+            $rules = [
+                'file' => 'mimes:jpg,jpeg,png,gif,webp,pdf,docx,mp3,mp4|max:40000'
+            ];
+
+            $validator = Validator::make(['file' => $file], $rules);
+
+            if ($validator->fails()) {
+                $res['status'] = 0;
+                $res['msg'] = 'Error >>' . $validator->errors()->first();
+                return response()->json($res);
+            } else {
+                // Store the file and get the name
+                $path = $file->store('public/attachments');
+                $fileNames[] = basename($path); // Extract and store only file name
+            }
+        }
+
+        $res['status'] = 1;
+        $res['file_names'] = $fileNames; 
+    } else {
+        $res['msg'] = "No files selected!";
+    }
+
+    return response()->json($res);
+}
+
+
+
     public function newsletter(Request $request)
     {
         $res = array();

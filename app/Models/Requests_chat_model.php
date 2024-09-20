@@ -17,4 +17,12 @@ class Requests_chat_model extends Model
         'sender_id',
         'receiver_id',
     ];
+    public function attachments()
+    {
+        return $this->hasMany(Chat_attachments_model::class, 'chat_id', 'id');
+    }
+    public function request_row()
+    {
+        return $this->belongsTo(Request_model::class,'request_id','id');
+    }
 }

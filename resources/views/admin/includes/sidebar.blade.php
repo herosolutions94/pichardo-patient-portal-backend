@@ -84,6 +84,12 @@
                 <iconify-icon icon="icon-park-outline:data-user"></iconify-icon>
                 <span class="hide-menu">User Requests</span>
               </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ $admin_page == 'requests' ? 'active' : '' }}" href="{{ url('admin/requests') }}" aria-expanded="false">
+                  <iconify-icon icon="ph:git-pull-request"></iconify-icon>
+                  <span class="hide-menu">Requests</span>
+                </a>
+              </li>
               @if(access(5))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'contact' ? 'active' : '' }}" href="{{ url('admin/contact') }}" aria-expanded="false">

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\Ajax;
 use App\Http\Controllers\Account;
+use App\Http\Controllers\Requests;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContentPages;
 use App\Http\Controllers\User_auth;
@@ -73,13 +74,13 @@ Route::post('/update-password', [App\Http\Controllers\Account::class, 'update_pa
 
 Route::post('/deactivate-account', [App\Http\Controllers\Account::class, 'deactivate_account']);
 Route::post('/user-dashboard', [App\Http\Controllers\Account::class, 'user_dashboard']);
-Route::post('/create-request', [App\Http\Controllers\Account::class, 'user_request']);
-Route::post('/user-requests', [App\Http\Controllers\Account::class, 'user_all_request']);
-Route::post('/view-request/{encodedId}', [App\Http\Controllers\Account::class, 'viewRequest']);
+Route::post('/create-request', [App\Http\Controllers\Requests::class, 'user_request']);
+Route::post('/user-requests', [App\Http\Controllers\Requests::class, 'user_all_request']);
+Route::post('/view-request/{encodedId}', [App\Http\Controllers\Requests::class, 'viewRequest']);
 
 // ===========================requests chat==========================================
 // Route::post('/chat-requests', [App\Http\Controllers\Requests_chat::class, 'chat_requests']);
-Route::post('/chat-requests', [Requests_chat::class, 'chat_requests']);
+Route::post('/chat-requests', [Requests::class, 'chat_requests']);
 // Route::post('/all-chat-requests/{id}', [App\Http\Controllers\Requests_chat::class, 'chat_all_request']);
 
 Route::match(['GET', 'POST'], '/notifications', [Account::class, 'notifications']);

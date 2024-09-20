@@ -30,6 +30,7 @@ use App\Http\Controllers\admin\Permissions;
 use App\Http\Controllers\admin\Team;
 use App\Http\Controllers\admin\Services;
 use App\Http\Controllers\admin\Preferred_pharmacy;
+use App\Http\Controllers\admin\Requests;
 
 /*
 |--------------------------------------------------------------------------
@@ -186,6 +187,10 @@ Route::middleware(['is_admin'])->group(function(){
     Route::match(['GET','POST'], '/admin/members/add', [Members::class,'add']);
     Route::match(['GET','POST'], '/admin/members/edit/{id}', [Members::class,'edit']);
     Route::match(['GET','POST'], '/admin/members/delete/{id}', [Members::class,'delete']);
+    /*==============================Requests =====================================*/
+    Route::get('/admin/requests', [Requests::class,'index']);
+    Route::match(['GET','POST'], '/admin/requests/view/{id}', [Requests::class,'view']);
+    Route::match(['GET','POST'], '/admin/requests/delete/{id}', [Requests::class,'delete']);
     /*==============================Contact =====================================*/
     Route::get('/admin/contact', [Contact::class,'index']);
     Route::match(['GET','POST'], '/admin/contact/view/{id}', [Contact::class,'view']);
