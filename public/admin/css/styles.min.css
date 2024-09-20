@@ -20749,3 +20749,29 @@ ul {
 .row_2_col .col .row{
     display: -webkit-box;
 }
+
+.patient-chat-box .buble{
+    display: flex;
+    gap: 2rem;
+}
+.patient-chat-box .buble .ico{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.patient-chat-box .buble .ico img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.patient-chat-box .buble .txt{
+    flex: 1;
+}
+.patient-chat-box .buble .txt .time{
+    margin-bottom: 1rem;
+}
+.patient-chat-box .buble .txt .cntnt{
+    background-color: #ddd;padding: 1rem;
+    border-radius: 10px;
+}

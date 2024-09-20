@@ -190,6 +190,7 @@ Route::middleware(['is_admin'])->group(function(){
     /*==============================Requests =====================================*/
     Route::get('/admin/requests', [Requests::class,'index']);
     Route::match(['GET','POST'], '/admin/requests/view/{id}', [Requests::class,'view']);
+    Route::match(['GET','POST'], '/admin/requests/edit/{id}', [Requests::class,'edit']);
     Route::match(['GET','POST'], '/admin/requests/delete/{id}', [Requests::class,'delete']);
     /*==============================Contact =====================================*/
     Route::get('/admin/contact', [Contact::class,'index']);

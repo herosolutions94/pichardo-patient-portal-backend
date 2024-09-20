@@ -2214,6 +2214,24 @@ function getUserIdStatus($status)
         return '<span class="badge bg-warning-subtle text-warning">In Progress</span>';
     }
 }
+
+function getRequestsStatus($status)
+{
+    if ($status == 'in_progress') {
+        return '<span class="badge bg-info-subtle text-success">In Progress</span>';
+    } else if ($status == 'prescription_in_progress') {
+        return '<span class="badge bg-yellow-subtle text-success">Prescription In Progress</span>';
+    } else if ($status == 'payed') {
+        return '<span class="badge bg-success-subtle text-success">Payed</span>';
+    }else if ($status == 'prescription') {
+        return '<span class="badge bg-teal-subtle text-success">Prescription</span>';
+    }else if ($status == 'prescription') {
+        return '<span class="badge bg-ganger-subtle text-danger">Closed</span>';
+    } else {
+        return '<span class="badge bg-warning-subtle text-warning">New</span>';
+    }
+}
+
 function has_access($permission_id = 0)
 {
     if (is_admin())
