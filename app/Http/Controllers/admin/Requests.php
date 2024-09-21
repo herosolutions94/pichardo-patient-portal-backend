@@ -4,7 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Request_model;
+use App\Models\Requests_chat_model;
+use App\Models\Chat_attachments_model;
 use App\Http\Controllers\Controller;
 
 class Requests extends Controller
@@ -15,24 +18,63 @@ class Requests extends Controller
         return view('admin.requests', $this->data);
     }
     public function view($id){
-        $this->data['rows'] = Request_model::with(['messages', 'messages.attachments', 'member_row'])
-                                        ->where('id', $id)
-                                        ->first();
+        $this->data['rows'] = Request_model::with(['messages', 'messages.attachments', 'member_row'])->where('id', $id)->first();
+        // pr($this->data['rows']->toArray());
         return view('admin.requests', $this->data);
     }
     public function edit($id){
-        $request = Request_model::with(['messages', 'messages.attachments', 'member_row'])
-                                        ->where('id', $id)
-                                        ->first();
-                                        if ($request) {
-                                            $request->status = 'in_progress';
-                                            $request->save();
-                                        }
-                                    
-                                        // Pass the updated request data to the view
-                                        $this->data['rows'] = $request;
-                                        return redirect('admin/requests')->with('success', 'Status updated successfully.');
+        $request = Request_model::with(['messages', 'messages.attachments', 'member_row'])->where('id', $id)->first();
+        if ($request) {
+            $request->status = 'in_progress';
+            $request->save();
+        }                 
+        // Pass the updated request data to the view
+        $this->data['rows'] = $request;
+        return redirect('admin/requests');
     }
+    public function post_comment(Request $request, $id)
+    {
+        if ($req = Request_model::with(['member_row'])->where('id', $id)->first()) {
+            $input = $request->all();
+            $request_data = [
+                'comment' => 'required',
+            ];
+            $validator = Validator::make($input, $request_data);
+
+            if ($validator->fails()) {
+                return redirect('admin/requests/view/' . $id)
+                    ->with('error', 'Error >>' . $validator->errors()->first());
+            } else {
+               $chat_id=Requests_chat_model::create([
+                    'msg' => $request->comment,
+                    'msg_by'=> 'admin',
+                    'sender_id' => 1,
+                    'receiver_id' => $req->mem_id,
+                    'request_id' => $id
+                ]);
+
+                // Handle the attachments
+                if ($request->hasFile('attachments')) {
+                    foreach ($request->file('attachments') as $file) {
+                        $fileName=$file->store('public/attachments');
+                        $fileName = basename($fileName);
+                        // pr($fileName);
+                        Chat_attachments_model::create([
+                            'chat_id' => $chat_id->id,
+                            'file' => $fileName
+                        ]);
+                    }
+                }
+
+                return redirect('admin/requests/view/' . $id)
+                    ->with('success', 'comment posted successfully!');
+            }
+        } else {
+            return redirect('admin/requests/')
+                ->with('error', 'invalid request!');
+        }
+    }
+
     // public function delete($id){
     //     has_access(13);
     //     $category = Request_model::find($id);

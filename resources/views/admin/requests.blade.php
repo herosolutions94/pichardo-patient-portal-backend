@@ -7,11 +7,6 @@
 @endsection
 @section('page_content')
     @if (request()->segment(3) == 'view')
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
         {!! breadcrumb('Requests') !!}
         <div class="card">
             <div class="card-body">
@@ -83,45 +78,82 @@
             </div>
             
         </div>
-        <div class="card">
-            <div class="card-body">
-            @if($rows->status == "closed")
-                <div class="alert alert-danger">
-                    This request has been closed!!
-                </div>
-                @else
-                <div class="chat_area">
-                    <h4>Start Chat</h4>
-                    <div class="d-flex patient-chat-box">
-                        <div class="chat-box w-100">
-                            <div class="chat-box-inner p-9">
-                                <div class="chat-list chat active-chat">
-                                    <!-- ==========start loop============= -->
-                                    <div class="hstack gap-3 align-items-start mb-7">
+            @if(!empty($rows->messages))
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <h4 class="mb-0 fw-semibold">Comments</h4>
+                            <span class="badge bg-primary-subtle text-primary fs-4 fw-semibold px-6 py-8 rounded">{{count($rows->messages)}}</span>
+                        </div>
+                        <div class="position-relative">
+
+                                <div class="p-4 rounded-2 text-bg-light mb-3">
+                                    <div class="d-flex align-items-center gap-3 text-bg-light-primary rounded-2 p-4">
+                                        <img src="{{ get_site_image_src('images', $site_settings->site_icon) }}" alt="matdash-img" class="rounded-circle" width="50" height="50">
                                         <div>
-                                            <div className="buble you ">
-                                                <div className="ico">
-                                                    <img src="http://127.0.0.1:8000/storage/members//BFgcrTEBPPH6GwTFwZOUZf0dwnc3ugFQETwBdPAC.png" width="45" class="rounded-circle"/>
-                                                </div>
-                                                <div className="txt">
-                                                    <div className="time">34/43/4343</div>
-                                                    <div className="cntnt">
-                                                        some text will be here from patient about request
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_date($rows->created_at,'M d, Y')}}</span>
+                                            <h6 class="fw-semibold mb-0 fs-4">Support Team</h6>
                                         </div>
                                     </div>
-                                    <!-- =============end loop============== -->
+                                    <p class="my-3">{!! $site_settings->generate_questions !!}</p>
                                 </div>
-                            </div>
+                                @foreach($rows->messages as $message)
+                                <div class="p-4 rounded-2 text-bg-light mb-3">
+                                    <div class="d-flex align-items-center gap-3 text-bg-light-primary rounded-2 p-4">
+                                        @if($message->receiver_id === 1)
+                                        <img src="{{ get_site_image_src('members', $rows->member_row->mem_image) }}" alt="matdash-img" class="rounded-circle" width="50" height="50">
+                                        <div>
+                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_date($message->created_at,'M d, Y')}}</span>
+                                            <h6 class="fw-semibold mb-0 fs-4">{{$rows->member_row->mem_fullname}}</h6>
+                                        </div>
+                                        @else
+                                        <img src="{{ get_site_image_src('images', $site_settings->site_icon) }}" alt="matdash-img" class="rounded-circle" width="50" height="50">
+                                        <div>
+                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_date($message->created_at,'M d, Y')}}</span>
+                                            <h6 class="fw-semibold mb-0 fs-4">Support Team</h6>
+                                        </div>
+                                        @endif
+                                        
+                                    </div>
+                                    <p class="my-3">{!! $message->msg !!}</p>
+                                    @if($message->attachments->count() > 0)
+                                    <div class="mb-3">
+                                        <h6 class="fw-semibold mb-0 text-dark mb-3">
+                                        Attachments
+                                        </h6>
+                                        <div class="d-block d-sm-flex align-items-center gap-4">
+                                        @foreach($message->attachments as $attachment)
+                                        <a href="{{ get_site_image_src('attachments', !empty($attachment) ? $attachment->file : '') }}" class="hstack gap-3 mb-2 mb-sm-0" target="_blank">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="rounded-1 p-6 attachment-icon">
+                                                    <img src="{{ asset('admin/images/file.png')}}" alt="matdash-img" width="24" height="24">
+                                                </div>
+                                            </div>
+                                        </a>
+                                        @endforeach
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                                @endforeach
                         </div>
+                        @if($rows->status == 'closed')
+                        <div class="alert alert-danger">Request has been closed!</div>
+                        @else
+                        <h4 class="mb-4 fw-semibold">Post Comments</h4>
+                        <form method="post" action="{{ url('admin/requests/post-comment/'.$rows->id) }}" enctype="multipart/form-data">
+                            @csrf                
+                            <textarea class="form-control mb-4" rows="5" name="comment" required=""></textarea>
+                            <div class="mb-3">
+                                <label for="formFileMultiple" class="form-label">Select attachments</label>
+                                <input class="form-control" type="file" name="attachments[]" id="formFileMultiple" multiple />
+                            </div>
+                            <button class="btn btn-primary" type="submit">Post Comment</button>
+                        </form>
+                        @endif
                     </div>
                 </div>
             @endif
-            </div>
-        </div>
-        
     @else
         {!! breadcrumb('Manage Requests') !!}
         <div class="card">

@@ -191,6 +191,7 @@ Route::middleware(['is_admin'])->group(function(){
     Route::get('/admin/requests', [Requests::class,'index']);
     Route::match(['GET','POST'], '/admin/requests/view/{id}', [Requests::class,'view']);
     Route::match(['GET','POST'], '/admin/requests/edit/{id}', [Requests::class,'edit']);
+    Route::post('/admin/requests/post-comment/{id}', [Requests::class, 'post_comment']);
     Route::match(['GET','POST'], '/admin/requests/delete/{id}', [Requests::class,'delete']);
     /*==============================Contact =====================================*/
     Route::get('/admin/contact', [Contact::class,'index']);

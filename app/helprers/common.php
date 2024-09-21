@@ -2389,6 +2389,23 @@ function format_date($d, $format = '', $default_show = 'TBD')
     $d = (is_numeric($d) && (int)$d == $d) ? $d : strtotime($d);
     return date($format, $d);
 }
+
+function format_american_date($d, $format = '', $default_show = 'TBD', $timezone = 'America/New_York')
+{
+    $format = empty($format) ? 'm/d/Y' : $format;
+
+    if ($d == '0000:00:00' || $d == '0000-00-00' || !$d)
+        return $default_show;
+
+    // Convert to timestamp
+    $d = (is_numeric($d) && (int)$d == $d) ? $d : strtotime($d);
+
+    // Set timezone
+    $dt = new DateTime("@$d");
+    $dt->setTimezone(new DateTimeZone($timezone));
+
+    return $dt->format($format);
+}
 function subtractHoursFromTime($hours = 4)
 {
     $timezone = new DateTimeZone("America/New_York");
