@@ -96,10 +96,10 @@ class Dashboard extends Controller
             $site_stripe_type=1;
         }
         if(!empty($request->site_sandbox) && $request->site_sandbox=='on'){
-            $site_sandbox=0;
+            $site_sandbox=1;
         }
         else{
-            $site_sandbox=1;
+            $site_sandbox=0;
         }
         // pr($site_stripe_type);
         $admin->site_domain=$request->site_domain;

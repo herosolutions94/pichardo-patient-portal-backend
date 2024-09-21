@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Request_model;
+use App\Models\Invoices_model;
 use App\Models\Requests_chat_model;
 use App\Models\Chat_attachments_model;
 use App\Http\Controllers\Controller;
@@ -17,10 +18,26 @@ class Requests extends Controller
         // pr($this->data['rows']->toArray());
         return view('admin.requests', $this->data);
     }
-    public function view($id){
-        $this->data['rows'] = Request_model::with(['messages', 'messages.attachments', 'member_row'])->where('id', $id)->first();
-        // pr($this->data['rows']->toArray());
-        return view('admin.requests', $this->data);
+    public function view(Request $request,$id){
+        $input=$request->all();
+        if($id > 0 && $this->data['rows'] = Request_model::with(['messages', 'messages.attachments', 'member_row','invoice'])->where('id', $id)->first()){
+            if($input && !empty($input['amount'])){
+                Request_model::where('id',$this->data['rows']->id)->update(array('status'=>'prescription_in_progress','created_at'=>$this->data['rows']->created_at));
+                Invoices_model::create(array(
+                    'request_id'=>$this->data['rows']->id,
+                    'status'=>'pending',
+                    'amount'=>$input['amount']
+                ));
+                return redirect('admin/requests/view/' . $id)
+                    ->with('success', 'invoice created successfully!');
+            }
+            return view('admin.requests', $this->data);
+        }
+        else{
+            return redirect('admin/requests/')
+                ->with('error', 'invalid request!');
+        }
+            
     }
     public function edit($id){
         $request = Request_model::with(['messages', 'messages.attachments', 'member_row'])->where('id', $id)->first();

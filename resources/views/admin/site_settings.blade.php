@@ -158,8 +158,8 @@
                         <div class="col-lg-12">
                           <div class="mb-3">
                             <div class="form-check form-switch py-2">
-                                <input class="form-check-input success" type="checkbox" id="color-success"  {{ !empty($site_settings) ? ($site_settings->site_sandbox == 0 ? 'checked' : '') : '' }} name="site_sandbox" />
-                                <label class="form-check-label" for="color-success"> {{ !empty($site_settings) ? ($site_settings->site_sandbox == 1 ? 'Sandbox' : 'Live') : '' }} Mode</label>
+                                <input class="form-check-input success" type="checkbox" id="color-success"  {{ !empty($site_settings) ? ($site_settings->site_sandbox == 1 ? 'checked' : '') : '' }} name="site_sandbox" />
+                                <label class="form-check-label" for="color-success"> Sandbox Mode</label>
                               </div>
                           </div>
                         </div>
@@ -172,8 +172,8 @@
               <div class="col-12">
                 <div class="card w-100 border position-relative overflow-hidden">
                   <div class="card-body p-4">
-                    <h4 class="card-title">Site Processing Fee(%)</h4>
-                    <p class="card-subtitle mb-4">Site processing fee or services charges</p>
+                    <h4 class="card-title">Site Processing Fee($)</h4>
+                    <p class="card-subtitle mb-4">Site Fee for Prescription</p>
                       <div class="row">
                         <div class="col-lg-12">
                           <div class="mb-3">

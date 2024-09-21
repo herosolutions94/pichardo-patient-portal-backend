@@ -40,73 +40,11 @@ class Ajax extends Controller
         // Return a JSON response with the URL
         return response()->json(['url' => $url]);
     }
-    public function create_stripe_intent(Request $request)
-    {
-        $res = array();
-        $res['status'] = 0;
-        $token = $request->input('token', null);
-        $member = $this->authenticate_verify_token($token);
-        $input = $request->all();
-        if ($input) {
-            $stripe = new StripeClient(
-                $this->data['site_settings']->site_stripe_testing_secret_key
-            );
-            try {
-                $amount = $input['amount'];
-                if (!empty($input['expires_in'])) {
-                    // $expires_in=$input['expires_in'];
-                    // $total=floatval($amount) * intval($expires_in);
-                    $total = floatval($amount);
-                } else {
-                    $total = floatval($amount);
-                }
-
-
-
-                $cents = intval($total * 100);
-                if (!empty($member->customer_id)) {
-                    $customer_id = $member->customer_id;
-                } else {
-                    $customer = $stripe->customers->create([
-                        'email' => $member->mem_email,
-                        'name' => $member->mem_fname . " " . $member->mem_lname,
-                        // 'address' => $stripe_adddress,
-                    ]);
-                    $customer_id = $customer->id;
-                }
-
-                $intent = $stripe->paymentIntents->create([
-                    'amount' => $cents,
-                    'currency' => 'usd',
-                    'customer' => $customer_id,
-                    // 'payment_method' => $vals['payment_method'],
-                    'setup_future_usage' => 'off_session',
-                ]);
-                $setupintent = $stripe->setupIntents->create([
-                    'customer' => $customer_id,
-                ]);
-                $arr = array(
-                    'paymentIntentId' => $intent->id,
-                    'setup_client_secret' => $setupintent->client_secret,
-                    'setup_intent_id' => $setupintent->id,
-                    'client_secret' => $intent->client_secret,
-                    'customer' => $customer_id,
-                    'status' => 1
-                );
-                $res['arr'] = $arr;
-                $res['status'] = 1;
-                // pr($arr);
-
-            } catch (Exception $e) {
-                $arr['msg'] = "Error >> " . $e->getMessage();
-                $arr['status'] = 0;
-            }
-        }
-        exit(json_encode($res));
-    }
+    
 
     public function get_data()
     {
+        pr(pr(env('STRIPE_TESTING_SECRET_KEY')));
         print_r(env('NODE_SOCKET'));
         print_r("hiii");
         $data = array(

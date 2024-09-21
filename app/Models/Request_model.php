@@ -24,6 +24,10 @@ class Request_model extends Model
     {
         return $this->hasMany(Requests_chat_model::class, 'request_id', 'id');
     }
+    public function invoice()
+    {
+        return $this->hasOne(Invoices_model::class, 'request_id', 'id');
+    }
     public function member_row()
     {
         return $this->belongsTo(Member_model::class,'mem_id','id');

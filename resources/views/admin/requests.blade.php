@@ -8,6 +8,39 @@
 @section('page_content')
     @if (request()->segment(3) == 'view')
         {!! breadcrumb('Requests') !!}
+        @if($rows->status == 'in_progress')
+        <form class="form theme-form" method="post" action="" enctype="multipart/form-data"
+        id="saveForm">
+        @csrf
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                      <div class="col-lg-12 d-flex align-items-stretch">
+                        <div class="card w-100 border position-relative overflow-hidden">
+                          <div class="card-body p-4">
+                            <h4 class="card-title">Mark this requested as in progress for prescription to notify user to pay for invoice.</h4>
+                              <div class="row">
+                                  <div class="col-10">
+                                    <div class="mb-3">
+                                      <label for="amount" class="form-label">Prescription Fee</label>
+                                      <input type="text" class="form-control" name="amount" value="{{!empty($row->amount) ? $row->amount : $site_settings->site_processing_fee}}">
+                                    </div>
+                                  </div>
+                                  <div class="col-2">
+                                    <div class="d-flex align-items-center justify-content-end mt-4 gap-6">
+                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                              </div>
+                              
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        @endif
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -71,6 +104,25 @@
                                     <img src="{{ get_site_image_src('attachments', !empty($rows->document) ? $rows->document : '') }}" width="145" height="100"/>
                                     </a>
                                 </div>
+                                <hr />
+                                <br />
+                                <br />
+                                <br />
+                                @if(!empty($rows->invoice))
+                                    <h4 class="card-title mb-3">Invoice Details</h4>
+                                    <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                                        <div>
+                                            <h5 class="fs-4 fw-semibold mb-0">Invoice Amount</h5>
+                                        </div>
+                                        <p class="mb-0">{{format_amount($rows->invoice->amount)}}</p>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                                        <div>
+                                            <h5 class="fs-4 fw-semibold mb-0">Invoice Status</h5>
+                                        </div>
+                                        <p class="mb-0">{!!getInvoiceStatus($rows->invoice->status)!!}</p>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

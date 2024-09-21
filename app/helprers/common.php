@@ -1143,7 +1143,7 @@ function setInvoiceNo($invoice_id)
         $output .= '0';
     }
 
-    return "Re_" . $output . $invoice_id;
+    return "PP_" . $output . $invoice_id;
 }
 function setLeaseInvoiceNo($invoice_id)
 {
@@ -2107,6 +2107,14 @@ function getStatus($status)
         return '<span class="badge bg-danger-subtle text-danger">InActive</span>';
     }
 }
+function getInvoiceStatus($status)
+{
+    if ($status == 'paid') {
+        return '<span class="badge bg-success-subtle text-success">Paid</span>';
+    } else {
+        return '<span class="badge bg-danger-subtle text-danger">Not Paid Yet!</span>';
+    }
+}
 function getTenantStatus($status)
 {
     if ($status == 1) {
@@ -2221,8 +2229,8 @@ function getRequestsStatus($status)
         return '<span class="badge bg-info-subtle text-success">In Progress</span>';
     } else if ($status == 'prescription_in_progress') {
         return '<span class="badge bg-yellow-subtle text-success">Prescription In Progress</span>';
-    } else if ($status == 'payed') {
-        return '<span class="badge bg-success-subtle text-success">Payed</span>';
+    } else if ($status == 'paid') {
+        return '<span class="badge bg-success-subtle text-success">Paid</span>';
     }else if ($status == 'prescription') {
         return '<span class="badge bg-teal-subtle text-success">Prescription</span>';
     }else if ($status == 'prescription') {

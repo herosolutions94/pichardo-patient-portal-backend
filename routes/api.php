@@ -77,6 +77,8 @@ Route::post('/user-dashboard', [App\Http\Controllers\Account::class, 'user_dashb
 Route::post('/create-request', [App\Http\Controllers\Requests::class, 'user_request']);
 Route::post('/user-requests', [App\Http\Controllers\Requests::class, 'user_all_request']);
 Route::post('/view-request/{encodedId}', [App\Http\Controllers\Requests::class, 'viewRequest']);
+Route::post('/create-payment-intent', [App\Http\Controllers\Requests::class, 'create_payment_intent']);
+Route::post('/pay-invoice', [App\Http\Controllers\Requests::class, 'invoice_pay']);
 
 // ===========================requests chat==========================================
 // Route::post('/chat-requests', [App\Http\Controllers\Requests_chat::class, 'chat_requests']);
