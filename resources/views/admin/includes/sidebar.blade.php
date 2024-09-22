@@ -90,6 +90,12 @@
                   <span class="hide-menu">Requests</span>
                 </a>
               </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ $admin_page == 'prescription' ? 'active' : '' }}" href="{{ url('admin/prescription') }}" aria-expanded="false">
+                <iconify-icon icon="hugeicons:file-02"></iconify-icon>
+                  <span class="hide-menu">Prescriptions</span>
+                </a>
+              </li>
               @if(access(5))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'contact' ? 'active' : '' }}" href="{{ url('admin/contact') }}" aria-expanded="false">

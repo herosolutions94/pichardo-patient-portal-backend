@@ -79,7 +79,7 @@ class Requests extends Controller
         $token = $request->input('token', null);
         $member = $this->authenticate_verify_token($token);
         if (!empty($member)) {
-            $all_requests = Request_model::where(['mem_id' => $member->id])->get();
+            $all_requests = Request_model::where(['mem_id' => $member->id])->where('is_deleted', '0')->orderByDesc("id")->get();
             $open_requests = Request_model::where(['mem_id' => $member->id, 'status' => 0])->count();
 
             foreach($all_requests as $request){
@@ -107,7 +107,7 @@ class Requests extends Controller
                 $id = doDecode($encodedId);
                 
                 if (intval($id) > 0 && $result = Request_model::with(['messages','messages.attachments','invoice'])->where('id', $id)
-                ->where('mem_id', $member->id)
+                ->where('mem_id', $member->id)->where('is_deleted', '0')
                 ->first()) {
                     if(!empty($result->invoice)){
                         
@@ -184,10 +184,7 @@ class Requests extends Controller
                 $res['msg']='Invalid request!';
             }
         }else {
-            $res = [
-                'success' => false,
-                'message' => 'This user does not exist',
-            ];
+            $res['msg']='This user does not exist';
         }
 
         exit(json_encode($res));

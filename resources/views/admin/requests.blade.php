@@ -51,7 +51,7 @@
                                 <div class="d-flex align-items-center justify-content-between pb-7">
                                     <div>
                                         <h4 class="card-title mb-3">Request Details</h4>
-                                        {{format_date($rows->created_at,'M d, Y')}}
+                                        {{format_american_date($rows->created_at,'M d, Y')}}
                                     </div>
                                     <div>
                                         {!! getRequestsStatus($rows->status) !!}
@@ -101,14 +101,15 @@
                                         <h5 class="fs-4 fw-semibold mb-0">Attachment</h5>
                                     </div>
                                     <a href="{{ get_site_image_src('attachments', !empty($rows->document) ? $rows->document : '') }}">
-                                    <img src="{{ get_site_image_src('attachments', !empty($rows->document) ? $rows->document : '') }}" width="145" height="100"/>
+                                    <img src="{{ asset('admin/images/file.png')}}" width="100" height="100"/>
                                     </a>
                                 </div>
-                                <hr />
-                                <br />
-                                <br />
-                                <br />
+                                
                                 @if(!empty($rows->invoice))
+                                    <hr />
+                                    <br />
+                                    <br />
+                                    <br />
                                     <h4 class="card-title mb-3">Invoice Details</h4>
                                     <div class="d-flex align-items-center justify-content-between py-3 border-top">
                                         <div>
@@ -130,6 +131,80 @@
             </div>
             
         </div>
+
+        @if($rows->status == 'paid')
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-3 fw-semibold">Create Prescription</h3>
+                    <form action="{{ url('admin/requests/create-prescription/'.$rows->id) }}" method="POST">
+                    @csrf
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="doctor_name">Doctor Name</label>
+                                    <input class="form-control" id="doctor_name" type="text"
+                                        name="doctor_name" placeholder=""
+                                        value="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="doctor_note">Doctor's Note</label>
+                                    <textarea id="doctor_note" name="doctor_note" rows="4" class="editor"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="">Medication Information</label>
+                                    <table class="table" id="rowRepeater">
+                                        <thead class="table-primary">
+                                            <tr>
+                                                <th scope="col" width="30%">Medication</th>
+                                                <th scope="col" width="30%">Dosage</th>
+                                                <th scope="col" width="40%">Instructions</th>
+                                                <th scope="col">
+                                                    <a class="addNewRowTbl fs-6" href="javascript:void(0)">
+                                                        <iconify-icon icon="ic:sharp-plus"></iconify-icon>
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <input type="text" name="medication[]" class="form-control" placeholder="Medication"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="dosage[]" class="form-control" placeholder="Dosage"/>
+                                                </td>
+                                                <td>
+                                                    <textarea class="form-control" name="instructions[]" placeholder="Write some instructions for patient" rows="3"></textarea>
+                                                </td>
+                                                <td>
+                                                    <a class="removeRow fs-6" href="javascript:void(0)">
+                                                        <iconify-icon icon="ic:round-minus"></iconify-icon>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="additional_note">Additional Note</label>
+                                    <textarea id="additional_note" name="additional_note" rows="4" class="editor"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        @endif
+
             @if(!empty($rows->messages))
                 <div class="card">
                     <div class="card-body">
@@ -143,7 +218,7 @@
                                     <div class="d-flex align-items-center gap-3 text-bg-light-primary rounded-2 p-4">
                                         <img src="{{ get_site_image_src('images', $site_settings->site_icon) }}" alt="matdash-img" class="rounded-circle" width="50" height="50">
                                         <div>
-                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_date($rows->created_at,'M d, Y')}}</span>
+                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_american_date($rows->created_at,'M d, Y')}}</span>
                                             <h6 class="fw-semibold mb-0 fs-4">Support Team</h6>
                                         </div>
                                     </div>
@@ -155,13 +230,13 @@
                                         @if($message->receiver_id === 1)
                                         <img src="{{ get_site_image_src('members', $rows->member_row->mem_image) }}" alt="matdash-img" class="rounded-circle" width="50" height="50">
                                         <div>
-                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_date($message->created_at,'M d, Y')}}</span>
+                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_american_date($message->created_at,'M d, Y')}}</span>
                                             <h6 class="fw-semibold mb-0 fs-4">{{$rows->member_row->mem_fullname}}</h6>
                                         </div>
                                         @else
                                         <img src="{{ get_site_image_src('images', $site_settings->site_icon) }}" alt="matdash-img" class="rounded-circle" width="50" height="50">
                                         <div>
-                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_date($message->created_at,'M d, Y')}}</span>
+                                            <span class="p-1 d-inline-block fs-2 mb-1">{{format_american_date($message->created_at,'M d, Y')}}</span>
                                             <h6 class="fw-semibold mb-0 fs-4">Support Team</h6>
                                         </div>
                                         @endif
@@ -206,13 +281,15 @@
                     </div>
                 </div>
             @endif
+
+            
     @else
         {!! breadcrumb('Manage Requests') !!}
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="table-responsive">
-                        <table id="zero_config" class="table table-striped table-bordered text-nowrap align-middle">
+                        <table class="table table-striped table-bordered text-nowrap align-middle">
                             <thead>
                                 <!-- start row -->
                                 <tr>
@@ -237,7 +314,7 @@
                                                 </div>
                                             </td>
                                             <td>{{ $row->subject }}</td>
-                                            <td>{{format_date($row->created_at,'M d, Y')}}</td>
+                                            <td>{{format_american_date($row->created_at,'M d, Y')}}</td>
                                             <td>{!! getRequestsStatus($row->status) !!}</td>
                                             <td>
                                                 <div class="dropdown dropstart">

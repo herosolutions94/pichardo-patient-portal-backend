@@ -8,19 +8,21 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Request_model;
 use App\Models\Invoices_model;
 use App\Models\Requests_chat_model;
+use App\Models\Prescription_model;
+use App\Models\Medication_model;
 use App\Models\Chat_attachments_model;
 use App\Http\Controllers\Controller;
 
 class Requests extends Controller
 {
     public function index(){
-        $this->data['rows'] = Request_model::with(['messages','messages.attachments','member_row'])->get();
+        $this->data['rows'] = Request_model::with(['messages','messages.attachments','member_row'])->orderByDesc("id")->where('is_deleted', '0')->get();
         // pr($this->data['rows']->toArray());
         return view('admin.requests', $this->data);
     }
     public function view(Request $request,$id){
         $input=$request->all();
-        if($id > 0 && $this->data['rows'] = Request_model::with(['messages', 'messages.attachments', 'member_row','invoice'])->where('id', $id)->first()){
+        if($id > 0 && $this->data['rows'] = Request_model::with(['messages', 'messages.attachments', 'member_row','invoice'])->where('id', $id)->where('is_deleted', '0')->first()){
             if($input && !empty($input['amount'])){
                 Request_model::where('id',$this->data['rows']->id)->update(array('status'=>'prescription_in_progress','created_at'=>$this->data['rows']->created_at));
                 Invoices_model::create(array(
@@ -40,14 +42,15 @@ class Requests extends Controller
             
     }
     public function edit($id){
-        $request = Request_model::with(['messages', 'messages.attachments', 'member_row'])->where('id', $id)->first();
-        if ($request) {
+        if($id > 0 && $request = Request_model::with(['messages', 'messages.attachments', 'member_row'])->where('id', $id)->first()){
             $request->status = 'in_progress';
             $request->save();
-        }                 
-        // Pass the updated request data to the view
-        $this->data['rows'] = $request;
-        return redirect('admin/requests');
+            $this->data['rows'] = $request;
+            return redirect('admin/requests');
+        }else{
+            return redirect('admin/requests/')
+                ->with('error', 'invalid request!');
+        }
     }
     public function post_comment(Request $request, $id)
     {
@@ -92,26 +95,55 @@ class Requests extends Controller
         }
     }
 
-    // public function delete($id){
-    //     has_access(13);
-    //     $category = Request_model::find($id);
-    //     removeImage("categories/".$category->image);
-    //     $category->delete();
-    //     return redirect('admin/requests/')
-    //             ->with('error','Request deleted Successfully');
-    // }
-    // public function orderAll(Request $request)
-    // {
-    //     $rows = Request_model::all();
-    //     foreach ($rows as $row) {
-    //         $orderId = $request->input('orderid' . $row->id);
-    //         if ($orderId !== null) {
-    //             $row->order_no = $orderId;
-    //             $row->save();
-    //         }
-    //     }
+    public function delete($id) {
+        $request = Request_model::find($id);
         
-    //     return redirect('admin/requests/')
-    //             ->with('success','Order updated Successfully');
-    // }
+        if ($request && $request->is_deleted == '0') {
+            // Set is_deleted to 1
+            $request->is_deleted = '1'; 
+            $request->save(); // Save the changes
+            
+            return redirect('admin/requests/')
+                    ->with('success', 'Request deleted successfully');
+        } else {
+            return redirect('admin/requests/')
+                    ->with('error', 'Request not found or already deleted');
+        }
+    }
+    public function create_prescription(Request $request, $id)
+    {
+        $input = $request->all();
+        if($req = Request_model::with(['member_row'])->where('id', $id)->first()){
+            $memId = $req->mem_id;
+            $newPrescription = Prescription_model::create([
+                'mem_id' => $memId,
+                'request_id' => $id,
+                'doctor_name' => $input['doctor_name'],
+                'doctor_note' => $input['doctor_note'] ?? '',
+                'additional_note' => $input['additional_note'] ?? '',
+            ]);
+            
+            $medications = $input['medication'];
+            $dosages = $input['dosage'];
+            $instructions = $input['instructions'];
+    
+            $medicationDetails = [];
+            foreach ($medications as $index => $medication) {
+                $medicationDetails[] = [
+                    'prescription_id' => $newPrescription->id,
+                    'medication' => $medication,
+                    'dosage' => $dosages[$index],
+                    'instructions' => $instructions[$index],
+                ];
+            }
+            Medication_model::insert($medicationDetails);
+            return redirect('admin/requests/view/' . $id)
+                    ->with('success', 'Prescription and medications created successfully!');
+        }else{
+            return redirect('admin/requests/')
+                    ->with('error', 'Member not found');
+        }
+
+        
+    }
 }

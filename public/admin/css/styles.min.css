@@ -20776,3 +20776,6 @@ ul {
     border-radius: 10px;
 }
 
+#rowRepeater tbody td{
+    border-bottom: none;
+}

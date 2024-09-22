@@ -52,3 +52,34 @@
     </script>
     
 @endif
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Function to add a new row
+        $('.addNewRowTbl').click(function() {
+            var newRow = `
+            <tr>
+                <td>
+                    <input type="text" name="medication[]" class="form-control" placeholder="Medication" />
+                </td>
+                <td>
+                    <input type="text" name="dosage[]" class="form-control" placeholder="Dosage" />
+                </td>
+                <td>
+                    <textarea class="form-control" name="instructions[]" placeholder="Write some instructions for patient" rows="3"></textarea>
+                </td>
+                <td>
+                    <a class="removeRow fs-6" href="javascript:void(0)">
+                        <iconify-icon icon="ic:round-minus"></iconify-icon>
+                    </a>
+                </td>
+            </tr>`;
+            $('#rowRepeater tbody').append(newRow);
+        });
+
+        // Function to remove a row
+        $(document).on('click', '.removeRow', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>

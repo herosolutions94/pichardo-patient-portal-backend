@@ -70,6 +70,10 @@ class Member_model extends Model
     {
         return $this->hasMany(Request_model::class, 'mem_id', 'id');
     }
+    public function perscription()
+    {
+        return $this->hasMany(Prescription_model::class, 'mem_id', 'id');
+    }
     // function id_verification($id){
     //     return $this->hasOne(Mem_id_verifications_model::class,'mem_id','id')->where('id',$id)->get()->first();
     // }

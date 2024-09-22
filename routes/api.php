@@ -9,7 +9,7 @@ use App\Http\Controllers\ContentPages;
 use App\Http\Controllers\User_auth;
 
 use App\Http\Controllers\Requests_chat;
-
+use App\Http\Controllers\PrescriptionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -85,6 +85,11 @@ Route::post('/pay-invoice', [App\Http\Controllers\Requests::class, 'invoice_pay'
 Route::post('/chat-requests', [Requests::class, 'chat_requests']);
 // Route::post('/all-chat-requests/{id}', [App\Http\Controllers\Requests_chat::class, 'chat_all_request']);
 
+// ========================prescription=============
+Route::post('/prescriptions-all', [App\Http\Controllers\PrescriptionController::class, 'prescription_all']);
+Route::post('/view-prescription/{encodedId}', [App\Http\Controllers\PrescriptionController::class, 'view_prescription']);
+
+// ===========notifications===========
 Route::match(['GET', 'POST'], '/notifications', [Account::class, 'notifications']);
 Route::post('/delete-notification/{id}', [App\Http\Controllers\Account::class, 'delete_notification']);
 Route::match(['GET', 'POST'], '/earnings', [Account::class, 'earnings']);
