@@ -2112,7 +2112,7 @@ function getInvoiceStatus($status)
     if ($status == 'paid') {
         return '<span class="badge bg-success-subtle text-success">Paid</span>';
     } else {
-        return '<span class="badge bg-danger-subtle text-danger">Not Paid Yet!</span>';
+        return '<span class="badge bg-danger-subtle text-danger">Pending!</span>';
     }
 }
 function getTenantStatus($status)

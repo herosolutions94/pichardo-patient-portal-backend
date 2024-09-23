@@ -88,6 +88,7 @@ Route::post('/chat-requests', [Requests::class, 'chat_requests']);
 // ========================prescription=============
 Route::post('/prescriptions-all', [App\Http\Controllers\PrescriptionController::class, 'prescription_all']);
 Route::post('/view-prescription/{encodedId}', [App\Http\Controllers\PrescriptionController::class, 'view_prescription']);
+Route::match(['GET', 'POST'], '/generate-prescription/{id}', [PrescriptionController::class, 'generate_prescription_pdf']);
 
 // ===========notifications===========
 Route::match(['GET', 'POST'], '/notifications', [Account::class, 'notifications']);

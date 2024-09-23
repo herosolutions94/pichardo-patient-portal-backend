@@ -32,6 +32,7 @@ use App\Http\Controllers\admin\Services;
 use App\Http\Controllers\admin\Preferred_pharmacy;
 use App\Http\Controllers\admin\Requests;
 use App\Http\Controllers\admin\Prescription;
+use App\Http\Controllers\admin\Invoice;
 
 /*
 |--------------------------------------------------------------------------
@@ -199,6 +200,9 @@ Route::middleware(['is_admin'])->group(function(){
     Route::get('/admin/prescription', [Prescription::class,'index']);
     Route::get('/admin/prescription/view/{id}', [Prescription::class, 'view']);
     Route::match(['GET','POST'], '/admin/prescription/delete/{id}', [Prescription::class,'delete']);
+    // ============invoice===============
+    Route::get('/admin/invoice', [Invoice::class,'index']);
+    Route::get('/admin/invoice/view/{id}', [Invoice::class, 'view']);
     /*==============================Contact =====================================*/
     Route::get('/admin/contact', [Contact::class,'index']);
     Route::match(['GET','POST'], '/admin/contact/view/{id}', [Contact::class,'view']);

@@ -96,6 +96,12 @@
                   <span class="hide-menu">Prescriptions</span>
                 </a>
               </li>
+              <li class="sidebar-item">
+                <a class="sidebar-link {{ $admin_page == 'invoice' ? 'active' : '' }}" href="{{ url('admin/invoice') }}" aria-expanded="false">
+                <iconify-icon icon="hugeicons:file-02"></iconify-icon>
+                  <span class="hide-menu">Invoices</span>
+                </a>
+              </li>
               @if(access(5))
               <li class="sidebar-item">
                 <a class="sidebar-link {{ $admin_page == 'contact' ? 'active' : '' }}" href="{{ url('admin/contact') }}" aria-expanded="false">

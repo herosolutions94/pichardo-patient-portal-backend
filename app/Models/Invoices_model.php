@@ -11,6 +11,7 @@ class Invoices_model extends Model
     protected $table = 'invoices';
     protected $fillable = [
         'request_id',
+        'member_id',
         'amount',
         'status',
         'fname',
@@ -30,5 +31,9 @@ class Invoices_model extends Model
     public function member_row()
     {
         return $this->belongsTo(Request_model::class,'request_id','id');
+    }
+    public function member_data()
+    {
+        return $this->belongsTo(Member_model::class,'member_id','id');
     }
 }
