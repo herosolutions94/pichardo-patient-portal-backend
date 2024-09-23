@@ -16,19 +16,30 @@
                             <div class="card-body p-4">
                                 
                                 <div class="d-flex align-items-center justify-content-between pb-7">
+                                    <div><h4>#{{$invoice_id}}</h4></div>
                                     <div>
                                         {{format_american_date($rows->created_at,'M d, Y')}}
                                     </div>
-                                    <div>#{{$invoice_id}}</div>
                                 </div>
-                                <div class="d-flex align-items-center justify-content-between py-3 border-top">
-                                    <div>
-                                        <h5 class="fs-4 fw-semibold mb-0">Patient</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h5>Billing to</h5>
+                                        <div class="d-flex align-items-center justify-content-between py-3 border-top">
+                                            <p class="mb-0">{{ $rows->member_data->mem_fullname }}</p>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <p class="mb-0">{{ $rows->member_row->address }}</p>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <p class="mb-0">{{ $rows->member_data->email }}</p>
+                                        </div>
                                     </div>
-                                    <div class="d-flex align-items-center gap-6 crud_thumbnail_icon">
-                                        <img src="{{ get_site_image_src('members', !empty($rows->member_data->mem_image) ? $rows->member_data->mem_image : '') }}" width="45" class="rounded-circle" />
-                                        <h6 class="mb-0">{{ $rows->member_data->mem_fullname }}</h6>
+
+                                    <div class="col-lg-6">
+                                        <h5>Billing from</h5>
                                     </div>
+
                                 </div>
                                 
                             </div>

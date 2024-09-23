@@ -203,6 +203,7 @@ Route::middleware(['is_admin'])->group(function(){
     // ============invoice===============
     Route::get('/admin/invoice', [Invoice::class,'index']);
     Route::get('/admin/invoice/view/{id}', [Invoice::class, 'view']);
+    Route::get('/admin/invoice-create/{member_id}/{request_id}', [Invoice::class, 'invoice_create']);
     /*==============================Contact =====================================*/
     Route::get('/admin/contact', [Contact::class,'index']);
     Route::match(['GET','POST'], '/admin/contact/view/{id}', [Contact::class,'view']);

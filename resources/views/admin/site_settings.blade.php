@@ -172,13 +172,13 @@
               <div class="col-12">
                 <div class="card w-100 border position-relative overflow-hidden">
                   <div class="card-body p-4">
-                    <h4 class="card-title">Site Processing Fee($)</h4>
+                    <h4 class="card-title">Site Processing Fee(%)</h4>
                     <p class="card-subtitle mb-4">Site Fee for Prescription</p>
                       <div class="row">
                         <div class="col-lg-12">
                           <div class="mb-3">
                             <div class="">
-                               <input type="number" name="site_processing_fee" class="form-control" value="{{$site_settings->site_processing_fee}}" />
+                               <input type="text" name="site_processing_fee" class="form-control" value="{{$site_settings->site_processing_fee}}" />
                               </div>
                           </div>
                         </div>

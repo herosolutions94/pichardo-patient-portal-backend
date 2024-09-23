@@ -9,7 +9,12 @@
     @if (request()->segment(3) == 'view')
         {!! breadcrumb('Requests') !!}
         @if($rows->status == 'in_progress')
-        <form class="form theme-form" method="post" action="" enctype="multipart/form-data"
+        <div class="card">
+            <div class="card-body">
+                <a href="{{ url('admin/invoice-create/' . $rows->member_row->id. '/'. $rows->id) }}"><h4 class="card-title mb-0 text-primary" style="text-decoration:underline">Mark this requested as in progress for prescription to notify user to pay for invoice.</h4></a>
+            </div>
+        </div>
+        <!-- <form class="form theme-form" method="post" action="" enctype="multipart/form-data"
         id="saveForm">
         @csrf
         <div class="card">
@@ -39,7 +44,7 @@
                 </div>
             </div>
         </div>
-        </form>
+        </form> -->
         @endif
         <div class="card">
             <div class="card-body">

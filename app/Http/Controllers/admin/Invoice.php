@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Request_model;
+use App\Models\Member_model;
 use App\Models\Invoices_model;
 use App\Models\Requests_chat_model;
 use App\Models\Prescription_model;
@@ -28,5 +29,18 @@ class Invoice extends Controller
         
         $this->data['invoice_id'] = setInvoiceNo($id);
         return view('admin.invoice', $this->data);
+    }
+
+
+    public function invoice_create($member_id, $request_id=null)
+    {
+        if($member_id > 0 && $this->data['row'] = Member_model::with(['requests'])->where('id', $member_id)->first()){
+            // pr($this->data);
+            return view('admin.invoice_create', $this->data);
+        }
+        else{
+            return redirect('admin/requests/')
+                ->with('error', 'invalid request!');
+        }
     }
 }

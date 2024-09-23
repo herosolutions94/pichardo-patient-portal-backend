@@ -122,7 +122,7 @@ class Dashboard extends Controller
         $admin->site_stripe_testing_secret_key=$request->site_stripe_testing_secret_key;
         $admin->site_stripe_live_api_key=$request->site_stripe_live_api_key;
         $admin->site_listing_fee=floatval($request->site_listing_fee);
-        $admin->site_processing_fee=floatval($request->site_processing_fee);
+        $admin->site_processing_fee=$request->site_processing_fee;
         $admin->site_package_cost=floatval($request->site_package_cost);
         $admin->ach_merchant_id=$request->ach_merchant_id;
         $admin->ach_api_key=$request->ach_api_key;
